@@ -2,14 +2,22 @@ import { useRef, useState, Fragment } from 'react';
 
 import { Logout } from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, ListItemButton, ListItemIcon, ListItemText, Popover, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../../hooks/store';
+import { logOut } from '../../../store/slices/authSlice';
 import { generateAvatarImage } from '../../../utils/utils';
 
 const UserMenu = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const [open, setOpen] = useState<boolean>(false);
   const anchorRef = useRef(null);
+
   return (
     <Fragment>
       <IconButton ref={anchorRef} onClick={() => setOpen(true)}>
@@ -32,23 +40,27 @@ const UserMenu = () => {
             </Typography>
           </Box>
         </Box>
-        <Divider sx={{ my: 2 }} />
+        <Divider sx={{ mt: 2 }} />
         <Box>
-          <ListItemButton>
-            <ListItemText>set status</ListItemText>
+          <ListItemButton
+            onClick={() => {
+              navigate('settings/?update-details');
+              setOpen(false);
+            }}
+          >
+            <ListItemText>{t('auth.user_menu.settings')}</ListItemText>
           </ListItemButton>
-          <ListItemButton>
-            <ListItemText>Set Status</ListItemText>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemText>Set Status</ListItemText>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemText>Set Status</ListItemText>
+          <ListItemButton
+            onClick={() => {
+              navigate('settings/?update-password');
+              setOpen(false);
+            }}
+          >
+            <ListItemText>{t('auth.user_menu.password_change')}</ListItemText>
           </ListItemButton>
           <Divider />
-          <ListItemButton>
-            <ListItemText>Log out</ListItemText>
+          <ListItemButton onClick={() => dispatch(logOut())}>
+            <ListItemText>{t('auth.user_menu.logout')}</ListItemText>
             <ListItemIcon sx={{ minWidth: 0 }}>
               <Logout />
             </ListItemIcon>

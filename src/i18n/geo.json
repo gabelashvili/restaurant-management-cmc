@@ -44,6 +44,11 @@
             "min_one_special_character": "მინიმუმ 1 სიმბოლო",
             "min_one_special_number": "მინიმუმ 1 ციფრი",
             "min_length": "მინიმუმ 8 სიმბოლო"
+        },
+        "user_menu": {
+            "logout": "გასვლა",
+            "settings": "პარამეტრები",
+            "password_change": "პაროლის შეცვლა"
         }
     },
     "errors": {
