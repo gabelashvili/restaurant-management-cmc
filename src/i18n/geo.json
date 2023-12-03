@@ -42,7 +42,8 @@
         }
     },
     "errors": {
-        "password_already_used": "პაროლი უკვე გამოყენებულია"
+        "password_already_used": "პაროლი უკვე გამოყენებულია",
+        "maxFileSize": "ფაილის მაქსიმალური ზომა {{size}}"
     },
     "api_errors": {
 

@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 
 import { AddAPhoto } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Avatar, Box, Button, Typography, styled } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { useAppSelector } from '../../../hooks/store';
 import { useLazyUpdateAvatarQuery } from '../../../store/api/authApi';
+import { updateAvatar } from '../../../store/slices/authSlice';
+import { generateAvatarImage } from '../../../utils/utils';
 import SettingsComponentContainer from '../SettingsComponentContainer';
 
 const UpdateAvatar = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [updateAvatar, { isFetching }] = useLazyUpdateAvatarQuery();
+  const [uploadAvatar, { isFetching }] = useLazyUpdateAvatarQuery();
   const { user } = useAppSelector((state) => state.auth);
   const [avatar, setAvatar] = useState<null | File>(null);
 
@@ -19,19 +24,42 @@ const UpdateAvatar = () => {
     if (avatar) {
       const formData = new FormData();
       formData.append('avatar', avatar);
-      const result = await updateAvatar(formData);
+      const result = await uploadAvatar(formData);
       if (result.data) {
         setAvatar(null);
-        // Todo update url in store
+        dispatch(updateAvatar(URL.createObjectURL(avatar)));
       }
+    }
+  };
+
+  const handleAvatarChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return;
+    }
+    if (e.target.files[0].size > 5 * 1024) {
+      toast.error(t('errors.maxFileSize', { size: '5MB' }));
+      return;
+    }
+    setAvatar(e.target.files[0]);
+    if (e.target) {
+      e.target.value = '';
     }
   };
 
   return (
     <SettingsComponentContainer title="Update Avatar">
-      <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', gap: 3, height: 'fit-content' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          gap: 3,
+          height: 'fit-content',
+        }}
+      >
         <Wrapper>
-          <Avatar sx={{ width: '100%', height: '100%' }} src={avatar ? URL.createObjectURL(avatar) : user?.avatar || ''} />
+          <Avatar sx={{ width: '100%', height: '100%' }} src={generateAvatarImage(avatar, user?.avatar)} />
           <Button
             component="label"
             variant="contained"
@@ -48,15 +76,7 @@ const UpdateAvatar = () => {
             }}
           >
             <AddAPhoto />
-            <VisuallyHiddenInput
-              type="file"
-              onChange={(e) => {
-                setAvatar(e.target.files?.[0] || null);
-                if (e.target) {
-                  e.target.value = '';
-                }
-              }}
-            />
+            <VisuallyHiddenInput type="file" accept="image/png, image/jpg, image/jpeg" onChange={handleAvatarChange} />
           </Button>
         </Wrapper>
         <Typography sx={{ textAlign: 'center' }}>Upload/Change Your Profile Image</Typography>
@@ -78,8 +98,8 @@ const UpdateAvatar = () => {
 export default UpdateAvatar;
 
 const Wrapper = styled(Box)(({ theme }) => ({
-  width: 80,
-  height: 80,
+  width: 120,
+  height: 120,
   position: 'relative',
   cursor: 'pointer',
   '&:hover > label': {

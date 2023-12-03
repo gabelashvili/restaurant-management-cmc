@@ -36,7 +36,7 @@ const setNewAccessTokenInLocalStorage = (token: string) => {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5000/api/v1/',
+  baseUrl: `${process.env.REACT_APP_API}/api/v1/`,
   prepareHeaders: async (headers) => {
     headers.set('authorization', `Bearer ${getTokensFromStorage()?.accessToken}`);
 
@@ -45,7 +45,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 const refreshBaseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5000/api/v1/',
+  baseUrl: `${process.env.REACT_APP_API}/api/v1/`,
   prepareHeaders: async (headers) => {
     headers.set('authorization', `Bearer ${getTokensFromStorage()?.refreshToken}`);
   },

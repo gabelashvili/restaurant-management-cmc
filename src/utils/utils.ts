@@ -7,3 +7,17 @@ export const getDirtyFieldsValues = <T>(dirtyFields: Partial<Record<keyof T, boo
   });
   return reqData;
 };
+
+export const generateAvatarImage = (file?: File | null, url?: string | null) => {
+  if (file) {
+    return URL.createObjectURL(file);
+  }
+  if (url && url.startsWith('blob')) {
+    return url;
+  }
+
+  if (url) {
+    return `${process.env.REACT_APP_API}/avatar/${url}`;
+  }
+  return '';
+};
