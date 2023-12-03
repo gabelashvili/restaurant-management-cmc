@@ -1,0 +1,50 @@
+{
+    "common": {
+        "email": "ელ.ფოსტა",
+        "password": "ავტორიზაცია",
+        "search": "ძებნა",
+        "role": "როლი",
+        "firstName": "სახელი",
+        "lastName": "გვარი",
+        "save": "შენახვა",
+        "cancel":"გაუქმება"
+    },
+    "routes": {
+        "statistics": "სტატისტიკა",
+        "menu": "მენიუ",
+        "branches": "ფილიალები",
+        "employees": "თანამშრომლები",
+        "dishes": "კერძები",
+        "drinks": "სასმელები",
+        "categories": "კატეგორიები",
+        "dishes_list": "კერძების სია"
+    },
+    "auth": {
+        "welcome": "მოგესალმებით",
+        "insert_details": "შეიყვანეთ თქვენი მონაცემები",
+        "sign_in": "ავტორიზაცია",
+        "forgot_password": "დაგავიწყდა პაროლი?",
+        "settings": {
+            "update_details": "მონაცემების შეცვლა",
+            "update_password": "პაროლის შეცვლა",
+            "user_profile": "მომხმარებლის პროფილი",
+            "update_your_details": "განაახლეთ თქვენი მონაცემები",
+            "current_password": "მიმდინარე პაროლი",
+            "new_password": "ახალი პაროლი",
+            "repeat_new_password": "გაიმეორე ახალი პაროლი"
+        },
+        "passwordValidations": {
+            "min_one_lower_case": "მინიმუმ 1 დაბალი რეგისტრის ასო",
+            "min_one_upper_case": "მინიმუმ 1 მაღალი რეგისტრის ასო",
+            "min_one_special_character": "მინიმუმ 1 სიმბოლო",
+            "min_one_special_number": "მინიმუმ 1 ციფრი",
+            "min_length": "მინიმუმ 8 სიმბოლო"
+        }
+    },
+    "errors": {
+        "password_already_used": "პაროლი უკვე გამოყენებულია"
+    },
+    "api_errors": {
+
+    }
+}
