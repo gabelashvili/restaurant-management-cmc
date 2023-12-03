@@ -1,5 +1,5 @@
 import { Box, CircularProgress, CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import './i18n/config';
 import AuthLayout from './components/AuthLayout';
@@ -66,6 +66,10 @@ const authRoutes = createBrowserRouter([
       {
         index: true,
         element: <SignIn />,
+      },
+      {
+        path: '*',
+        element: <Navigate to={'/'} />,
       },
     ],
   },
