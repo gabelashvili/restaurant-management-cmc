@@ -37,7 +37,7 @@ const UpdateAvatar = () => {
       return;
     }
     if (e.target.files[0].size > 2 * 1024 * 1024) {
-      toast.error(t('errors.maxFileSize', { size: '2MB' }));
+      toast.error(t('image_upload.maxSize', { size: '2MB' }));
       return;
     }
     setAvatar(e.target.files[0]);
@@ -47,7 +47,7 @@ const UpdateAvatar = () => {
   };
 
   return (
-    <SettingsComponentContainer title="Update Avatar">
+    <SettingsComponentContainer title={t('auth.settings.avatar')}>
       <Box
         sx={{
           display: 'flex',
@@ -79,7 +79,7 @@ const UpdateAvatar = () => {
             <VisuallyHiddenInput type="file" accept="image/png, image/jpg, image/jpeg" onChange={handleAvatarChange} />
           </Button>
         </Wrapper>
-        <Typography sx={{ textAlign: 'center' }}>Upload/Change Your Profile Image</Typography>
+        <Typography sx={{ textAlign: 'center' }}>{t('image_upload.title')}</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, justifyContent: 'end' }}>
           {avatar && (
             <LoadingButton size="small" variant="outlined" onClick={() => setAvatar(null)}>

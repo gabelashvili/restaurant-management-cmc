@@ -19,6 +19,10 @@
         "categories": "კატეგორიები",
         "dishes_list": "კერძების სია"
     },
+    "image_upload": {
+        "maxSize": "სურათის მაქსიმალური ზომა {{size}}",
+        "title": "ატვირთე/გაანახლე სურათი"
+    },
     "auth": {
         "welcome": "მოგესალმებით",
         "insert_details": "შეიყვანეთ თქვენი მონაცემები",
@@ -31,7 +35,8 @@
             "update_your_details": "განაახლეთ თქვენი მონაცემები",
             "current_password": "მიმდინარე პაროლი",
             "new_password": "ახალი პაროლი",
-            "repeat_new_password": "გაიმეორე ახალი პაროლი"
+            "repeat_new_password": "გაიმეორე ახალი პაროლი",
+            "avatar": "ავატარი"
         },
         "passwordValidations": {
             "min_one_lower_case": "მინიმუმ 1 დაბალი რეგისტრის ასო",
@@ -42,8 +47,7 @@
         }
     },
     "errors": {
-        "password_already_used": "პაროლი უკვე გამოყენებულია",
-        "maxFileSize": "ფაილის მაქსიმალური ზომა {{size}}"
+        "password_already_used": "პაროლი უკვე გამოყენებულია"
     },
     "api_errors": {
 

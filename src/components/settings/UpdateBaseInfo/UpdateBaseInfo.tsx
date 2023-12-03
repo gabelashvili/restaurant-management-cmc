@@ -62,7 +62,7 @@ const UpdateBaseInfo = () => {
 
   return (
     <Paper sx={{ p: 2 }}>
-      <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: { xs: '1fr', md: 'minmax(300px, 1fr) 2.5fr' } }}>
+      <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: { xs: '1fr', md: 'minmax(280px, 1fr) 2.5fr' } }}>
         <UpdateAvatar />
         <SettingsComponentContainer title={t('auth.settings.update_details')}>
           <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: { xs: '1fr', xl: '1fr 1fr' } }}>
