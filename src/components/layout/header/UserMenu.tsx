@@ -4,6 +4,7 @@ import { Logout } from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, ListItemButton, ListItemIcon, ListItemText, Popover, Typography } from '@mui/material';
 
 import { useAppSelector } from '../../../hooks/store';
+import { generateAvatarImage } from '../../../utils/utils';
 
 const UserMenu = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -12,7 +13,7 @@ const UserMenu = () => {
   return (
     <Fragment>
       <IconButton ref={anchorRef} onClick={() => setOpen(true)}>
-        <Avatar sx={{ width: 30, height: 30 }} />
+        <Avatar sx={{ width: 30, height: 30 }} src={generateAvatarImage(null, user?.avatar)} />
       </IconButton>
       <Popover
         open={open}

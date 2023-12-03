@@ -6,12 +6,15 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import routes from '../../../helpers/routes';
+import { useAppSelector } from '../../../hooks/store';
+import { generateAvatarImage } from '../../../utils/utils';
 import Logo from '../../shared/Logo';
 
 const NavigationList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
+  const user = useAppSelector((state) => state.auth.user);
   const [openNavPath, setOpenNavPath] = useState<string | null>(null);
   const currentPath = () => {
     let path = location.pathname;
@@ -29,7 +32,7 @@ const NavigationList = () => {
         <Logo />
       </Box>
       <Box sx={{ my: 5, display: 'flex', alignItems: 'center', gap: 2, bgcolor: 'secondary.200', p: 2, borderRadius: 2 }}>
-        <Avatar />
+        <Avatar src={generateAvatarImage(null, user?.avatar)} />
         <Typography>Lasha Gabelashvili</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>

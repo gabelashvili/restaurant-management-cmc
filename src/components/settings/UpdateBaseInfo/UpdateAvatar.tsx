@@ -36,8 +36,8 @@ const UpdateAvatar = () => {
     if (!e.target.files) {
       return;
     }
-    if (e.target.files[0].size > 5 * 1024) {
-      toast.error(t('errors.maxFileSize', { size: '5MB' }));
+    if (e.target.files[0].size > 2 * 1024 * 1024) {
+      toast.error(t('errors.maxFileSize', { size: '2MB' }));
       return;
     }
     setAvatar(e.target.files[0]);
