@@ -1,6 +1,7 @@
 import { type Middleware, type MiddlewareAPI } from '@reduxjs/toolkit';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import i18next from 'i18next';
 import { toast } from 'react-toastify';
 
 import { type SignInRespModel } from '../../@types/auth';
@@ -39,6 +40,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: `${process.env.REACT_APP_API}/api/v1/`,
   prepareHeaders: async (headers) => {
     headers.set('authorization', `Bearer ${getTokensFromStorage()?.accessToken}`);
+    headers.set('language', i18next.language);
 
     return headers;
   },

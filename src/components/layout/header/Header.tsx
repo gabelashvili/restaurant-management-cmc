@@ -3,6 +3,7 @@ import { type Dispatch, type SetStateAction } from 'react';
 import { Menu } from '@mui/icons-material';
 import { AppBar, Box, IconButton, Toolbar, useMediaQuery, useTheme } from '@mui/material';
 
+import SelectLanguage from './SelectLanguage';
 import UserMenu from './UserMenu';
 
 interface Props {
@@ -30,7 +31,8 @@ const Header = ({ openMobileNav, setOpenMobileNav }: Props) => {
             <Menu />
           </IconButton>
         )}
-        <Box sx={{ ml: 'auto' }}>
+        <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+          <SelectLanguage />
           <UserMenu />
         </Box>
       </Toolbar>
