@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import EmployeesList from '../components/Employees/EmployeesList';
+import EmployeesList from '../components/employees/EmployeesList';
 
 const Employees = () => {
   return (

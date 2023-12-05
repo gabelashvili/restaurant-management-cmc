@@ -5,7 +5,8 @@ import './i18n/config';
 import AuthLayout from './components/AuthLayout';
 import Layout from './components/layout/Layout';
 import useAuth from './hooks/useAuth';
-import Branches from './pages/Branches';
+import Branches from './pages/branches/Branches';
+import NewBranch from './pages/branches/NewBranch';
 import Dishes from './pages/Dishes';
 import Drinks from './pages/Drinks';
 import Employees from './pages/Employees';
@@ -48,7 +49,16 @@ const defaultRoutes = createBrowserRouter([
       },
       {
         path: 'branches',
-        element: <Branches />,
+        children: [
+          {
+            index: true,
+            element: <Branches />,
+          },
+          {
+            path: 'new',
+            element: <NewBranch />,
+          },
+        ],
       },
       {
         path: 'settings',

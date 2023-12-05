@@ -1,13 +1,17 @@
 import { type FC } from 'react';
 
-import { FilterList, Search } from '@mui/icons-material';
-import { Box, ButtonBase, InputAdornment, TextField, Typography } from '@mui/material';
+import { Add, FilterList, Search } from '@mui/icons-material';
+import { Box, ButtonBase, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface TableHeaderProps {
   title: string;
+  handleAdd?: {
+    title?: string;
+    onClick: () => void;
+  };
 }
-const TableHeader: FC<TableHeaderProps> = ({ title }) => {
+const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd }) => {
   const { t } = useTranslation();
   return (
     <>
@@ -40,6 +44,13 @@ const TableHeader: FC<TableHeaderProps> = ({ title }) => {
           <ButtonBase sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
             <FilterList />
           </ButtonBase>
+          {handleAdd && (
+            <Tooltip title={handleAdd.title} placement="top">
+              <ButtonBase onClick={handleAdd.onClick} sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
+                <Add />
+              </ButtonBase>
+            </Tooltip>
+          )}
         </Box>
       </Box>
     </>
