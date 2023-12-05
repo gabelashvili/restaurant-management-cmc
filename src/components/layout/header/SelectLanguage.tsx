@@ -16,6 +16,7 @@ const SelectLanguage = () => {
       <Menu MenuListProps={{ sx: { p: 0 } }} anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
         {languages.map((el) => (
           <ListItemButton
+            selected={el.key === i18n.language}
             key={el.key}
             onClick={() => {
               i18n.changeLanguage(el.key);
