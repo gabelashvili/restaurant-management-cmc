@@ -157,9 +157,7 @@ const baseOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           '& .MuiPopover-paper': {
-            boxShadow: 'none',
             borderRadius: '8px',
-            border: '2px solid #E5EAF2',
           },
         },
       },

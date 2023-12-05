@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import { Box, IconButton, ListItemButton, ListItemIcon, ListItemText, Menu } from '@mui/material';
-import getUnicodeFlagIcon from 'country-flag-icons/unicode';
 import { useTranslation } from 'react-i18next';
+
+import { languages } from '../../../utils/utils';
 
 const SelectLanguage = () => {
   const { i18n } = useTranslation();
@@ -33,16 +34,3 @@ const SelectLanguage = () => {
 };
 
 export default SelectLanguage;
-
-const languages = [
-  {
-    label: 'ქართული',
-    key: 'ge',
-    icon: getUnicodeFlagIcon('GEO'),
-  },
-  {
-    label: 'English',
-    key: 'en',
-    icon: getUnicodeFlagIcon('GB'),
-  },
-];

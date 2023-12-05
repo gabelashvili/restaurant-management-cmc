@@ -1,3 +1,5 @@
+import getUnicodeFlagIcon from 'country-flag-icons/unicode';
+
 export const getDirtyFieldsValues = <T>(dirtyFields: Partial<Record<keyof T, boolean>>, data: T): Partial<T> => {
   const reqData: Partial<T> = {};
   Object.keys(dirtyFields).forEach((key) => {
@@ -21,3 +23,16 @@ export const generateAvatarImage = (file?: File | null, url?: string | null) => 
   }
   return '';
 };
+
+export const languages = [
+  {
+    label: 'ქართული',
+    key: 'ge',
+    icon: getUnicodeFlagIcon('GEO'),
+  },
+  {
+    label: 'English',
+    key: 'en',
+    icon: getUnicodeFlagIcon('GB'),
+  },
+];
