@@ -5,12 +5,13 @@ import { Box, Divider, Paper, Typography } from '@mui/material';
 interface Props {
   title: string;
   children: ReactNode;
+  centerTitle?: boolean;
 }
 
-const Container = ({ title, children }: Props) => {
+const Container = ({ title, children, centerTitle }: Props) => {
   return (
     <Paper sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Typography sx={{ p: 2 }} variant="h6">
+      <Typography sx={{ p: 2, textAlign: centerTitle ? 'center' : 'inherit' }} variant="h6">
         {title}
       </Typography>
       <Divider />

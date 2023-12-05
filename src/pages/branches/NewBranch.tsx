@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import UpsertBranch from '../../components/branches/UpsertBranch';
+import UpsertBranch from '../../components/branches/upsert/UpsertBranch';
 
 const NewBranch = () => {
   return (
