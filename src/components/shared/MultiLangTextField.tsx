@@ -7,8 +7,9 @@ import { languages } from '../../utils/utils';
 
 interface Props {
   label?: string;
+  onChange: (lang: string, value: string) => void;
 }
-const MultiLangTextField = () => {
+const MultiLangTextField = ({ onChange, label }: Props) => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedLang, setSelectedLang] = useState(i18n.language);
@@ -16,7 +17,8 @@ const MultiLangTextField = () => {
 
   return (
     <TextField
-      label="ae ae"
+      label={label}
+      onChange={(e) => onChange(selectedLang, e.target.value)}
       InputProps={{
         sx: {
           pr: 0,
