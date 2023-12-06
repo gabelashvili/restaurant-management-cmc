@@ -1,10 +1,8 @@
-import { Autocomplete, Box, Divider, TextField, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 
 import BranchBaseInfo from './BranchBaseInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import Container from '../../shared/Container';
-import MultiLangTextField from '../../shared/MultiLangTextField';
-import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 
 const UpsertBranch = () => {
   return (

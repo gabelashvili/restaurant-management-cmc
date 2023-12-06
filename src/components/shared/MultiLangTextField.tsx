@@ -31,12 +31,12 @@ const MultiLangTextField = ({ onChange, label, fullWidth, variant }: Props) => {
       variant={variant}
       fullWidth={fullWidth}
       label={label}
-      onChange={(e) => onChange(selectedLang, e.target.value)}
+      onChange={(e) => onChange(languages.length === 1 ? languages[0].key : selectedLang, e.target.value)}
       InputProps={{
         sx: {
           pr: 0,
         },
-        endAdornment: (
+        endAdornment: languages.length > 1 && (
           <InputAdornment position="start" sx={{ m: 0, marginTop: '0 !important' }}>
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <Box sx={{ fontSize: 22 }}>{languages.find((el) => el.key === selectedLang)?.icon}</Box>
