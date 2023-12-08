@@ -1,4 +1,6 @@
 import { Box, CircularProgress, CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
+import i18next from 'i18next';
+import moment from 'moment';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import './i18n/config';
@@ -13,6 +15,11 @@ import Employees from './pages/Employees';
 import SignIn from './pages/SignIn';
 import UserSettings from './pages/UserSettings';
 import { getTheme } from './theme';
+
+import 'moment/locale/fr';
+import 'moment/locale/ka';
+
+moment.locale(i18next.language);
 
 // App theme
 const appTheme = getTheme();

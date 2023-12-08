@@ -7,6 +7,11 @@ import geJSON from './geo.json';
 
 export const defaultNS = 'geJSON';
 
+// Temp solution
+if (localStorage.getItem('i18nextLng') === null) {
+  localStorage.setItem('i18nextLng', 'ge');
+}
+
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)

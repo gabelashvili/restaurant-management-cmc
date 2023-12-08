@@ -17,3 +17,8 @@ export interface TokensModel {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface MultiLangModel {
+  ge: string;
+  en: string;
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, IconButton, ListItemButton, ListItemIcon, ListItemText, Menu } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,9 @@ const SelectLanguage = () => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  useEffect(() => {
+    console.log(i18n.language);
+  }, [i18n.language]);
   return (
     <Box>
       <IconButton color="inherit" onClick={(e) => setAnchorEl(e.currentTarget)}>
