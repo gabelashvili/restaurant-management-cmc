@@ -9,9 +9,6 @@ const SelectLanguage = () => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  useEffect(() => {
-    console.log(i18n.language);
-  }, [i18n.language]);
   return (
     <Box>
       <IconButton color="inherit" onClick={(e) => setAnchorEl(e.currentTarget)}>

@@ -3,7 +3,6 @@ import moment from 'moment';
 
 import { type BranchModel } from '../../../@types/bracnh';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
-moment.locale('ge');
 const BranchWorkingHours = () => {
   return (
     <UpsertSectionWrapper title="სამუშაო საათები">
