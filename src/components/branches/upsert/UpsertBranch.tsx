@@ -64,14 +64,7 @@ const initialState = {
 };
 
 const UpsertBranch = () => {
-  const {
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    register,
-    control,
-    trigger,
-  } = useForm<BranchModel>({
+  const { handleSubmit, getValues, control, trigger } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver<BranchModel>(upsertBranchSchema),
   });
@@ -85,7 +78,7 @@ const UpsertBranch = () => {
 
   return (
     <Container title="ფილიალის დამატება" centerTitle>
-      <BranchGeneralInfo register={register} errors={errors.general} control={control} />
+      <BranchGeneralInfo control={control} />
       <Divider sx={{ mt: 4, mb: 2 }} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} />
       <Divider sx={{ mt: 4, mb: 2 }} />

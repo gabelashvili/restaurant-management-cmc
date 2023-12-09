@@ -1,20 +1,17 @@
 import React from 'react';
 
-import { PartyModeSharp } from '@mui/icons-material';
 import { Autocomplete, TextField } from '@mui/material';
-import { Controller, type Control, type FieldErrors, type UseFormRegister } from 'react-hook-form';
+import { Controller, type Control } from 'react-hook-form';
 
-import { type BranchGeneralInfoModel, type BranchModel } from '../../../@types/bracnh';
+import { type BranchModel } from '../../../@types/bracnh';
 import MultiLangTextField from '../../shared/MultiLangTextField';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 
 interface Props {
-  errors?: FieldErrors<BranchGeneralInfoModel>;
-  register: UseFormRegister<BranchModel>;
   control: Control<BranchModel, any>;
 }
 
-const BranchGeneralInfo = ({ errors, register, control }: Props) => {
+const BranchGeneralInfo = ({ control }: Props) => {
   return (
     <UpsertSectionWrapper title="ზოგადი ინფორმაცია">
       <Controller
