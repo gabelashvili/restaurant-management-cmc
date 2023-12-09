@@ -79,11 +79,9 @@ const UpsertBranch = () => {
   );
 
   return (
-    <Container title={t('branch.add')} centerTitle>
+    <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <BranchGeneralInfo control={control} />
-      <Divider sx={{ mt: 4, mb: 2 }} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} />
-      <Divider sx={{ mt: 4, mb: 2 }} />
       <Box>
         <Typography sx={{ fontSize: 16, fontWeight: 500 }}>გამონაკლისი დღეები</Typography>
       </Box>

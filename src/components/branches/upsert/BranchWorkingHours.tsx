@@ -28,7 +28,14 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
               <TableCell align="center">{t('branch.upsert.end')}</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody sx={(theme) => ({ '& td': { borderBottom: `1px solid ${theme.palette.divider}` } })}>
+          <TableBody
+            sx={(theme) => ({
+              '& td': {
+                borderBottom: `1px solid ${theme.palette.divider}`,
+              },
+              '& > :last-child td': { border: 0 },
+            })}
+          >
             {[
               'monday' as const,
               'sunday' as const,
