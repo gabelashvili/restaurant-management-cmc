@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/bracnh';
@@ -82,9 +83,7 @@ const UpsertBranch = () => {
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <BranchGeneralInfo control={control} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} />
-      <Box>
-        <Typography sx={{ fontSize: 16, fontWeight: 500 }}>გამონაკლისი დღეები</Typography>
-      </Box>
+      <BranchExceptionDates control={control} trigger={trigger} />
       <LoadingButton variant="contained" sx={{ ml: 'left', display: 'flex' }} onClick={onSubmit}>
         damateba
       </LoadingButton>

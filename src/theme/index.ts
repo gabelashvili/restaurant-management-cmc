@@ -1,7 +1,7 @@
 import { createTheme, type Theme, type ThemeOptions } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
-import { error, info, primary, secondary, success, warning } from './themeColors';
+import { error, info, primary, secondary, success, warning, text } from './themeColors';
 
 const fontSize = 14;
 
@@ -201,6 +201,15 @@ const baseOptions: ThemeOptions = {
         },
       },
     },
+    MuiPickersLayout: {
+      styleOverrides: {
+        root: {
+          '& span, div, button': {
+            color: secondary.main,
+          },
+        },
+      },
+    },
   },
   typography: {
     button: {
@@ -247,7 +256,6 @@ export interface themeSettingsProps {
 
 export const getTheme = () => {
   const theme: Theme = createTheme(baseOptions);
-
   // theme shadows
   theme.shadows[1] = '0px 4px 23px rgba(0, 0, 0, 0.12)';
   theme.shadows[2] = '0px 0px 21px 1px rgba(0, 0, 0, 0.07)';
