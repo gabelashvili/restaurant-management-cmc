@@ -41,7 +41,10 @@ const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
                     <MobileDateTimePicker
                       sx={{ width: '100%' }}
                       ampmInClock={true}
-                      onChange={(value: moment.Moment | null) => params.field.onChange(value ? value.toISOString() : null)}
+                      onChange={(value: moment.Moment | null) => {
+                        params.field.onChange(value ? value.toISOString() : null);
+                        trigger(`exceptions.${i}.end`);
+                      }}
                       slotProps={{
                         textField: {
                           inputRef: params.field.ref,
@@ -59,7 +62,10 @@ const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
                     <MobileDateTimePicker
                       sx={{ width: '100%' }}
                       ampmInClock={true}
-                      onChange={(value: moment.Moment | null) => params.field.onChange(value ? value.toISOString() : null)}
+                      onChange={(value: moment.Moment | null) => {
+                        params.field.onChange(value ? value.toISOString() : null);
+                        trigger(`exceptions.${i}.start`);
+                      }}
                       slotProps={{
                         textField: {
                           inputRef: params.field.ref,
@@ -82,6 +88,7 @@ const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
                     getOptionLabel={(opt) => t(`branch.upsert.${opt}`)}
                     onChange={(_, val) => params.field.onChange(val)}
                     filterSelectedOptions
+                    value={params.field.value}
                     renderInput={(inputParams) => (
                       <TextField
                         {...inputParams}

@@ -1,6 +1,8 @@
 import moment from 'moment';
 import * as yup from 'yup';
 
+import { ExceptionRepeatEnum } from '../@types/bracnh';
+
 const weekDaySchema = yup.object().shape({
   id: yup.string(),
   enabled: yup.boolean().required(),
@@ -49,10 +51,10 @@ const exceptionSchema = yup.object().shape({
     .required()
     .notOneOf(['Invalid date'])
     .test('dateValidation', 'Start date should be always lower than end date', function () {
-      const { start, end, enabled } = this.parent;
+      const { start, end } = this.parent;
       const startTime = moment(start);
       const endTime = moment(end);
-      if (enabled && startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
+      if (startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
         return false;
       }
       return true;
@@ -62,15 +64,17 @@ const exceptionSchema = yup.object().shape({
     .required()
     .notOneOf(['Invalid date'])
     .test('dateValidation', 'End date should be always greater than start date', function () {
-      const { start, end, enabled } = this.parent;
+      const { start, end } = this.parent;
       const startTime = moment(start);
       const endTime = moment(end);
-      if (enabled && startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
+      console.log(startTime.isValid());
+
+      if (startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
         return false;
       }
       return true;
     }),
-  repeat: yup.string().required(),
+  repeat: yup.string().required().oneOf([ExceptionRepeatEnum.ANNUALLY, ExceptionRepeatEnum.ONE_TIME]),
 });
 
 export const upsertBranchSchema = yup.object().shape({

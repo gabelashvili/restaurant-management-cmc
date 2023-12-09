@@ -83,7 +83,6 @@ const UpsertBranch = () => {
     },
     (err) => console.log(err),
   );
-  console.log(errors, 22);
 
   return (
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
