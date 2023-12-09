@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as yup from 'yup';
 
 const weekDaySchema = yup.object().shape({
@@ -5,16 +6,36 @@ const weekDaySchema = yup.object().shape({
   start: yup
     .string()
     .required()
+    .notOneOf(['Invalid date'])
     .when('enabled', {
       is: false,
       then: (schema) => schema.nullable(),
+    })
+    .test('dateValidation', 'Start date should be always lower than end date', function () {
+      const { start, end, enabled } = this.parent;
+      const startTime = moment(start, 'HH:mm');
+      const endTime = moment(end, 'HH:mm');
+      if (enabled && startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
+        return false;
+      }
+      return true;
     }),
   end: yup
     .string()
     .required()
+    .notOneOf(['Invalid date'])
     .when('enabled', {
       is: false,
       then: (schema) => schema.nullable(),
+    })
+    .test('dateValidation', 'End date should be always greater than start date', function () {
+      const { start, end, enabled } = this.parent;
+      const startTime = moment(start, 'HH:mm');
+      const endTime = moment(end, 'HH:mm');
+      if (enabled && startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
+        return false;
+      }
+      return true;
     }),
 });
 

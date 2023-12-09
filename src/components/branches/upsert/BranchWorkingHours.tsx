@@ -1,10 +1,14 @@
 import { Autocomplete, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TextField } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { TimeField } from '@mui/x-date-pickers/TimeField';
+import moment from 'moment';
 import { type UseFormClearErrors, type FieldErrors, type UseFormSetValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { type WorkingHourModel, type BranchModel, type BranchWorkingHoursModel } from '../../../@types/bracnh';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
-
 interface Props {
   values: BranchWorkingHoursModel;
   setValue: UseFormSetValue<BranchModel>;
@@ -45,27 +49,29 @@ const BranchWorkingHours = ({ values, setValue, errors, clearErrors }: Props) =>
                 />
               </TableCell>
               <TableCell align="left">{t(`week_days.${day}`)}</TableCell>
-              <TableCell align="left">
-                <Autocomplete
-                  value={values[day as keyof typeof values].start}
-                  size="small"
-                  options={[]}
-                  renderInput={(params) => <TextField {...params} error={!!errors?.[day as keyof typeof values]} />}
-                  onChange={() =>
-                    setValue(`workingHours.${day as keyof typeof values}.start`, null, { shouldValidate: true, shouldDirty: true })
-                  }
-                />
+              <TableCell align="center">
+                <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
+                  <TimeField
+                    disabled={!values[day as keyof typeof values].enabled}
+                    label={t('branch.upsert.start_hour')}
+                    onChange={(value: moment.Moment | null) => handleValueChange(day, 'start', value ? value.format('HH:mm') : null)}
+                    format="HH:mm"
+                    InputProps={{ error: !!errors?.[day as keyof typeof values]?.start }}
+                    InputLabelProps={{ error: !!errors?.[day as keyof typeof values]?.start }}
+                  />
+                </LocalizationProvider>
               </TableCell>
-              <TableCell align="left">
-                <Autocomplete
-                  value={values[day as keyof typeof values].end}
-                  size="small"
-                  options={[]}
-                  renderInput={(params) => <TextField {...params} error={!!errors?.[day as keyof typeof values]} />}
-                  onChange={() =>
-                    setValue(`workingHours.${day as keyof typeof values}.end`, null, { shouldValidate: true, shouldDirty: true })
-                  }
-                />
+              <TableCell align="center">
+                <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
+                  <TimeField
+                    disabled={!values[day as keyof typeof values].enabled}
+                    label={t('branch.upsert.end_hour')}
+                    onChange={(value: moment.Moment | null) => handleValueChange(day, 'end', value ? value.format('HH:mm') : null)}
+                    format="HH:mm"
+                    InputProps={{ error: !!errors?.[day as keyof typeof values]?.end }}
+                    InputLabelProps={{ error: !!errors?.[day as keyof typeof values]?.end }}
+                  />
+                </LocalizationProvider>
               </TableCell>
             </TableRow>
           ))}

@@ -57,8 +57,12 @@
     "api_errors": {
 
     },
-    "branches": {
-        "title": "ფილიალები"
+    "branch": {
+        "title": "ფილიალები",
+        "upsert": {
+            "start_hour":"დაწყების დროს",
+            "end_hour":"დასრულების დროს"
+        }
     },
     "week_days": {
         "monday": "ორშაბათი",
