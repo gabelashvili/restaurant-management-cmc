@@ -10,7 +10,8 @@
         "cancel":"გაუქმება",
         "address": "მისამართი",
         "name": "სახელი",
-        "phone_number": "ტელეფონის ნომერი"
+        "phone_number": "ტელეფონის ნომერი",
+        "remove": "წაშლა"
     },
     "routes": {
         "statistics": "სტატისტიკა",

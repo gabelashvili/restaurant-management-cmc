@@ -1,5 +1,5 @@
-import { AddCircleRounded } from '@mui/icons-material';
-import { Autocomplete, Box, Button, TextField } from '@mui/material';
+import { AddCircleRounded, Delete, Remove } from '@mui/icons-material';
+import { Autocomplete, Box, Button, Divider, IconButton, TextField } from '@mui/material';
 import { LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment, { Moment } from 'moment';
@@ -18,7 +18,7 @@ interface Props {
 
 const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
   const { t } = useTranslation();
-  const { fields, append, remove } = useFieldArray({
+  const { append, remove } = useFieldArray({
     control,
     name: 'exceptions',
   });
@@ -101,6 +101,10 @@ const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
                   />
                 )}
               />
+              <Button sx={{ ml: 'auto' }} startIcon={<Delete />} onClick={() => remove(i)}>
+                {t('common.remove')}
+              </Button>
+              <Divider />
             </Box>
           ))
         ) : (

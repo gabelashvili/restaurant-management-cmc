@@ -66,13 +66,7 @@ const initialState = {
 
 const UpsertBranch = () => {
   const { t } = useTranslation();
-  const {
-    handleSubmit,
-    getValues,
-    control,
-    trigger,
-    formState: { errors },
-  } = useForm<BranchModel>({
+  const { handleSubmit, getValues, control, trigger } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });

@@ -67,8 +67,6 @@ const exceptionSchema = yup.object().shape({
       const { start, end } = this.parent;
       const startTime = moment(start);
       const endTime = moment(end);
-      console.log(startTime.isValid());
-
       if (startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
         return false;
       }
