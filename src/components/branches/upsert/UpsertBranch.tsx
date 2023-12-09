@@ -68,8 +68,11 @@ const UpsertBranch = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
+    getValues,
     clearErrors,
+    register,
+    control,
+    trigger,
   } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver<BranchModel>(upsertBranchSchema),
@@ -81,9 +84,9 @@ const UpsertBranch = () => {
 
   return (
     <Container title="ფილიალის დამატება" centerTitle>
-      <BranchGeneralInfo values={watch('general')} setValue={setValue} errors={errors.general} />
+      <BranchGeneralInfo register={register} errors={errors.general} />
       <Divider sx={{ mt: 4, mb: 2 }} />
-      <BranchWorkingHours values={watch('workingHours')} setValue={setValue} errors={errors.workingHours} clearErrors={clearErrors} />
+      <BranchWorkingHours control={control} errors={errors.workingHours} trigger={trigger} getValues={getValues} />
       <Divider sx={{ mt: 4, mb: 2 }} />
       <Box>
         <Typography sx={{ fontSize: 16, fontWeight: 500 }}>გამონაკლისი დღეები</Typography>
