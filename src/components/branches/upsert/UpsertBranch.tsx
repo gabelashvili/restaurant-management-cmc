@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Box, Divider, TextField, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import BranchGeneralInfo from './BranchGeneralInfo';
@@ -67,9 +67,7 @@ const UpsertBranch = () => {
   const {
     handleSubmit,
     formState: { errors },
-    setValue,
     getValues,
-    clearErrors,
     register,
     control,
     trigger,
