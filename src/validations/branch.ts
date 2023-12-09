@@ -40,19 +40,25 @@ const weekDaySchema = yup.object().shape({
 });
 
 export const upsertBranchSchema = yup.object().shape({
-  id: yup.string().nullable(),
-  general: yup.object().shape({
-    name: yup.object().shape({
-      ge: yup.string().required(),
-      en: yup.string().required(),
-    }),
-    address: yup.object().shape({
-      ge: yup.string().required(),
-      en: yup.string().required(),
-    }),
-    email: yup.string().required(),
-    phone: yup.string().required(),
-  }),
+  id: yup.string().required().nullable(),
+  general: yup
+    .object()
+    .shape({
+      name: yup
+        .object()
+        .shape({
+          ge: yup.string().required(),
+          en: yup.string().required(),
+        })
+        .required(),
+      address: yup.object().shape({
+        ge: yup.string().required(),
+        en: yup.string().required(),
+      }),
+      email: yup.string().required(),
+      phone: yup.string().required(),
+    })
+    .required(),
   workingHours: yup.object().shape({
     monday: weekDaySchema,
     tuesday: weekDaySchema,
