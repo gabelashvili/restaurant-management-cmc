@@ -6,10 +6,11 @@ const weekDaySchema = yup.object().shape({
   start: yup
     .string()
     .required()
+    .nullable()
     .notOneOf(['Invalid date'])
     .when('enabled', {
-      is: false,
-      then: (schema) => schema.nullable(),
+      is: true,
+      then: () => yup.string().required(),
     })
     .test('dateValidation', 'Start date should be always lower than end date', function () {
       const { start, end, enabled } = this.parent;
@@ -23,10 +24,11 @@ const weekDaySchema = yup.object().shape({
   end: yup
     .string()
     .required()
+    .nullable()
     .notOneOf(['Invalid date'])
     .when('enabled', {
-      is: false,
-      then: (schema) => schema.nullable(),
+      is: true,
+      then: () => yup.string().required(),
     })
     .test('dateValidation', 'End date should be always greater than start date', function () {
       const { start, end, enabled } = this.parent;

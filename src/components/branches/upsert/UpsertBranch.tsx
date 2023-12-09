@@ -66,7 +66,7 @@ const initialState = {
 const UpsertBranch = () => {
   const { handleSubmit, getValues, control, trigger } = useForm<BranchModel>({
     defaultValues: { ...initialState },
-    resolver: yupResolver<BranchModel>(upsertBranchSchema),
+    resolver: yupResolver(upsertBranchSchema),
   });
 
   const onSubmit = handleSubmit(
