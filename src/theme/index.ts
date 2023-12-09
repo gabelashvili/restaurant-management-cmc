@@ -1,5 +1,6 @@
 import { createTheme, type Theme, type ThemeOptions } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 import { error, info, primary, secondary, success, warning, text } from './themeColors';
 

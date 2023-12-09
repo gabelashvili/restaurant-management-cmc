@@ -71,6 +71,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                       <TimeField
                         disabled={!getValues('workingHours')[day].enabled}
                         label={t('branch.upsert.start_hour')}
+                        required={getValues('workingHours')[day].enabled}
                         format="HH:mm"
                         InputProps={{ error: !!fieldState.error }}
                         InputLabelProps={{ error: !!fieldState.error }}
@@ -91,6 +92,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                       <TimeField
                         disabled={!getValues('workingHours')[day].enabled}
                         label={t('branch.upsert.end_hour')}
+                        required={getValues('workingHours')[day].enabled}
                         format="HH:mm"
                         InputProps={{ error: !!fieldState.error }}
                         InputLabelProps={{ error: !!fieldState.error }}

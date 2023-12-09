@@ -24,8 +24,9 @@ interface Props {
   value: MultiLangModel;
   error?: boolean;
   ref?: any;
+  required?: boolean;
 }
-const MultiLangTextField = forwardRef<Props, any>(({ label, fullWidth, variant, error, onChange, value }, ref) => {
+const MultiLangTextField = forwardRef<Props, any>(({ label, fullWidth, variant, error, onChange, value, required }, ref) => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedLang, setSelectedLang] = useState<Languages>(i18n.language as Languages);
@@ -42,6 +43,7 @@ const MultiLangTextField = forwardRef<Props, any>(({ label, fullWidth, variant, 
         label={label}
         error={error}
         value={value[selectedLang]}
+        required={required}
         InputProps={{
           sx: {
             pr: 0,

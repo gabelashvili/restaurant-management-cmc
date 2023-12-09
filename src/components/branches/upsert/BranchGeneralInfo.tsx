@@ -24,6 +24,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
             variant="filled"
             fullWidth
             label={t('common.name')}
+            required
             onChange={params.field.onChange}
             value={params.field.value}
             error={!!params.fieldState.error}
@@ -39,6 +40,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
             variant="filled"
             fullWidth
             label={t('common.address')}
+            required
             onChange={params.field.onChange}
             value={params.field.value}
             error={!!params.fieldState.error}
@@ -55,6 +57,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
             fullWidth
             label={t('common.phone_number')}
             error={!!params.fieldState.error}
+            required
             inputProps={{ ...params.field }}
           />
         )}
@@ -67,6 +70,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
             variant="filled"
             fullWidth
             label={t('common.email')}
+            required
             error={!!params.fieldState.error}
             inputProps={{ ...params.field }}
           />

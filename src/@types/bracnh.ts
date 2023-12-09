@@ -1,20 +1,21 @@
 import { type MultiLangModel } from './common';
 
 export interface WorkingHourModel {
+  id?: string;
   enabled: boolean;
   start: string | null;
   end: string | null;
 }
 
-enum RepeatExceptions {
-  onetime,
-  annually,
+export enum ExceptionRepeatEnum {
+  ANNUALLY = 'annually',
+  ONE_TIME = 'one_time',
 }
-
 export interface ExceptionDateModel {
+  id?: string;
   start: string;
   end: string;
-  repeat: RepeatExceptions;
+  repeat: ExceptionRepeatEnum;
 }
 
 export interface BranchWorkingHoursModel {

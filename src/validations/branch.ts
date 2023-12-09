@@ -2,6 +2,7 @@ import moment from 'moment';
 import * as yup from 'yup';
 
 const weekDaySchema = yup.object().shape({
+  id: yup.string(),
   enabled: yup.boolean().required(),
   start: yup
     .string()
