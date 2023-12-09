@@ -13,18 +13,20 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import { type MultiLangModel } from '../../@types/common';
 import { languages } from '../../utils/utils';
 
 interface Props {
   label?: string;
-  onChange: (lang: string, value: string) => void;
+  onChange: (lang: 'en' | 'ge', value: string) => void;
   fullWidth?: boolean;
   variant?: TextFieldVariants;
+  value: MultiLangModel;
 }
 const MultiLangTextField = ({ onChange, label, fullWidth, variant }: Props) => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedLang, setSelectedLang] = useState(i18n.language);
+  const [selectedLang, setSelectedLang] = useState<'en' | 'ge'>(i18n.language as 'en' | 'ge');
 
   return (
     <TextField

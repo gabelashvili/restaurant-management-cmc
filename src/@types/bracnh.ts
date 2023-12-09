@@ -27,14 +27,16 @@ export interface BranchWorkingHoursModel {
   sunday: WorkingHourModel;
 }
 
+export interface BranchGeneralInfoModel {
+  name: MultiLangModel;
+  address: MultiLangModel;
+  phone: string;
+  email: string;
+}
+
 export interface BranchModel {
-  general: {
-    id: string | null;
-    name: MultiLangModel;
-    address: MultiLangModel;
-    phone: string;
-    email: string;
-  };
+  id: string | null;
+  general: BranchGeneralInfoModel;
   workingHours: BranchWorkingHoursModel;
   // exceptions: ExceptionDateModel[];
 }

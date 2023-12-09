@@ -27,12 +27,12 @@ export const generateAvatarImage = (file?: File | null, url?: string | null) => 
 export const languages = [
   {
     label: 'ქართული',
-    key: 'ge',
+    key: 'ge' as const,
     icon: getUnicodeFlagIcon('GEO'),
   },
   {
     label: 'English',
-    key: 'en',
+    key: 'en' as const,
     icon: getUnicodeFlagIcon('GB'),
   },
 ];

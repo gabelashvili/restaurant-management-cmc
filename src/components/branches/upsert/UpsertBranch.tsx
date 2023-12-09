@@ -11,16 +11,18 @@ import Container from '../../shared/Container';
 
 const initialState = {
   id: null,
-  name: {
-    ge: '',
-    en: '',
+  general: {
+    name: {
+      ge: '',
+      en: '',
+    },
+    address: {
+      ge: '',
+      en: '',
+    },
+    email: '',
+    phone: '',
   },
-  address: {
-    ge: '',
-    en: '',
-  },
-  email: '',
-  phone: '',
   workingHours: {
     monday: {
       enabled: true,
@@ -79,7 +81,7 @@ const UpsertBranch = () => {
 
   return (
     <Container title="ფილიალის დამატება" centerTitle>
-      <BranchGeneralInfo />
+      <BranchGeneralInfo values={watch('general')} setValue={setValue} errors={errors.general} />
       <Divider sx={{ mt: 4, mb: 2 }} />
       <BranchWorkingHours values={watch('workingHours')} setValue={setValue} errors={errors.workingHours} clearErrors={clearErrors} />
       <Divider sx={{ mt: 4, mb: 2 }} />
