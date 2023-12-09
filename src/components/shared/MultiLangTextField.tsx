@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import {
   Box,
@@ -30,6 +30,9 @@ const MultiLangTextField = forwardRef<Props, any>(({ label, fullWidth, variant, 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedLang, setSelectedLang] = useState<Languages>(i18n.language as Languages);
 
+  useEffect(() => {
+    setSelectedLang(i18n.language as Languages);
+  }, [i18n.language]);
   // Temp sol
   return (
     <>

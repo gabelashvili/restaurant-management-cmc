@@ -18,14 +18,14 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
 
   return (
     <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
-      <UpsertSectionWrapper title="სამუშაო საათები">
+      <UpsertSectionWrapper title={t('branch.upsert.working_hours')}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow sx={(theme) => ({ '& th': { borderBottom: `1px solid ${theme.palette.divider}` } })}>
               <TableCell width={'10%'}></TableCell>
-              <TableCell align="left">კვირის დღე</TableCell>
-              <TableCell align="center">დაწყება</TableCell>
-              <TableCell align="center">დასრულება</TableCell>
+              <TableCell align="left">{t('week_days.title')}</TableCell>
+              <TableCell align="center">{t('branch.upsert.start')}</TableCell>
+              <TableCell align="center">{t('branch.upsert.end')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody sx={(theme) => ({ '& td': { borderBottom: `1px solid ${theme.palette.divider}` } })}>

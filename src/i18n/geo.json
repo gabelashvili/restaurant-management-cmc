@@ -7,7 +7,10 @@
         "firstName": "სახელი",
         "lastName": "გვარი",
         "save": "შენახვა",
-        "cancel":"გაუქმება"
+        "cancel":"გაუქმება",
+        "address": "მისამართი",
+        "name": "სახელი",
+        "phone_number": "ტელეფონის ნომერი"
     },
     "routes": {
         "statistics": "სტატისტიკა",
@@ -59,12 +62,20 @@
     },
     "branch": {
         "title": "ფილიალები",
+        "add": "ფილიალის დამატება",
         "upsert": {
+            "general_info": "ზოგადი ინფორმაცია",
+            "working_hours": "სამუშაო საათები",
+            "exception_days": "გამონაკლისი დღეები",
             "start_hour":"დაწყების დროს",
-            "end_hour":"დასრულების დროს"
+            "end_hour":"დასრულების დროს",
+            "managers": "მენეჯერი(ები)",
+            "start": "დაწყება",
+            "end": "დასრულება"
         }
     },
     "week_days": {
+        "title": "კვირის დღეები",
         "monday": "ორშაბათი",
         "tuesday": "სამშაბათი",
         "wednesday": "ოთხშაბათი",
@@ -72,5 +83,7 @@
         "friday": "პარასკევი",
         "saturday": "შაბათი",
         "sunday": "კვირა"
+    },
+    "manager": {
     }
 }

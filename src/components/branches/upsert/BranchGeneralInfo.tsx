@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Autocomplete, TextField } from '@mui/material';
 import { Controller, type Control } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { type BranchModel } from '../../../@types/bracnh';
 import MultiLangTextField from '../../shared/MultiLangTextField';
@@ -12,8 +13,9 @@ interface Props {
 }
 
 const BranchGeneralInfo = ({ control }: Props) => {
+  const { t } = useTranslation();
   return (
-    <UpsertSectionWrapper title="ზოგადი ინფორმაცია">
+    <UpsertSectionWrapper title={t('branch.upsert.general_info')}>
       <Controller
         control={control}
         name={`general.name`}
@@ -21,7 +23,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
           <MultiLangTextField
             variant="filled"
             fullWidth
-            label="სახელი"
+            label={t('common.name')}
             onChange={params.field.onChange}
             value={params.field.value}
             error={!!params.fieldState.error}
@@ -36,7 +38,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
           <MultiLangTextField
             variant="filled"
             fullWidth
-            label="მისამართი"
+            label={t('common.address')}
             onChange={params.field.onChange}
             value={params.field.value}
             error={!!params.fieldState.error}
@@ -51,7 +53,7 @@ const BranchGeneralInfo = ({ control }: Props) => {
           <TextField
             variant="filled"
             fullWidth
-            label="ტელეფონის ნომერი"
+            label={t('common.phone_number')}
             error={!!params.fieldState.error}
             inputProps={{ ...params.field }}
           />
@@ -61,14 +63,20 @@ const BranchGeneralInfo = ({ control }: Props) => {
         control={control}
         name={`general.email`}
         render={(params) => (
-          <TextField variant="filled" fullWidth label="ელ.ფოსტა" error={!!params.fieldState.error} inputProps={{ ...params.field }} />
+          <TextField
+            variant="filled"
+            fullWidth
+            label={t('common.email')}
+            error={!!params.fieldState.error}
+            inputProps={{ ...params.field }}
+          />
         )}
       />
       <Autocomplete
         fullWidth
         disablePortal
         options={[]}
-        renderInput={(params) => <TextField {...params} variant="filled" label="მენეჯერი(ები)" />}
+        renderInput={(params) => <TextField {...params} variant="filled" label={t('branch.upsert.managers')} />}
       />
     </UpsertSectionWrapper>
   );

@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, Divider, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
@@ -64,6 +65,7 @@ const initialState = {
 };
 
 const UpsertBranch = () => {
+  const { t } = useTranslation();
   const { handleSubmit, getValues, control, trigger } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
@@ -77,7 +79,7 @@ const UpsertBranch = () => {
   );
 
   return (
-    <Container title="ფილიალის დამატება" centerTitle>
+    <Container title={t('branch.add')} centerTitle>
       <BranchGeneralInfo control={control} />
       <Divider sx={{ mt: 4, mb: 2 }} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} />
