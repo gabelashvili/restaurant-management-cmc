@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Autocomplete, TextField } from '@mui/material';
-import i18next from 'i18next';
 import { type FieldErrors, type UseFormSetValue, type FieldPath } from 'react-hook-form';
 
 import { type BranchGeneralInfoModel, type BranchModel } from '../../../@types/bracnh';
@@ -16,6 +15,8 @@ interface Props {
 
 const BranchGeneralInfo = ({ values, setValue, errors }: Props) => {
   const handleValueChange = (field: FieldPath<BranchGeneralInfoModel>, value: any) => {
+    console.log(field, value);
+
     setValue(`general.${field}`, value, {
       shouldValidate: true,
       shouldDirty: true,
@@ -30,6 +31,7 @@ const BranchGeneralInfo = ({ values, setValue, errors }: Props) => {
         fullWidth
         onChange={(lang, value) => handleValueChange(`name.${lang}`, value)}
         label="სახელი"
+        error={!!errors?.name}
       />
       <MultiLangTextField
         value={values.address}
@@ -37,12 +39,18 @@ const BranchGeneralInfo = ({ values, setValue, errors }: Props) => {
         fullWidth
         onChange={(lang, value) => handleValueChange(`address.${lang}`, value)}
         label="მისამართი"
+        error={!!errors?.name}
       />
       <TextField
-        value={values.phone}
+        // value={values.phone}
         variant="filled"
         fullWidth
-        onChange={(value) => handleValueChange(`phone`, value)}
+        onChange={(e) =>
+          setValue(`general.phone`, e.target.value, {
+            shouldValidate: true,
+            shouldDirty: true,
+          })
+        }
         label="ტელეფონის ნომერი"
       />
       <TextField value={values.email} variant="filled" fullWidth onChange={(value) => handleValueChange(`email`, value)} label="ელ.ფოსტა" />

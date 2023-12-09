@@ -13,27 +13,30 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { type MultiLangModel } from '../../@types/common';
+import { type Languages, type MultiLangModel } from '../../@types/common';
 import { languages } from '../../utils/utils';
 
 interface Props {
   label?: string;
-  onChange: (lang: 'en' | 'ge', value: string) => void;
+  onChange: (lang: Languages, value: string) => void;
   fullWidth?: boolean;
   variant?: TextFieldVariants;
   value: MultiLangModel;
+  error?: boolean;
 }
-const MultiLangTextField = ({ onChange, label, fullWidth, variant }: Props) => {
+const MultiLangTextField = ({ onChange, label, fullWidth, variant, error, value }: Props) => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedLang, setSelectedLang] = useState<'en' | 'ge'>(i18n.language as 'en' | 'ge');
+  const [selectedLang, setSelectedLang] = useState<Languages>(i18n.language as Languages);
 
   return (
     <TextField
       variant={variant}
       fullWidth={fullWidth}
       label={label}
-      onChange={(e) => onChange(languages.length === 1 ? languages[0].key : selectedLang, e.target.value)}
+      error={error}
+      // value={value[selectedLang]}
+      onChange={(e) => onChange(selectedLang, e.target.value)}
       InputProps={{
         sx: {
           pr: 0,
