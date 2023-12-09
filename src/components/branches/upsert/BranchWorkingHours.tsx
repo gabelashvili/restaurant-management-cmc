@@ -78,6 +78,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                           field.onChange(value ? value.format('HH:mm') : null);
                           trigger(`workingHours.${day}.end`);
                         }}
+                        inputRef={field.ref}
                       />
                     )}
                   />
@@ -97,6 +98,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                           field.onChange(value ? value.format('HH:mm') : null);
                           trigger(`workingHours.${day}.start`);
                         }}
+                        inputRef={field.ref}
                       />
                     )}
                   />
