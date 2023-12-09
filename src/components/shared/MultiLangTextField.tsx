@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import {
   Box,
@@ -25,7 +25,7 @@ interface Props {
   error?: boolean;
   ref?: any;
 }
-const MultiLangTextField = ({ label, fullWidth, variant, error, onChange, value, ref }: Props) => {
+const MultiLangTextField = forwardRef<Props, any>(({ label, fullWidth, variant, error, onChange, value }, ref) => {
   const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedLang, setSelectedLang] = useState<Languages>(i18n.language as Languages);
@@ -73,6 +73,6 @@ const MultiLangTextField = ({ label, fullWidth, variant, error, onChange, value,
       />
     </>
   );
-};
+});
 
 export default MultiLangTextField;

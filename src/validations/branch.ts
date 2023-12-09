@@ -40,7 +40,7 @@ const weekDaySchema = yup.object().shape({
 });
 
 export const upsertBranchSchema = yup.object().shape({
-  id: yup.string().nullable().required(),
+  id: yup.string().nullable(),
   general: yup.object().shape({
     name: yup.object().shape({
       ge: yup.string().required(),

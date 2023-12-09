@@ -76,9 +76,12 @@ const UpsertBranch = () => {
     resolver: yupResolver<BranchModel>(upsertBranchSchema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
+  const onSubmit = handleSubmit(
+    (data) => {
+      console.log(data);
+    },
+    (err) => console.log(err),
+  );
 
   return (
     <Container title="ფილიალის დამატება" centerTitle>

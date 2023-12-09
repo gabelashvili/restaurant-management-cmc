@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { PartyModeSharp } from '@mui/icons-material';
 import { Autocomplete, TextField } from '@mui/material';
 import { Controller, type Control, type FieldErrors, type UseFormRegister } from 'react-hook-form';
 
@@ -16,7 +17,7 @@ interface Props {
 const BranchGeneralInfo = ({ errors, register, control }: Props) => {
   return (
     <UpsertSectionWrapper title="ზოგადი ინფორმაცია">
-      {/* <Controller
+      <Controller
         control={control}
         name={`general.name`}
         render={(params) => (
@@ -30,9 +31,22 @@ const BranchGeneralInfo = ({ errors, register, control }: Props) => {
             ref={params.field.ref}
           />
         )}
-      /> */}
-      {/* <MultiLangTextField variant="filled" fullWidth label="სახელი" error={!!errors?.name} name="general.name" register={register} /> */}
-      {/* <MultiLangTextField variant="filled" fullWidth label="მისამართი" error={!!errors?.name} name="general.address" register={register} /> */}
+      />
+      <Controller
+        control={control}
+        name={`general.address`}
+        render={(params) => (
+          <MultiLangTextField
+            variant="filled"
+            fullWidth
+            label="მისამართი"
+            onChange={params.field.onChange}
+            value={params.field.value}
+            error={!!params.fieldState.error}
+            ref={params.field.ref}
+          />
+        )}
+      />
       <Controller
         control={control}
         name={`general.phone`}
@@ -41,16 +55,17 @@ const BranchGeneralInfo = ({ errors, register, control }: Props) => {
             variant="filled"
             fullWidth
             label="ტელეფონის ნომერი"
-            {...params.field}
             error={!!params.fieldState.error}
-            inputRef={params.field.ref}
+            inputProps={{ ...params.field }}
           />
         )}
       />
       <Controller
         control={control}
         name={`general.email`}
-        render={(params) => <TextField variant="filled" fullWidth label="ელ.ფოსტა" {...params.field} error={!!params.fieldState.error} />}
+        render={(params) => (
+          <TextField variant="filled" fullWidth label="ელ.ფოსტა" error={!!params.fieldState.error} inputProps={{ ...params.field }} />
+        )}
       />
       <Autocomplete
         fullWidth
