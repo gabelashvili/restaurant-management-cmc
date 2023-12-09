@@ -42,6 +42,37 @@ const weekDaySchema = yup.object().shape({
     }),
 });
 
+const exceptionSchema = yup.object().shape({
+  id: yup.string().required(),
+  start: yup
+    .string()
+    .required()
+    .notOneOf(['Invalid date'])
+    .test('dateValidation', 'Start date should be always lower than end date', function () {
+      const { start, end, enabled } = this.parent;
+      const startTime = moment(start);
+      const endTime = moment(end);
+      if (enabled && startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
+        return false;
+      }
+      return true;
+    }),
+  end: yup
+    .string()
+    .required()
+    .notOneOf(['Invalid date'])
+    .test('dateValidation', 'End date should be always greater than start date', function () {
+      const { start, end, enabled } = this.parent;
+      const startTime = moment(start);
+      const endTime = moment(end);
+      if (enabled && startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
+        return false;
+      }
+      return true;
+    }),
+  repeat: yup.string().required(),
+});
+
 export const upsertBranchSchema = yup.object().shape({
   id: yup.string().required().nullable(),
   general: yup
@@ -71,5 +102,5 @@ export const upsertBranchSchema = yup.object().shape({
     saturday: weekDaySchema,
     sunday: weekDaySchema,
   }),
-  //   exceptions: yup.array(),
+  exceptions: yup.array().of(exceptionSchema).required(),
 });

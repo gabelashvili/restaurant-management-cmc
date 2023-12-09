@@ -12,7 +12,7 @@ export enum ExceptionRepeatEnum {
   ONE_TIME = 'one_time',
 }
 export interface ExceptionDateModel {
-  id?: string;
+  id: string;
   start: string;
   end: string;
   repeat: ExceptionRepeatEnum;
@@ -39,5 +39,5 @@ export interface BranchModel {
   id: string | null;
   general: BranchGeneralInfoModel;
   workingHours: BranchWorkingHoursModel;
-  // exceptions: ExceptionDateModel[];
+  exceptions: ExceptionDateModel[];
 }

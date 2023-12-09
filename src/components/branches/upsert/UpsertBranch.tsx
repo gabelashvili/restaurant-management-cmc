@@ -61,12 +61,18 @@ const initialState = {
       end: null,
     },
   },
-  // exceptions: [],
+  exceptions: [],
 };
 
 const UpsertBranch = () => {
   const { t } = useTranslation();
-  const { handleSubmit, getValues, control, trigger } = useForm<BranchModel>({
+  const {
+    handleSubmit,
+    getValues,
+    control,
+    trigger,
+    formState: { errors },
+  } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
@@ -77,12 +83,13 @@ const UpsertBranch = () => {
     },
     (err) => console.log(err),
   );
+  console.log(errors, 22);
 
   return (
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <BranchGeneralInfo control={control} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} />
-      <BranchExceptionDates control={control} trigger={trigger} />
+      <BranchExceptionDates control={control} trigger={trigger} getValues={getValues} />
       <LoadingButton variant="contained" sx={{ ml: 'left', display: 'flex' }} onClick={onSubmit}>
         damateba
       </LoadingButton>
