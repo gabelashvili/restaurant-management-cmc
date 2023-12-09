@@ -3,18 +3,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import moment from 'moment';
-import { type FieldErrors, type Control, Controller, type UseFormTrigger, type UseFormGetValues } from 'react-hook-form';
+import { type Control, Controller, type UseFormTrigger, type UseFormGetValues } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type BranchModel, type BranchWorkingHoursModel } from '../../../@types/bracnh';
+import { type BranchModel } from '../../../@types/bracnh';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 interface Props {
   control: Control<BranchModel, any>;
-  errors?: FieldErrors<BranchWorkingHoursModel>;
   trigger: UseFormTrigger<BranchModel>;
   getValues: UseFormGetValues<BranchModel>;
 }
-const BranchWorkingHours = ({ control, errors, trigger, getValues }: Props) => {
+const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -61,13 +60,13 @@ const BranchWorkingHours = ({ control, errors, trigger, getValues }: Props) => {
                   <Controller
                     control={control}
                     name={`workingHours.${day}.start`}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
                       <TimeField
                         disabled={!getValues('workingHours')[day].enabled}
                         label={t('branch.upsert.start_hour')}
                         format="HH:mm"
-                        InputProps={{ error: !!errors?.[day]?.start }}
-                        InputLabelProps={{ error: !!errors?.[day]?.start }}
+                        InputProps={{ error: !!fieldState.error }}
+                        InputLabelProps={{ error: !!fieldState.error }}
                         onChange={(value: moment.Moment | null) => {
                           field.onChange(value ? value.format('HH:mm') : null);
                           trigger(`workingHours.${day}.end`);
@@ -80,13 +79,13 @@ const BranchWorkingHours = ({ control, errors, trigger, getValues }: Props) => {
                   <Controller
                     control={control}
                     name={`workingHours.${day}.end`}
-                    render={({ field }) => (
+                    render={({ field, fieldState }) => (
                       <TimeField
                         disabled={!getValues('workingHours')[day].enabled}
                         label={t('branch.upsert.end_hour')}
                         format="HH:mm"
-                        InputProps={{ error: !!errors?.[day]?.end }}
-                        InputLabelProps={{ error: !!errors?.[day]?.end }}
+                        InputProps={{ error: !!fieldState.error }}
+                        InputLabelProps={{ error: !!fieldState.error }}
                         onChange={(value: moment.Moment | null) => {
                           field.onChange(value ? value.format('HH:mm') : null);
                           trigger(`workingHours.${day}.start`);

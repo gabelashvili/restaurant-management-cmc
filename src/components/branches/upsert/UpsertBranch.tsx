@@ -82,9 +82,9 @@ const UpsertBranch = () => {
 
   return (
     <Container title="ფილიალის დამატება" centerTitle>
-      <BranchGeneralInfo register={register} errors={errors.general} />
+      <BranchGeneralInfo register={register} errors={errors.general} control={control} />
       <Divider sx={{ mt: 4, mb: 2 }} />
-      <BranchWorkingHours control={control} errors={errors.workingHours} trigger={trigger} getValues={getValues} />
+      <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} />
       <Divider sx={{ mt: 4, mb: 2 }} />
       <Box>
         <Typography sx={{ fontSize: 16, fontWeight: 500 }}>გამონაკლისი დღეები</Typography>
