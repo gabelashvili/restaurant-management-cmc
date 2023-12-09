@@ -1,4 +1,5 @@
 import { createTheme, type Theme, type ThemeOptions } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 import { error, info, primary, secondary, success, warning } from './themeColors';
 
@@ -190,6 +191,13 @@ const baseOptions: ThemeOptions = {
           boxShadow: 'none',
           border: '1px solid #E5EAF2',
           borderRadius: 8,
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        colorPrimary: {
+          color: grey[600],
         },
       },
     },

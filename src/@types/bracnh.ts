@@ -1,8 +1,9 @@
 import { type MultiLangModel } from './common';
 
 export interface WorkingHourModel {
-  start: string;
-  end: string;
+  enabled: boolean;
+  start: string | null;
+  end: string | null;
 }
 
 enum RepeatExceptions {
@@ -16,21 +17,24 @@ export interface ExceptionDateModel {
   repeat: RepeatExceptions;
 }
 
+export interface BranchWorkingHoursModel {
+  monday: WorkingHourModel;
+  tuesday: WorkingHourModel;
+  wednesday: WorkingHourModel;
+  thursday: WorkingHourModel;
+  friday: WorkingHourModel;
+  saturday: WorkingHourModel;
+  sunday: WorkingHourModel;
+}
+
 export interface BranchModel {
-  id: string;
-  name: MultiLangModel;
-  address: MultiLangModel;
-  phone: string;
-  email: string;
-  managers: any[];
-  workingHours: {
-    monday: WorkingHourModel;
-    tuesday: WorkingHourModel;
-    wednesday: WorkingHourModel;
-    thursday: WorkingHourModel;
-    friday: WorkingHourModel;
-    saturday: WorkingHourModel;
-    sunday: WorkingHourModel;
+  general: {
+    id: string | null;
+    name: MultiLangModel;
+    address: MultiLangModel;
+    phone: string;
+    email: string;
   };
-  exceptions: ExceptionDateModel[];
+  workingHours: BranchWorkingHoursModel;
+  // exceptions: ExceptionDateModel[];
 }

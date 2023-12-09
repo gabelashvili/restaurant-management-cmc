@@ -5,7 +5,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import MultiLangTextField from '../../shared/MultiLangTextField';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 
-const BranchBaseInfo = () => {
+const BranchGeneralInfo = () => {
   return (
     <UpsertSectionWrapper title="ზოგადი ინფორმაცია">
       <MultiLangTextField variant="filled" fullWidth onChange={(lang, value) => console.log(lang, value)} label="სახელი" />
@@ -22,4 +22,4 @@ const BranchBaseInfo = () => {
   );
 };
 
-export default BranchBaseInfo;
+export default BranchGeneralInfo;

@@ -59,5 +59,14 @@
     },
     "branches": {
         "title": "ფილიალები"
+    },
+    "week_days": {
+        "monday": "ორშაბათი",
+        "tuesday": "სამშაბათი",
+        "wednesday": "ოთხშაბათი",
+        "thursday": "ხუთშაბათი",
+        "friday": "პარასკევი",
+        "saturday": "შაბათი",
+        "sunday": "კვირა"
     }
 }

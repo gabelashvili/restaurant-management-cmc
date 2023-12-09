@@ -4,14 +4,15 @@ import { Paper, Table, TableBody, TableContainer, TableHead, TablePagination, Ta
 import Scrollbars from 'react-custom-scrollbars';
 
 interface CustomTableProps {
-  header: () => ReactElement;
+  header?: () => ReactElement;
   renderTableHeader: () => ReactElement | ReactElement[];
   renderTableBody: () => ReactElement | ReactElement[];
+  paginationOpts?: any;
 }
-const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader }) => {
+const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts }) => {
   return (
     <TableContainer component={Paper} sx={{ display: 'grid' }}>
-      {header()}
+      {header && header()}
       <Scrollbars autoHeight autoHeightMax={'100%'}>
         <Table>
           <TableHead>
@@ -20,15 +21,17 @@ const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTabl
           <TableBody>{renderTableBody()}</TableBody>
         </Table>
       </Scrollbars>
-      <TablePagination
-        sx={{ m: 3, display: 'flex', justifyContent: 'flex-end' }}
-        count={250}
-        rowsPerPage={10}
-        page={2}
-        component={'div'}
-        onChange={() => {}}
-        onPageChange={() => {}}
-      />
+      {paginationOpts && (
+        <TablePagination
+          sx={{ m: 3, display: 'flex', justifyContent: 'flex-end' }}
+          count={250}
+          rowsPerPage={10}
+          page={2}
+          component={'div'}
+          onChange={() => {}}
+          onPageChange={() => {}}
+        />
+      )}
     </TableContainer>
   );
 };
