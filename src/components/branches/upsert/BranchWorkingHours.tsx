@@ -56,7 +56,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                         checked={field.value}
                         onChange={(e) => {
                           field.onChange(e.target.checked);
-                          trigger(`workingHours.${day}`);
+                          // trigger(`workingHours.${day}`);
                         }}
                       />
                     )}
@@ -80,7 +80,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                             InputLabelProps={{ error: !!fieldState.error }}
                             onChange={(value: moment.Moment | null) => {
                               field.onChange(value ? value.format('HH:mm') : null);
-                              trigger(`workingHours.${day}.data.${workingHourI}.end`);
+                              // trigger(`workingHours.${day}.data.${workingHourI}.end`);
                             }}
                             inputRef={field.ref}
                           />
@@ -106,9 +106,11 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                             InputLabelProps={{ error: !!fieldState.error }}
                             onChange={(value: moment.Moment | null) => {
                               field.onChange(value ? value.format('HH:mm') : null);
-                              trigger(`workingHours.${day}.data.${workingHourI}.start`);
+                              // trigger(`workingHours.${day}.data.${workingHourI}.start`);
+                              // trigger(`workingHours.${day}.data.${workingHourI}.end`);
                             }}
                             inputRef={field.ref}
+                            name={field.name}
                           />
                         )}
                       />

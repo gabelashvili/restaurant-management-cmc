@@ -136,8 +136,6 @@ const UpsertBranch = () => {
     (err) => console.log(err),
   );
 
-  console.log(getValues());
-
   return (
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <BranchGeneralInfo control={control} />
