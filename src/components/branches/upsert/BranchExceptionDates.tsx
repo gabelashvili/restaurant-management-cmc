@@ -3,7 +3,7 @@ import { Autocomplete, Box, Button, Divider, TextField } from '@mui/material';
 import { LocalizationProvider, MobileDateTimePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment';
-import { type Control, type UseFormTrigger, type UseFormGetValues, useFieldArray, Controller } from 'react-hook-form';
+import { type Control, type UseFormTrigger, useFieldArray, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
