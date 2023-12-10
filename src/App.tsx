@@ -1,4 +1,5 @@
 import { Box, CircularProgress, CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
+import moment from 'moment';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import './i18n/config';
@@ -89,6 +90,12 @@ const authRoutes = createBrowserRouter([
 
 function App() {
   const { state } = useAuth();
+
+  const lng = localStorage.getItem('i18nextLng');
+
+  if (lng) {
+    moment.locale(lng);
+  }
 
   return (
     <StyledEngineProvider injectFirst>

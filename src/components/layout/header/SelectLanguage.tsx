@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Box, IconButton, ListItemButton, ListItemIcon, ListItemText, Menu } from '@mui/material';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 import { type Languages } from '../../../@types/common';
@@ -23,6 +24,7 @@ const SelectLanguage = () => {
             key={el.key}
             onClick={() => {
               i18n.changeLanguage(el.key);
+              moment.locale(el.key);
               setAnchorEl(null);
             }}
           >

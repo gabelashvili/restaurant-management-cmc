@@ -14,4 +14,4 @@ export interface MultiLangModel {
   en: string;
 }
 
-export type Languages = 'ge' | 'en';
+export type Languages = 'ka' | 'en';

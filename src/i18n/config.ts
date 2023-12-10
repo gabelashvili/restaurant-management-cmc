@@ -1,34 +1,23 @@
-import i18next from 'i18next';
+import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
-import enJSON from './en.json';
-import geJSON from './geo.json';
+// don't want to use this?
+// have a look at the Quick start guide
+// for passing in lng and translations on init
+const languages = ['en', 'ka'];
 
-export const defaultNS = 'geJSON';
-
-// Temp solution
-if (localStorage.getItem('i18nextLng') === null) {
-  localStorage.setItem('i18nextLng', 'ge');
-}
-
-i18next
+i18n
+  .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources: {
-      en: {
-        enJSON,
-      },
-      ge: {
-        geJSON,
-      },
+    debug: false,
+    supportedLngs: languages,
+    interpolation: {
+      escapeValue: false, // not needed for react as it escapes by default
     },
-    defaultNS,
-  })
-  .then(() => {
-    console.log('localization successfully initialized...');
-  })
-  .catch(() => {
-    console.log('localization initialized failed...');
   });
+
+export default i18n;

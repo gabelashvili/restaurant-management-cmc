@@ -27,7 +27,7 @@ export const generateAvatarImage = (file?: File | null, url?: string | null) => 
 export const languages = [
   {
     label: 'ქართული',
-    key: 'ge' as const,
+    key: 'ka' as const,
     icon: getUnicodeFlagIcon('GEO'),
   },
   {
