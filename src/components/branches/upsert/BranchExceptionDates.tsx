@@ -23,7 +23,7 @@ const BranchExceptionDates = ({ control, trigger }: Props) => {
   });
 
   const handleExceptionAdd = () => {
-    append({ start: '', end: '', repeat: ExceptionRepeatEnum.ONE_TIME, id: uuidv4() });
+    append({ start: '', end: '', repeat: ExceptionRepeatEnum.ONE_TIME, _id: uuidv4() });
   };
 
   return (

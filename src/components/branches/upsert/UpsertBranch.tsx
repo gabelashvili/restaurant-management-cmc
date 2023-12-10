@@ -26,77 +26,77 @@ const initialState = {
   },
   workingHours: {
     monday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },
       ],
     },
     tuesday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },
       ],
     },
     wednesday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },
       ],
     },
     thursday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },
       ],
     },
     friday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },
       ],
     },
     saturday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },
       ],
     },
     sunday: {
-      id: uuidv4(),
+      _id: uuidv4(),
       enabled: true,
       data: [
         {
-          id: uuidv4(),
+          _id: uuidv4(),
           start: null,
           end: null,
         },

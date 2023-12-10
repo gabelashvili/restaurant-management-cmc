@@ -37,7 +37,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
   const removeItem = (id: string, day: keyof BranchWorkingHoursModel) => {
     setValue(
       `workingHours.${day}.data`,
-      getValues('workingHours')[day].data.filter((el) => el.id !== id),
+      getValues('workingHours')[day].data.filter((el) => el._id !== id),
       { shouldDirty: true },
     );
   };
@@ -46,7 +46,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
     const data = [...getValues(`workingHours.${day}.data`)];
 
     data.splice(index + 1, 0, {
-      id: uuid4(),
+      _id: uuid4(),
       end: null,
       start: null,
     });
@@ -108,7 +108,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
                     {getValues('workingHours')[day].data.map((workingHour, workingHourI) => (
                       <Controller
                         control={control}
-                        key={`${workingHour.id} - start`}
+                        key={`${workingHour._id} - start`}
                         name={`workingHours.${day}.data.${workingHourI}.start`}
                         render={({ field, fieldState }) => (
                           <TimeField
@@ -142,7 +142,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
                           justifyContent: 'center',
                           position: 'relative',
                         }}
-                        key={`${workingHour.id} - end`}
+                        key={`${workingHour._id} - end`}
                       >
                         <Controller
                           control={control}
@@ -168,15 +168,15 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
 
                         <IconButton
                           sx={{ position: 'absolute', right: 0, transform: 'translate(120%, -50%)', top: '50%' }}
-                          onClick={(e) => handleOpen(e, workingHour.id)}
+                          onClick={(e) => handleOpen(e, workingHour._id)}
                         >
                           <MoreVert />
                         </IconButton>
-                        <Menu anchorEl={anchorEl} open={!!anchorEl && openItemId === workingHour.id} onClose={handleMenuClose}>
+                        <Menu anchorEl={anchorEl} open={!!anchorEl && openItemId === workingHour._id} onClose={handleMenuClose}>
                           <MenuItem
                             sx={{ color: 'error.main' }}
                             onClick={() => {
-                              removeItem(workingHour.id, day);
+                              removeItem(workingHour._id, day);
                               handleMenuClose();
                             }}
                           >
