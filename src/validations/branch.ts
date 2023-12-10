@@ -14,28 +14,35 @@ const optionalDateSchema = yup.array().of(
 const requiredDateSchema = yup.array().of(
   yup.object().shape({
     id: yup.string().required(),
-    start: yup.string().nullable().required().notOneOf(['Invalid date']),
-    // .test('dateValidation', 'Start date should be always lower than end date', function () {
-    //   const { start, end } = this.parent;
-    //   const startTime = moment(start, 'HH:mm');
-    //   const endTime = moment(end, 'HH:mm');
-    //   if (startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
-    //     return false;
-    //   }
-    //   return true;
-    // }),
-    end: yup.string().nullable().required().notOneOf(['Invalid date']),
-    // .test('dateValidation', 'End date should be always greater than start date', function () {
-    //   const { start, end } = this.parent;
-    //   const startTime = moment(start, 'HH:mm');
-    //   const endTime = moment(end, 'HH:mm');
-    //   console.log('aqaa', start, end, endTime.isSameOrBefore(startTime));
+    start: yup
+      .string()
+      .nullable()
+      .required()
+      .notOneOf(['Invalid date'])
+      .test('dateValidation', 'Start date should be always lower than end date', function () {
+        const { start, end } = this.parent;
+        const startTime = moment(start, 'HH:mm');
+        const endTime = moment(end, 'HH:mm');
+        if (startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
+          return false;
+        }
+        return true;
+      }),
+    end: yup
+      .string()
+      .nullable()
+      .required()
+      .notOneOf(['Invalid date'])
+      .test('dateValidation', 'End date should be always greater than start date', function () {
+        const { start, end } = this.parent;
+        const startTime = moment(start, 'HH:mm');
+        const endTime = moment(end, 'HH:mm');
 
-    //   if (startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
-    //     return false;
-    //   }
-    //   return true;
-    // }),
+        if (startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
+          return false;
+        }
+        return true;
+      }),
   }),
 );
 
