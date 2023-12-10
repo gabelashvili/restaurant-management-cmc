@@ -25,7 +25,7 @@ const authApi = baseApi.injectEndpoints({
         body: args,
       }),
     }),
-    updateDetails: build.query<ResponseModel<null>, Partial<UpdateDetailModel>>({
+    updateDetails: build.query<ResponseModel<null>, Partial<Omit<UpdateDetailModel, '_id'>>>({
       query: (args) => ({
         url: 'auth/update-details',
         method: 'POST',

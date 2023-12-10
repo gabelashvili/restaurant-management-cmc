@@ -28,7 +28,7 @@ const UpdateBaseInfo = () => {
     setValue,
     watch,
     reset,
-  } = useForm<UpdateDetailModel>({
+  } = useForm<Omit<UpdateDetailModel, '_id'>>({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -38,7 +38,7 @@ const UpdateBaseInfo = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const reqData = getDirtyFieldsValues<UpdateDetailModel>(dirtyFields, data);
+    const reqData = getDirtyFieldsValues<Omit<UpdateDetailModel, '_id'>>(dirtyFields, data);
     const response = await updateDetails({ ...reqData });
     if (response.data) {
       reset({ ...data });

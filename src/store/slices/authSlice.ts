@@ -25,7 +25,7 @@ export const authSlice = createSlice({
       state.userId = null;
       localStorage.removeItem('auth');
     },
-    updateUserData: (state, action: PayloadAction<UpdateDetailModel>) => {
+    updateUserData: (state, action: PayloadAction<Omit<UpdateDetailModel, '_id'>>) => {
       if (state.user) {
         state.user = { ...state.user, ...action.payload };
       }
