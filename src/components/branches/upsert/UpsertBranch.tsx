@@ -22,29 +22,14 @@ const initialState = {
       ka: '',
       en: '',
     },
-    email: '',
-    phone: '',
+    email: null,
+    phone: null,
   },
   workingHours: {
     monday: {
       id: uuidv4(),
       enabled: true,
       data: [
-        {
-          id: uuidv4(),
-          start: null,
-          end: null,
-        },
-        {
-          id: uuidv4(),
-          start: null,
-          end: null,
-        },
-        {
-          id: uuidv4(),
-          start: null,
-          end: null,
-        },
         {
           id: uuidv4(),
           start: null,

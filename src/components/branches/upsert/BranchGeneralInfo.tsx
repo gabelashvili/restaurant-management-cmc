@@ -51,14 +51,15 @@ const BranchGeneralInfo = ({ control }: Props) => {
       <Controller
         control={control}
         name={`general.phone`}
+        defaultValue={''}
         render={(params) => (
           <TextField
             variant="filled"
             fullWidth
             label={t('common.phone_number')}
             error={!!params.fieldState.error}
-            required
-            inputProps={{ ...params.field }}
+            inputProps={{ ...params.field, value: params.field.value || '' }}
+            onChange={(e) => params.field.onChange(e.target.value || null)}
           />
         )}
       />
@@ -70,9 +71,9 @@ const BranchGeneralInfo = ({ control }: Props) => {
             variant="filled"
             fullWidth
             label={t('common.email')}
-            required
             error={!!params.fieldState.error}
-            inputProps={{ ...params.field }}
+            inputProps={{ ...params.field, value: params.field.value || '' }}
+            onChange={(e) => params.field.onChange(e.target.value || null)}
           />
         )}
       />

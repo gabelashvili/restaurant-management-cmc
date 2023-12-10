@@ -109,8 +109,8 @@ export const upsertBranchSchema = yup.object().shape({
         ka: yup.string().required(),
         en: yup.string().required(),
       }),
-      email: yup.string().required(),
-      phone: yup.string().required(),
+      email: yup.string().required().nullable(),
+      phone: yup.string().required().nullable(),
     })
     .required(),
   workingHours: yup.object().shape({

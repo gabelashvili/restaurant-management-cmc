@@ -34,8 +34,8 @@ export interface BranchWorkingHoursModel {
 export interface BranchGeneralInfoModel {
   name: MultiLangModel;
   address: MultiLangModel;
-  phone: string;
-  email: string;
+  phone: string | null;
+  email: string | null;
 }
 
 export interface BranchModel {
