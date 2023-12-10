@@ -1,10 +1,10 @@
 import { type MultiLangModel } from './common';
 
 export interface WorkingHourModel {
-  id: string;
+  _id: string;
   enabled: boolean;
   data: Array<{
-    id: string;
+    _id: string;
     start: string | null;
     end: string | null;
   }>;
@@ -15,7 +15,7 @@ export enum ExceptionRepeatEnum {
   ONE_TIME = 'one_time',
 }
 export interface ExceptionDateModel {
-  id: string;
+  _id: string;
   start: string;
   end: string;
   repeat: ExceptionRepeatEnum;
@@ -39,7 +39,7 @@ export interface BranchGeneralInfoModel {
 }
 
 export interface BranchModel {
-  id?: string;
+  _id?: string;
   general: BranchGeneralInfoModel;
   workingHours: BranchWorkingHoursModel;
   exceptions: ExceptionDateModel[];

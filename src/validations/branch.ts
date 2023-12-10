@@ -5,7 +5,7 @@ import { ExceptionRepeatEnum } from '../@types/bracnh';
 
 const optionalDateSchema = yup.array().of(
   yup.object().shape({
-    id: yup.string().required(),
+    _id: yup.string().required(),
     start: yup.string().required().nullable().notOneOf(['Invalid date']),
     end: yup.string().required().nullable().notOneOf(['Invalid date']),
   }),
@@ -13,7 +13,7 @@ const optionalDateSchema = yup.array().of(
 
 const requiredDateSchema = yup.array().of(
   yup.object().shape({
-    id: yup.string().required(),
+    _id: yup.string().required(),
     start: yup
       .string()
       .nullable()
@@ -47,7 +47,7 @@ const requiredDateSchema = yup.array().of(
 );
 
 const weekDaySchema = yup.object().shape({
-  id: yup.string().required(),
+  _id: yup.string().required(),
   enabled: yup.boolean().required(),
   data: yup
     .array()
@@ -63,7 +63,7 @@ const weekDaySchema = yup.object().shape({
 });
 
 const exceptionSchema = yup.object().shape({
-  id: yup.string().required(),
+  _id: yup.string().required(),
   start: yup
     .string()
     .required()
