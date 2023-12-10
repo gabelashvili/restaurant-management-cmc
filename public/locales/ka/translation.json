@@ -11,7 +11,8 @@
         "address": "მისამართი",
         "name": "სახელი",
         "phone_number": "ტელეფონის ნომერი",
-        "remove": "წაშლა"
+        "remove": "წაშლა",
+        "add": "დამატება"
     },
     "routes": {
         "statistics": "სტატისტიკა",

@@ -1,10 +1,14 @@
-import { Box, Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { type MouseEvent, useState } from 'react';
+
+import { MoreVert } from '@mui/icons-material';
+import { Box, Checkbox, IconButton, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
 import moment from 'moment';
-import { type Control, Controller, type UseFormTrigger, type UseFormGetValues } from 'react-hook-form';
+import { type Control, Controller, type UseFormTrigger, type UseFormGetValues, type UseFormSetValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuid4 } from 'uuid';
 
 import { type BranchWorkingHoursModel, type BranchModel } from '../../../@types/bracnh';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
@@ -12,9 +16,44 @@ interface Props {
   control: Control<BranchModel, any>;
   trigger: UseFormTrigger<BranchModel>;
   getValues: UseFormGetValues<BranchModel>;
+  setValue: UseFormSetValue<BranchModel>;
 }
-const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
+const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) => {
   const { t } = useTranslation();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openItemId, setOpenItemId] = useState<null | string>(null);
+
+  const handleOpen = (e: MouseEvent<HTMLButtonElement>, id: string) => {
+    setAnchorEl(e.currentTarget);
+    setOpenItemId(id);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setOpenItemId(null);
+  };
+
+  const removeItem = (id: string, day: keyof BranchWorkingHoursModel) => {
+    setValue(
+      `workingHours.${day}.data`,
+      getValues('workingHours')[day].data.filter((el) => el.id !== id),
+      { shouldDirty: true },
+    );
+  };
+
+  const insertNewDate = (index: number, day: keyof BranchWorkingHoursModel) => {
+    const data = [...getValues(`workingHours.${day}.data`)];
+
+    data.splice(index + 1, 0, {
+      id: uuid4(),
+      end: null,
+      start: null,
+    });
+
+    setValue(`workingHours.${day}.data`, data, { shouldDirty: true });
+    trigger(`workingHours.${day}`);
+  };
 
   return (
     <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
@@ -26,6 +65,7 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
               <TableCell align="left">{t('week_days.title')}</TableCell>
               <TableCell align="center">{t('branch.upsert.start')}</TableCell>
               <TableCell align="center">{t('branch.upsert.end')}</TableCell>
+              <TableCell width={'1%'} align="center"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody
@@ -67,13 +107,14 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                   <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
                     {getValues('workingHours')[day].data.map((workingHour, workingHourI) => (
                       <Controller
-                        key={`${workingHour.id} - start`}
                         control={control}
+                        key={`${workingHour.id} - start`}
                         name={`workingHours.${day}.data.${workingHourI}.start`}
                         render={({ field, fieldState }) => (
                           <TimeField
                             disabled={!getValues('workingHours')[day].enabled}
                             label={t('branch.upsert.start_hour')}
+                            sx={{ width: '100%' }}
                             required={getValues('workingHours')[day].enabled}
                             format="HH:mm"
                             InputProps={{ error: !!fieldState.error }}
@@ -89,30 +130,68 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                     ))}
                   </Box>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="left">
                   <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
                     {getValues('workingHours')[day].data.map((workingHour, workingHourI) => (
-                      <Controller
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          gap: 2,
+                          flexDirection: 'row',
+                          width: '100%',
+                          justifyContent: 'center',
+                          position: 'relative',
+                        }}
                         key={`${workingHour.id} - end`}
-                        control={control}
-                        name={`workingHours.${day}.data.${workingHourI}.end`}
-                        render={({ field, fieldState }) => (
-                          <TimeField
-                            disabled={!getValues('workingHours')[day].enabled}
-                            label={t('branch.upsert.start_hour')}
-                            required={getValues('workingHours')[day].enabled}
-                            format="HH:mm"
-                            InputProps={{ error: !!fieldState.error }}
-                            InputLabelProps={{ error: !!fieldState.error }}
-                            onChange={(value: moment.Moment | null) => {
-                              field.onChange(value ? value.format('HH:mm') : null);
-                              trigger(`workingHours.${day}.data.${workingHourI}`);
+                      >
+                        <Controller
+                          control={control}
+                          name={`workingHours.${day}.data.${workingHourI}.end`}
+                          render={({ field, fieldState }) => (
+                            <TimeField
+                              sx={{ width: 'calc(100%)' }}
+                              disabled={!getValues('workingHours')[day].enabled}
+                              label={t('branch.upsert.end_hour')}
+                              required={getValues('workingHours')[day].enabled}
+                              format="HH:mm"
+                              InputProps={{ error: !!fieldState.error }}
+                              InputLabelProps={{ error: !!fieldState.error }}
+                              onChange={(value: moment.Moment | null) => {
+                                field.onChange(value ? value.format('HH:mm') : null);
+                                trigger(`workingHours.${day}.data.${workingHourI}`);
+                              }}
+                              inputRef={field.ref}
+                              name={field.name}
+                            />
+                          )}
+                        />
+
+                        <IconButton
+                          sx={{ position: 'absolute', right: 0, transform: 'translate(120%, -50%)', top: '50%' }}
+                          onClick={(e) => handleOpen(e, workingHour.id)}
+                        >
+                          <MoreVert />
+                        </IconButton>
+                        <Menu anchorEl={anchorEl} open={!!anchorEl && openItemId === workingHour.id} onClose={handleMenuClose}>
+                          <MenuItem
+                            sx={{ color: 'error.main' }}
+                            onClick={() => {
+                              removeItem(workingHour.id, day);
+                              handleMenuClose();
                             }}
-                            inputRef={field.ref}
-                            name={field.name}
-                          />
-                        )}
-                      />
+                          >
+                            {t('common.remove')}
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              insertNewDate(workingHourI, day);
+                              handleMenuClose();
+                            }}
+                          >
+                            {t('common.add')}
+                          </MenuItem>
+                        </Menu>
+                      </Box>
                     ))}
                   </Box>
                 </TableCell>

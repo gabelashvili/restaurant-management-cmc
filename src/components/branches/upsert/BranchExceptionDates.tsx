@@ -13,12 +13,11 @@ import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 interface Props {
   control: Control<BranchModel, any>;
   trigger: UseFormTrigger<BranchModel>;
-  getValues: UseFormGetValues<BranchModel>;
 }
 
-const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
+const BranchExceptionDates = ({ control, trigger }: Props) => {
   const { t } = useTranslation();
-  const { append, remove } = useFieldArray({
+  const { append, remove, fields } = useFieldArray({
     control,
     name: 'exceptions',
   });
@@ -30,8 +29,8 @@ const BranchExceptionDates = ({ control, trigger, getValues }: Props) => {
   return (
     <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
       <UpsertSectionWrapper title={t('branch.upsert.exception_dates')}>
-        {getValues('exceptions').length > 0 ? (
-          getValues('exceptions').map((exception, i) => (
+        {fields.length > 0 ? (
+          fields.map((exception, i) => (
             <Box sx={{ width: '100%', display: 'flex', gap: 3, flexDirection: 'column' }} key={exception.id}>
               <Box sx={{ width: '100%', display: 'flex', gap: 2 }}>
                 <Controller
