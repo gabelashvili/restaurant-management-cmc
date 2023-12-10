@@ -12,7 +12,6 @@ import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
 const initialState = {
-  id: null,
   general: {
     name: {
       ka: '',

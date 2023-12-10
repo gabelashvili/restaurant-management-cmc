@@ -94,7 +94,6 @@ const exceptionSchema = yup.object().shape({
 });
 
 export const upsertBranchSchema = yup.object().shape({
-  id: yup.string().required().nullable(),
   general: yup
     .object()
     .shape({

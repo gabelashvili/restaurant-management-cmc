@@ -39,7 +39,7 @@ export interface BranchGeneralInfoModel {
 }
 
 export interface BranchModel {
-  id: string | null;
+  id?: string;
   general: BranchGeneralInfoModel;
   workingHours: BranchWorkingHoursModel;
   exceptions: ExceptionDateModel[];
