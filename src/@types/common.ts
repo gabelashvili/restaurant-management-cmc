@@ -10,7 +10,7 @@ export interface TokensModel {
 }
 
 export interface MultiLangModel {
-  ge: string;
+  ka: string;
   en: string;
 }
 

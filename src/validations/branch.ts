@@ -83,12 +83,12 @@ export const upsertBranchSchema = yup.object().shape({
       name: yup
         .object()
         .shape({
-          ge: yup.string().required(),
+          ka: yup.string().required(),
           en: yup.string().required(),
         })
         .required(),
       address: yup.object().shape({
-        ge: yup.string().required(),
+        ka: yup.string().required(),
         en: yup.string().required(),
       }),
       email: yup.string().required(),

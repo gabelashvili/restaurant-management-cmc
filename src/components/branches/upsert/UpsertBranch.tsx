@@ -14,11 +14,11 @@ const initialState = {
   id: null,
   general: {
     name: {
-      ge: '',
+      ka: '',
       en: '',
     },
     address: {
-      ge: '',
+      ka: '',
       en: '',
     },
     email: '',
