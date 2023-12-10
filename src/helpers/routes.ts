@@ -1,4 +1,4 @@
-import { Category, Leaderboard, ListAlt, LocalBar, LunchDining, People, Place, Restaurant } from '@mui/icons-material';
+import { Category, Leaderboard, ListAlt, LocalBar, People, Place, Restaurant } from '@mui/icons-material';
 
 const routes: Record<
   string,

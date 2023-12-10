@@ -97,7 +97,7 @@ const UpdateAvatar = () => {
 
 export default UpdateAvatar;
 
-const Wrapper = styled(Box)(({ theme }) => ({
+const Wrapper = styled(Box)(() => ({
   width: 120,
   height: 120,
   position: 'relative',
