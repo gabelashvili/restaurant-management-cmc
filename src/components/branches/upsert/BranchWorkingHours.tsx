@@ -1,4 +1,4 @@
-import { Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Box, Checkbox, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
@@ -6,7 +6,7 @@ import moment from 'moment';
 import { type Control, Controller, type UseFormTrigger, type UseFormGetValues } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type BranchModel } from '../../../@types/bracnh';
+import { type BranchWorkingHoursModel, type BranchModel } from '../../../@types/bracnh';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 interface Props {
   control: Control<BranchModel, any>;
@@ -64,46 +64,56 @@ const BranchWorkingHours = ({ control, trigger, getValues }: Props) => {
                 </TableCell>
                 <TableCell align="left">{t(`week_days.${day}`)}</TableCell>
                 <TableCell align="center">
-                  <Controller
-                    control={control}
-                    name={`workingHours.${day}.start`}
-                    render={({ field, fieldState }) => (
-                      <TimeField
-                        disabled={!getValues('workingHours')[day].enabled}
-                        label={t('branch.upsert.start_hour')}
-                        required={getValues('workingHours')[day].enabled}
-                        format="HH:mm"
-                        InputProps={{ error: !!fieldState.error }}
-                        InputLabelProps={{ error: !!fieldState.error }}
-                        onChange={(value: moment.Moment | null) => {
-                          field.onChange(value ? value.format('HH:mm') : null);
-                          trigger(`workingHours.${day}.end`);
-                        }}
-                        inputRef={field.ref}
+                  <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+                    {getValues('workingHours')[day].data.map((workingHour, workingHourI) => (
+                      <Controller
+                        key={`${workingHour.id} - start`}
+                        control={control}
+                        name={`workingHours.${day}.data.${workingHourI}.start`}
+                        render={({ field, fieldState }) => (
+                          <TimeField
+                            disabled={!getValues('workingHours')[day].enabled}
+                            label={t('branch.upsert.start_hour')}
+                            required={getValues('workingHours')[day].enabled}
+                            format="HH:mm"
+                            InputProps={{ error: !!fieldState.error }}
+                            InputLabelProps={{ error: !!fieldState.error }}
+                            onChange={(value: moment.Moment | null) => {
+                              field.onChange(value ? value.format('HH:mm') : null);
+                              trigger(`workingHours.${day}.data.${workingHourI}.end`);
+                            }}
+                            inputRef={field.ref}
+                          />
+                        )}
                       />
-                    )}
-                  />
+                    ))}
+                  </Box>
                 </TableCell>
                 <TableCell align="center">
-                  <Controller
-                    control={control}
-                    name={`workingHours.${day}.end`}
-                    render={({ field, fieldState }) => (
-                      <TimeField
-                        disabled={!getValues('workingHours')[day].enabled}
-                        label={t('branch.upsert.end_hour')}
-                        required={getValues('workingHours')[day].enabled}
-                        format="HH:mm"
-                        InputProps={{ error: !!fieldState.error }}
-                        InputLabelProps={{ error: !!fieldState.error }}
-                        onChange={(value: moment.Moment | null) => {
-                          field.onChange(value ? value.format('HH:mm') : null);
-                          trigger(`workingHours.${day}.start`);
-                        }}
-                        inputRef={field.ref}
+                  <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+                    {getValues('workingHours')[day].data.map((workingHour, workingHourI) => (
+                      <Controller
+                        key={`${workingHour.id} - end`}
+                        control={control}
+                        name={`workingHours.${day}.data.${workingHourI}.end`}
+                        render={({ field, fieldState }) => (
+                          <TimeField
+                            disabled={!getValues('workingHours')[day].enabled}
+                            label={t('branch.upsert.start_hour')}
+                            required={getValues('workingHours')[day].enabled}
+                            format="HH:mm"
+                            InputProps={{ error: !!fieldState.error }}
+                            InputLabelProps={{ error: !!fieldState.error }}
+                            onChange={(value: moment.Moment | null) => {
+                              field.onChange(value ? value.format('HH:mm') : null);
+                              trigger(`workingHours.${day}.data.${workingHourI}.start`);
+                            }}
+                            inputRef={field.ref}
+                          />
+                        )}
                       />
-                    )}
-                  />
+                    ))}
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}

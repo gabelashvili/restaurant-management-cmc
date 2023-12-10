@@ -1,10 +1,13 @@
 import { type MultiLangModel } from './common';
 
 export interface WorkingHourModel {
-  id?: string;
+  id: string;
   enabled: boolean;
-  start: string | null;
-  end: string | null;
+  data: Array<{
+    id: string;
+    start: string | null;
+    end: string | null;
+  }>;
 }
 
 export enum ExceptionRepeatEnum {

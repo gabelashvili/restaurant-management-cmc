@@ -4,44 +4,18 @@ import * as yup from 'yup';
 import { ExceptionRepeatEnum } from '../@types/bracnh';
 
 const weekDaySchema = yup.object().shape({
-  id: yup.string(),
+  id: yup.string().required(),
   enabled: yup.boolean().required(),
-  start: yup
-    .string()
-    .required()
-    .nullable()
-    .notOneOf(['Invalid date'])
-    .when('enabled', {
-      is: true,
-      then: () => yup.string().required(),
-    })
-    .test('dateValidation', 'Start date should be always lower than end date', function () {
-      const { start, end, enabled } = this.parent;
-      const startTime = moment(start, 'HH:mm');
-      const endTime = moment(end, 'HH:mm');
-      if (enabled && startTime?.isValid() && endTime?.isValid() && startTime.isSameOrAfter(endTime)) {
-        return false;
-      }
-      return true;
-    }),
-  end: yup
-    .string()
-    .required()
-    .nullable()
-    .notOneOf(['Invalid date'])
-    .when('enabled', {
-      is: true,
-      then: () => yup.string().required(),
-    })
-    .test('dateValidation', 'End date should be always greater than start date', function () {
-      const { start, end, enabled } = this.parent;
-      const startTime = moment(start, 'HH:mm');
-      const endTime = moment(end, 'HH:mm');
-      if (enabled && startTime?.isValid() && endTime?.isValid() && endTime.isSameOrBefore(startTime)) {
-        return false;
-      }
-      return true;
-    }),
+  data: yup
+    .array()
+    .of(
+      yup.object().shape({
+        id: yup.string().required(),
+        start: yup.string().required().nullable(),
+        end: yup.string().required().nullable(),
+      }),
+    )
+    .required(),
 });
 
 const exceptionSchema = yup.object().shape({
