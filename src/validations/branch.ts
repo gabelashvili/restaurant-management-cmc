@@ -47,7 +47,6 @@ const requiredDateSchema = yup.array().of(
 );
 
 const weekDaySchema = yup.object().shape({
-  _id: yup.string().required(),
   enabled: yup.boolean().required(),
   data: yup
     .array()

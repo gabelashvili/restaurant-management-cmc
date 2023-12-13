@@ -1,7 +1,6 @@
 import { type MultiLangModel } from './common';
 
 export interface WorkingHourModel {
-  _id: string;
   enabled: boolean;
   data: Array<{
     _id: string;
