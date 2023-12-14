@@ -12,7 +12,7 @@ import { useLazySignInQuery } from '../../store/api/authApi';
 import { signInSchema } from '../../validations/user';
 import Logo from '../shared/Logo';
 
-const SignInForm = () => {
+const SignIn = () => {
   const { t } = useTranslation();
   const [signIn, { isFetching }] = useLazySignInQuery();
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
@@ -101,4 +101,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignIn;

@@ -3,16 +3,14 @@ import moment from 'moment';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 
 import './i18n/config';
+import SignIn from './components/auth/SignIn';
 import AuthLayout from './components/AuthLayout';
+import BranchesList from './components/branches/BranchesList';
+import UpsertBranch from './components/branches/upsert/UpsertBranch';
+import EmployeesList from './components/employees/EmployeesList';
 import Layout from './components/layout/Layout';
+import UserSettings from './components/settings/UserSettings';
 import useAuth from './hooks/useAuth';
-import Branches from './pages/branches/Branches';
-import NewBranch from './pages/branches/NewBranch';
-import Dishes from './pages/Dishes';
-import Drinks from './pages/Drinks';
-import Employees from './pages/Employees';
-import SignIn from './pages/SignIn';
-import UserSettings from './pages/UserSettings';
 import { getTheme } from './theme';
 
 import 'moment/locale/ka';
@@ -31,7 +29,7 @@ const defaultRoutes = createBrowserRouter([
       },
       {
         path: 'employees',
-        element: <Employees />,
+        element: <EmployeesList />,
       },
       {
         path: 'menu',
@@ -42,11 +40,11 @@ const defaultRoutes = createBrowserRouter([
           },
           {
             path: 'dishes',
-            element: <Dishes />,
+            element: <div>ae</div>,
           },
           {
             path: 'drinks',
-            element: <Drinks />,
+            element: <div>oee</div>,
           },
         ],
       },
@@ -55,11 +53,15 @@ const defaultRoutes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Branches />,
+            element: <BranchesList />,
           },
           {
             path: 'new',
-            element: <NewBranch />,
+            element: <UpsertBranch />,
+          },
+          {
+            path: 'edit/:branchId',
+            element: <UpsertBranch />,
           },
         ],
       },

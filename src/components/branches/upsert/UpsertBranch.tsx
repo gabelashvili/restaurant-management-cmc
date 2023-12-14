@@ -8,6 +8,7 @@ import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/bracnh';
+import { useGetBranchQuery } from '../../../store/api/branchApi';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
@@ -101,6 +102,7 @@ const initialState = {
 
 const UpsertBranch = () => {
   const { t } = useTranslation();
+  const { data } = useGetBranchQuery('ae', { skip: true });
   const { handleSubmit, getValues, control, trigger, setValue } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),

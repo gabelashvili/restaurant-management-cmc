@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { useLocation, useSearchParams } from 'react-router-dom';
 
-import { type SettingsTabModel } from '../@types/auth';
-import SettingsMenu from '../components/settings/SettingsMenu';
-import UpdateBaseInfo from '../components/settings/UpdateBaseInfo/UpdateBaseInfo';
-import UpdatePassword from '../components/settings/UpdatePassword';
+import SettingsMenu from './SettingsMenu';
+import UpdateBaseInfo from './UpdateBaseInfo/UpdateBaseInfo';
+import UpdatePassword from './UpdatePassword';
+import { type SettingsTabModel } from '../../@types/auth';
 
 const UserSettings = () => {
   const location = useLocation();
