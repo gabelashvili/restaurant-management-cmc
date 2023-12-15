@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import { Box, CircularProgress, CssBaseline, StyledEngineProvider, ThemeProvider } from '@mui/material';
 import moment from 'moment';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
@@ -93,28 +95,24 @@ const authRoutes = createBrowserRouter([
 function App() {
   const { state } = useAuth();
 
-  const lng = localStorage.getItem('i18nextLng');
-
-  if (lng) {
-    moment.locale(lng);
-  }
-
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={appTheme}>
-        <div className="App">
-          <CssBaseline />
-          {state === 'pending' && (
-            <Box sx={{ height: '100vh', display: 'flex' }}>
-              <CircularProgress sx={{ m: 'auto', display: 'flex' }} />
-            </Box>
-          )}
-          {state !== 'pending' && (
-            <RouterProvider router={state === 'authorized' ? defaultRoutes : authRoutes} fallbackElement={<p>Loading...</p>} />
-          )}
-        </div>
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <Suspense>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={appTheme}>
+          <div className="App">
+            <CssBaseline />
+            {state === 'pending' && (
+              <Box sx={{ height: '100vh', display: 'flex' }}>
+                <CircularProgress sx={{ m: 'auto', display: 'flex' }} />
+              </Box>
+            )}
+            {state !== 'pending' && (
+              <RouterProvider router={state === 'authorized' ? defaultRoutes : authRoutes} fallbackElement={<p>Loading...</p>} />
+            )}
+          </div>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    </Suspense>
   );
 }
 

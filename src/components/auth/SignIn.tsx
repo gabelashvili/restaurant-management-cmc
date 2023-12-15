@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Box, Divider, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Divider, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -48,9 +48,20 @@ const SignIn = () => {
   }, [isFetching]);
 
   return (
-    <>
+    <Paper
+      sx={{
+        m: 'auto',
+        maxWidth: 500,
+        p: 3,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Logo />
-      <Typography sx={{ mt: 5, fontSize: 24, fontWeight: 700, color: 'primary.400' }}>{t('auth.welcome')}</Typography>
+      <Typography sx={{ mt: 3, fontSize: 24, fontWeight: 700, color: 'primary.400' }}>{t('auth.welcome')}</Typography>
       <Typography sx={{ mt: 1, textAlign: 'center' }}>{t('auth.insert_details')}</Typography>
 
       <Box sx={{ mt: 5, display: 'flex', gap: 2, flexDirection: 'column', width: '100%' }}>
@@ -97,7 +108,7 @@ const SignIn = () => {
 
       <Divider sx={{ my: 3, width: '100%' }} />
       <Typography sx={{ fontWeight: 600 }}>{t('auth.forgot_password')}</Typography>
-    </>
+    </Paper>
   );
 };
 

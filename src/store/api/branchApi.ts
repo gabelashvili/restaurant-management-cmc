@@ -1,17 +1,25 @@
 import baseApi from './baseApi';
+import { type BranchModel } from '../../@types/bracnh';
 import { type ResponseModel } from '../../@types/common';
 
 const branchApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getBranch: build.query<ResponseModel<any>, string>({
+    getBranch: build.query<ResponseModel<BranchModel>, string>({
       query: (branchId) => ({
-        url: `branch/${branchId}`,
+        url: `branches/${branchId}`,
         method: 'GET',
+      }),
+    }),
+    createBranch: build.query<ResponseModel<BranchModel>, Pick<BranchModel, '_id'>>({
+      query: (body) => ({
+        url: `branches`,
+        method: 'GET',
+        body,
       }),
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetBranchQuery } = branchApi;
+export const { useGetBranchQuery, useLazyCreateBranchQuery } = branchApi;
 export default branchApi;

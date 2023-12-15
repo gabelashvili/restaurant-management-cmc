@@ -1,14 +1,17 @@
+import { useEffect } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/bracnh';
-import { useGetBranchQuery } from '../../../store/api/branchApi';
+import { useGetBranchQuery, useLazyCreateBranchQuery } from '../../../store/api/branchApi';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
@@ -102,8 +105,10 @@ const initialState = {
 
 const UpsertBranch = () => {
   const { t } = useTranslation();
-  const { data } = useGetBranchQuery('ae', { skip: true });
-  const { handleSubmit, getValues, control, trigger, setValue } = useForm<BranchModel>({
+  const { branchId } = useParams();
+  const { data } = useGetBranchQuery(branchId || '', { skip: !branchId });
+  const [createBranch] = useLazyCreateBranchQuery();
+  const { handleSubmit, getValues, control, trigger, setValue, reset } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
@@ -111,9 +116,24 @@ const UpsertBranch = () => {
   const onSubmit = handleSubmit(
     (data) => {
       console.log(data);
+      if (branchId) {
+        console.log('edit');
+      } else {
+        createBranch(data);
+      }
     },
     (err) => console.log(err),
   );
+
+  useEffect(() => {
+    if (data?.data) {
+      reset({
+        general: data.data.general,
+        exceptions: data.data.exceptions,
+        workingHours: data.data.workingHours,
+      });
+    }
+  }, [data]);
 
   return (
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
