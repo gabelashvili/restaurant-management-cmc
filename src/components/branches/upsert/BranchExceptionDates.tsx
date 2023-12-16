@@ -42,7 +42,7 @@ const BranchExceptionDates = ({ control, trigger }: Props) => {
                       ampmInClock={true}
                       onChange={(value: moment.Moment | null) => {
                         params.field.onChange(value ? value.toISOString() : null);
-                        trigger(`exceptions.${i}.end`);
+                        trigger(`exceptions.${i}`);
                       }}
                       slotProps={{
                         textField: {
@@ -63,7 +63,7 @@ const BranchExceptionDates = ({ control, trigger }: Props) => {
                       ampmInClock={true}
                       onChange={(value: moment.Moment | null) => {
                         params.field.onChange(value ? value.toISOString() : null);
-                        trigger(`exceptions.${i}.start`);
+                        trigger(`exceptions.${i}`);
                       }}
                       slotProps={{
                         textField: {

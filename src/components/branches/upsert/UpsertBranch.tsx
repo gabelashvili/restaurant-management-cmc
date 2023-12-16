@@ -116,7 +116,7 @@ const UpsertBranch = () => {
     trigger,
     setValue,
     reset,
-    formState: { dirtyFields },
+    formState: { dirtyFields, errors },
   } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
