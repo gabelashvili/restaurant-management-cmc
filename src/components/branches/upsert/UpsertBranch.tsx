@@ -5,14 +5,13 @@ import { LoadingButton } from '@mui/lab';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 
 import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/bracnh';
 import { useGetBranchQuery, useLazyCreateBranchQuery } from '../../../store/api/branchApi';
-import { getDirtyFieldsValues } from '../../../utils/utils';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
@@ -34,7 +33,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },
@@ -44,7 +43,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },
@@ -54,7 +53,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },
@@ -64,7 +63,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },
@@ -74,7 +73,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },
@@ -84,7 +83,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },
@@ -94,7 +93,7 @@ const initialState = {
       enabled: false,
       data: [
         {
-          _id: uuidv4(),
+          _id: `new-${uuid4()}`,
           start: null,
           end: null,
         },

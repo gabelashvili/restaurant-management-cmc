@@ -46,7 +46,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
     const data = [...getValues(`workingHours.${day}.data`)];
 
     data.splice(index + 1, 0, {
-      _id: uuid4(),
+      _id: `new-${uuid4()}`,
       end: null,
       start: null,
     });
@@ -124,6 +124,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
                               trigger(`workingHours.${day}.data.${workingHourI}`);
                             }}
                             inputRef={field.ref}
+                            value={moment(field.value, 'HH:mm')}
                           />
                         )}
                       />
@@ -162,6 +163,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
                               }}
                               inputRef={field.ref}
                               name={field.name}
+                              value={moment(field.value, 'HH:mm')}
                             />
                           )}
                         />

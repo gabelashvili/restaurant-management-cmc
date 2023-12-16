@@ -18,13 +18,15 @@ const branchApi = baseApi.injectEndpoints({
         method: 'POST',
         body: {
           general: body.general,
-          exceptions: body.exceptions.map((el) => omit(el, '_id')),
+          exceptions: body.exceptions.map((el) => (el._id.includes('new') ? omit(el, '_id') : el)),
           workingHours: Object.keys(body.workingHours).reduce((acc, cur) => {
             return {
               ...acc,
               [cur]: {
                 ...body.workingHours[cur as keyof BranchWorkingHoursModel],
-                data: body.workingHours[cur as keyof BranchWorkingHoursModel].data.map((el) => omit(el, '_id')),
+                data: body.workingHours[cur as keyof BranchWorkingHoursModel].data.map((el) =>
+                  el._id.includes('new') ? omit(el, '_id') : el,
+                ),
               },
             };
           }, {}),

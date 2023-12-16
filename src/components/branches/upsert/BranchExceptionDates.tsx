@@ -5,7 +5,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment';
 import { type Control, type UseFormTrigger, useFieldArray, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid4 } from 'uuid';
 
 import { ExceptionRepeatEnum, type BranchModel } from '../../../@types/bracnh';
 import NoDatText from '../../shared/NoDatText';
@@ -23,7 +23,7 @@ const BranchExceptionDates = ({ control, trigger }: Props) => {
   });
 
   const handleExceptionAdd = () => {
-    append({ start: '', end: '', repeat: ExceptionRepeatEnum.ONE_TIME, _id: uuidv4() });
+    append({ start: '', end: '', repeat: ExceptionRepeatEnum.ONE_TIME, _id: `new-${uuid4()}` });
   };
 
   return (
@@ -51,6 +51,7 @@ const BranchExceptionDates = ({ control, trigger }: Props) => {
                           required: true,
                         },
                       }}
+                      value={moment(params.field.value)}
                     />
                   )}
                 />
@@ -72,6 +73,7 @@ const BranchExceptionDates = ({ control, trigger }: Props) => {
                           required: true,
                         },
                       }}
+                      value={moment(params.field.value)}
                     />
                   )}
                 />
