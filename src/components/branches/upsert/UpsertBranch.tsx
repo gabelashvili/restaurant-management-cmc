@@ -107,17 +107,9 @@ const initialState = {
 const UpsertBranch = () => {
   const { t } = useTranslation();
   const { branchId } = useParams();
-  const { data } = useGetBranchQuery(branchId || '', { skip: !branchId });
+  const { data: getBranchResponse } = useGetBranchQuery(branchId || '', { skip: !branchId });
   const [createBranch] = useLazyCreateBranchQuery();
-  const {
-    handleSubmit,
-    getValues,
-    control,
-    trigger,
-    setValue,
-    reset,
-    formState: { dirtyFields, errors },
-  } = useForm<BranchModel>({
+  const { handleSubmit, getValues, control, trigger, setValue, reset } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
@@ -127,23 +119,21 @@ const UpsertBranch = () => {
       if (branchId) {
         console.log('edit');
       } else {
-        const values = { ...data };
-        const reqData = getDirtyFieldsValues<Partial<BranchModel>>(Object.keys(dirtyFields), { ...values });
-        createBranch(reqData);
+        createBranch({ ...data });
       }
     },
     (err) => console.log(err),
   );
 
   useEffect(() => {
-    if (data?.data) {
+    if (getBranchResponse?.data) {
       reset({
-        general: data.data.general,
-        exceptions: data.data.exceptions,
-        workingHours: data.data.workingHours,
+        general: getBranchResponse.data.general,
+        exceptions: getBranchResponse.data.exceptions,
+        workingHours: getBranchResponse.data.workingHours,
       });
     }
-  }, [data]);
+  }, [getBranchResponse]);
 
   return (
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>

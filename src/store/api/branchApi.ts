@@ -1,5 +1,7 @@
+import { omit } from 'lodash';
+
 import baseApi from './baseApi';
-import { type BranchModel } from '../../@types/bracnh';
+import { type BranchWorkingHoursModel, type BranchModel } from '../../@types/bracnh';
 import { type ResponseModel } from '../../@types/common';
 
 const branchApi = baseApi.injectEndpoints({
@@ -10,11 +12,23 @@ const branchApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-    createBranch: build.query<ResponseModel<BranchModel>, Partial<Omit<BranchModel, '_id'>>>({
+    createBranch: build.query<ResponseModel<BranchModel>, Omit<BranchModel, '_id'>>({
       query: (body) => ({
         url: `branches`,
         method: 'POST',
-        body,
+        body: {
+          general: body.general,
+          exceptions: body.exceptions.map((el) => omit(el, '_id')),
+          workingHours: Object.keys(body.workingHours).reduce((acc, cur) => {
+            return {
+              ...acc,
+              [cur]: {
+                ...body.workingHours[cur as keyof BranchWorkingHoursModel],
+                data: body.workingHours[cur as keyof BranchWorkingHoursModel].data.map((el) => omit(el, '_id')),
+              },
+            };
+          }, {}),
+        },
       }),
     }),
   }),
