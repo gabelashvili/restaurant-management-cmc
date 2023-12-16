@@ -1,8 +1,7 @@
-import { omit } from 'lodash';
-
 import baseApi from './baseApi';
-import { type BranchWorkingHoursModel, type BranchModel } from '../../@types/bracnh';
+import { type BranchModel } from '../../@types/bracnh';
 import { type ResponseModel } from '../../@types/common';
+import { branchUpsertReqObject } from '../../components/branches/upsertBranchUtils';
 
 const branchApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -13,24 +12,17 @@ const branchApi = baseApi.injectEndpoints({
       }),
     }),
     createBranch: build.query<ResponseModel<BranchModel>, Omit<BranchModel, '_id'>>({
-      query: (body) => ({
+      query: (args) => ({
         url: `branches`,
         method: 'POST',
-        body: {
-          general: body.general,
-          exceptions: body.exceptions.map((el) => (el._id.includes('new') ? omit(el, '_id') : el)),
-          workingHours: Object.keys(body.workingHours).reduce((acc, cur) => {
-            return {
-              ...acc,
-              [cur]: {
-                ...body.workingHours[cur as keyof BranchWorkingHoursModel],
-                data: body.workingHours[cur as keyof BranchWorkingHoursModel].data.map((el) =>
-                  el._id.includes('new') ? omit(el, '_id') : el,
-                ),
-              },
-            };
-          }, {}),
-        },
+        body: branchUpsertReqObject(args),
+      }),
+    }),
+    updateBranch: build.query<ResponseModel<BranchModel>, Omit<BranchModel, '_id'>>({
+      query: (args) => ({
+        url: `branches`,
+        method: 'PUT',
+        body: branchUpsertReqObject(args),
       }),
     }),
   }),
