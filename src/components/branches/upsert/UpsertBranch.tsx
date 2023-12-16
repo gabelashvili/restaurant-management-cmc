@@ -12,6 +12,7 @@ import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/bracnh';
 import { useGetBranchQuery, useLazyCreateBranchQuery } from '../../../store/api/branchApi';
+import { getDirtyFieldsValues } from '../../../utils/utils';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
@@ -30,7 +31,7 @@ const initialState = {
   },
   workingHours: {
     monday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -40,7 +41,7 @@ const initialState = {
       ],
     },
     tuesday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -50,7 +51,7 @@ const initialState = {
       ],
     },
     wednesday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -60,7 +61,7 @@ const initialState = {
       ],
     },
     thursday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -70,7 +71,7 @@ const initialState = {
       ],
     },
     friday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -80,7 +81,7 @@ const initialState = {
       ],
     },
     saturday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -90,7 +91,7 @@ const initialState = {
       ],
     },
     sunday: {
-      enabled: true,
+      enabled: false,
       data: [
         {
           _id: uuidv4(),
@@ -108,18 +109,27 @@ const UpsertBranch = () => {
   const { branchId } = useParams();
   const { data } = useGetBranchQuery(branchId || '', { skip: !branchId });
   const [createBranch] = useLazyCreateBranchQuery();
-  const { handleSubmit, getValues, control, trigger, setValue, reset } = useForm<BranchModel>({
+  const {
+    handleSubmit,
+    getValues,
+    control,
+    trigger,
+    setValue,
+    reset,
+    formState: { dirtyFields },
+  } = useForm<Omit<BranchModel, '_id' | 'createdAt'>>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
 
   const onSubmit = handleSubmit(
     (data) => {
-      console.log(data);
       if (branchId) {
         console.log('edit');
       } else {
-        createBranch(data);
+        const values = { ...data };
+        const reqData = getDirtyFieldsValues<Partial<BranchModel>>(Object.keys(dirtyFields), { ...values });
+        createBranch(reqData);
       }
     },
     (err) => console.log(err),

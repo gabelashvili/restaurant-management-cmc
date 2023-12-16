@@ -10,10 +10,10 @@ const branchApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-    createBranch: build.query<ResponseModel<BranchModel>, Pick<BranchModel, '_id'>>({
+    createBranch: build.query<ResponseModel<BranchModel>, Partial<Omit<BranchModel, '_id'>>>({
       query: (body) => ({
         url: `branches`,
-        method: 'GET',
+        method: 'POST',
         body,
       }),
     }),
