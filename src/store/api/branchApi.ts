@@ -1,7 +1,6 @@
 import baseApi from './baseApi';
 import { type BranchModel } from '../../@types/bracnh';
 import { type ResponseModel } from '../../@types/common';
-import { branchUpsertReqObject } from '../../components/branches/upsertBranchUtils';
 
 const branchApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -15,19 +14,19 @@ const branchApi = baseApi.injectEndpoints({
       query: (args) => ({
         url: `branches`,
         method: 'POST',
-        body: branchUpsertReqObject(args),
+        body: args,
       }),
     }),
-    updateBranch: build.query<ResponseModel<BranchModel>, Omit<BranchModel, '_id'>>({
+    updateBranch: build.query<ResponseModel<BranchModel>, { data: Partial<Omit<BranchModel, '_id'>>; branchId: string }>({
       query: (args) => ({
-        url: `branches`,
+        url: `branches/${args.branchId}`,
         method: 'PUT',
-        body: branchUpsertReqObject(args),
+        body: args.data,
       }),
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetBranchQuery, useLazyCreateBranchQuery } = branchApi;
+export const { useGetBranchQuery, useLazyCreateBranchQuery, useLazyUpdateBranchQuery } = branchApi;
 export default branchApi;
