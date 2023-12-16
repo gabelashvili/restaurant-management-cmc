@@ -117,7 +117,7 @@ const UpsertBranch = () => {
     setValue,
     reset,
     formState: { dirtyFields },
-  } = useForm<Omit<BranchModel, '_id' | 'createdAt'>>({
+  } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
