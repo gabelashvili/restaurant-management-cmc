@@ -2,6 +2,7 @@ import { type FC } from 'react';
 
 import { Add, FilterList, Search } from '@mui/icons-material';
 import { Box, ButtonBase, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import { debounce } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
 interface TableHeaderProps {
@@ -10,8 +11,9 @@ interface TableHeaderProps {
     title?: string;
     onClick: () => void;
   };
+  onSearch?: (val: string) => void;
 }
-const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd }) => {
+const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch }) => {
   const { t } = useTranslation();
   return (
     <>
@@ -27,20 +29,25 @@ const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd }) => {
       >
         <Typography variant="h6">{title}</Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <TextField
-            placeholder={t('common.search')}
-            inputProps={{
-              sx: { py: 1.5 },
-            }}
-            InputProps={{
-              sx: { borderRadius: 2 },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
+          {onSearch && (
+            <TextField
+              placeholder={t('common.search')}
+              onChange={debounce((e) => {
+                onSearch(e.target.value);
+              }, 500)}
+              inputProps={{
+                sx: { py: 1.5 },
+              }}
+              InputProps={{
+                sx: { borderRadius: 2 },
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Search />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
           <ButtonBase sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
             <FilterList />
           </ButtonBase>

@@ -25,6 +25,7 @@ const BranchesList = () => {
             title: 'add',
             onClick: () => {},
           }}
+          onSearch={(value) => handleFilterChange('search', value)}
         />
       )}
       renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={t(el.label)} />)}

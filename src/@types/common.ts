@@ -26,4 +26,5 @@ export interface TableFiltersModel {
   limit: number;
   sortBy?: string | null;
   sortDir?: 'asc' | 'desc' | null;
+  search?: string;
 }

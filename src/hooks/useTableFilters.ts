@@ -14,7 +14,12 @@ const useTableFilters = () => {
   const [filters, setFilters] = useState<TableFiltersModel>(filtersInitial);
 
   const handleFilterChange = (filter: keyof TableFiltersModel, value: any) => {
-    setFilters({ ...filters, [filter]: value });
+    const newFilters = { ...filters };
+    if (filter === 'search') {
+      newFilters.page = PAGE_INITIAL;
+      newFilters.limit = LIMIT_INITIAL;
+    }
+    setFilters({ ...newFilters, [filter]: value });
   };
 
   const removeFilter = (filter: keyof TableFiltersModel) => {
