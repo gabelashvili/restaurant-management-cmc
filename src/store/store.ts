@@ -5,7 +5,7 @@ import reducer from './reducers';
 
 export const store = configureStore({
   reducer,
-  middleware: (gdm) => [...gdm({ serializableCheck: false }).concat(baseApi.middleware).concat(rtkQueryErrorLogger)],
+  middleware: (gdm) => gdm({ serializableCheck: false }).concat(baseApi.middleware).concat(rtkQueryErrorLogger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

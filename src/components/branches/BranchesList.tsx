@@ -1,5 +1,6 @@
 import { TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { type Languages } from '../../@types/common';
 import useTableFilters from '../../hooks/useTableFilters';
@@ -11,6 +12,7 @@ import TableHeader from '../shared/TableHeader';
 
 const BranchesList = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const lang = i18n.language as Languages;
   const { handleFilterChange, filters } = useTableFilters();
   const { isFetching, data: branches } = useGetBranchesQuery({ ...filters });
@@ -23,7 +25,7 @@ const BranchesList = () => {
           title={t('branch.branches')}
           handleAdd={{
             title: 'add',
-            onClick: () => {},
+            onClick: () => navigate('new'),
           }}
           onSearch={(value) => handleFilterChange('search', value)}
         />

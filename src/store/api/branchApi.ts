@@ -3,7 +3,7 @@ import { type GetAllBranchesModel, type BranchModel } from '../../@types/branch'
 import { type WithPaginationModel, type ResponseModel, type TableFiltersModel } from '../../@types/common';
 import { removeIdsFromBranchUpsert } from '../../utils/branch';
 
-const branchApi = baseApi.injectEndpoints({
+const branchApi = baseApi.enhanceEndpoints({ addTagTypes: ['BRANCHES_LIST'] }).injectEndpoints({
   endpoints: (build) => ({
     getBranches: build.query<ResponseModel<WithPaginationModel<GetAllBranchesModel>>, TableFiltersModel>({
       query: (args) => ({
@@ -11,6 +11,7 @@ const branchApi = baseApi.injectEndpoints({
         method: 'GET',
         params: { ...args },
       }),
+      providesTags: ['BRANCHES_LIST'],
     }),
     getBranch: build.query<ResponseModel<BranchModel>, string>({
       query: (branchId) => ({
@@ -24,6 +25,7 @@ const branchApi = baseApi.injectEndpoints({
         method: 'POST',
         body: removeIdsFromBranchUpsert(args),
       }),
+      invalidatesTags: () => [{ type: 'BRANCHES_LIST' }],
     }),
     updateBranch: build.query<ResponseModel<BranchModel>, { data: Partial<Omit<BranchModel, '_id'>>; branchId: string }>({
       query: (args) => ({
