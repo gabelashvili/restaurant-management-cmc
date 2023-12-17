@@ -1,5 +1,7 @@
 {
     "common": {
+        "empty" :"",
+        "number_sign": "#",
         "email": "ელ.ფოსტა",
         "password": "ავტორიზაცია",
         "search": "ძებნა",
@@ -80,7 +82,8 @@
             "exception_date_type": "გამონაკლისი თარიღის ტიპი",
             "exception_dates": "გამონაკლისი დღეები",
             "no_exception_dates": "გამონაკლისი დღეები არ არის დამატებული"
-        }
+        },
+        "branch_name": "ფილიალის სახელი"
     },
     "week_days": {
         "title": "კვირის დღეები",

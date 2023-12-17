@@ -21,7 +21,7 @@ const Layout = () => {
       <Navigation openMobileNav={openMobileNav} setOpenMobileNav={setOpenMobileNav} />
       <Box sx={{ height: '100%' }}>
         <Header openMobileNav={openMobileNav} setOpenMobileNav={setOpenMobileNav} />
-        <Box sx={{ mx: 2, my: 4, height: '100%' }}>
+        <Box sx={{ mx: 2, my: 4 }}>
           <Outlet />
         </Box>
       </Box>

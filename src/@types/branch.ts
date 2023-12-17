@@ -45,9 +45,10 @@ export interface BranchModel {
   exceptions: ExceptionDateModel[];
 }
 
-export interface GetAllBranchesModel {
+export type GetAllBranchesModel = Array<{
+  _id: string;
   name: MultiLangModel;
   address: MultiLangModel;
   email: string | null;
   phone: string | null;
-}
+}>;

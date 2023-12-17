@@ -1,11 +1,11 @@
 import baseApi from './baseApi';
-import { type BranchModel } from '../../@types/branch';
-import { type WithPaginationModel, type ResponseModel, type FiltersModel } from '../../@types/common';
+import { type GetAllBranchesModel, type BranchModel } from '../../@types/branch';
+import { type WithPaginationModel, type ResponseModel, type TableFiltersModel } from '../../@types/common';
 import { removeIdsFromBranchUpsert } from '../../utils/branch';
 
 const branchApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getBranches: build.query<ResponseModel<WithPaginationModel<BranchModel>>, FiltersModel>({
+    getBranches: build.query<ResponseModel<WithPaginationModel<GetAllBranchesModel>>, TableFiltersModel>({
       query: (args) => ({
         url: `branches`,
         method: 'GET',

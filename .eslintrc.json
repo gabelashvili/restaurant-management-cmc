@@ -55,6 +55,7 @@
       "@typescript-eslint/promise-function-async": "off",
       "@typescript-eslint/prefer-optional-chain":"off",
       "react/display-name": "off",
+      "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn", // or "error"
         { 
