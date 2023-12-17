@@ -1,6 +1,7 @@
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import { useGetBranchesQuery } from '../../store/api/branchApi';
 import CustomTable from '../shared/CustomTable';
 import CustomTableBodyCell from '../shared/CustomTableBodyCell';
 import CustomTableHeaderCell from '../shared/CustomTableHeaderCell';
@@ -8,11 +9,13 @@ import TableHeader from '../shared/TableHeader';
 
 const BranchesList = () => {
   const { t } = useTranslation();
+  const { isFetching, data: branches } = useGetBranchesQuery({ page: 1, limit: 2 });
+
   return (
     <CustomTable
       header={() => (
         <TableHeader
-          title={t('branches.title')}
+          title={t('branch.branches')}
           handleAdd={{
             title: 'add',
             onClick: () => {},

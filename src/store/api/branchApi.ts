@@ -1,10 +1,17 @@
 import baseApi from './baseApi';
 import { type BranchModel } from '../../@types/branch';
-import { type ResponseModel } from '../../@types/common';
+import { type WithPaginationModel, type ResponseModel, type FiltersModel } from '../../@types/common';
 import { removeIdsFromBranchUpsert } from '../../utils/branch';
 
 const branchApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    getBranches: build.query<ResponseModel<WithPaginationModel<BranchModel>>, FiltersModel>({
+      query: (args) => ({
+        url: `branches`,
+        method: 'GET',
+        params: { ...args },
+      }),
+    }),
     getBranch: build.query<ResponseModel<BranchModel>, string>({
       query: (branchId) => ({
         url: `branches/${branchId}`,
@@ -29,5 +36,5 @@ const branchApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetBranchQuery, useLazyCreateBranchQuery, useLazyUpdateBranchQuery } = branchApi;
+export const { useGetBranchQuery, useLazyCreateBranchQuery, useLazyUpdateBranchQuery, useGetBranchesQuery } = branchApi;
 export default branchApi;

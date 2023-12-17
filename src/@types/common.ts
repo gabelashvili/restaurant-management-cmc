@@ -15,3 +15,15 @@ export interface MultiLangModel {
 }
 
 export type Languages = 'ka' | 'en';
+
+export interface WithPaginationModel<T> {
+  totalPages: number;
+  list: T;
+}
+
+export interface FiltersModel {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortDir?: 'asc' | 'desc';
+}

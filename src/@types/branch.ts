@@ -44,3 +44,10 @@ export interface BranchModel {
   workingHours: BranchWorkingHoursModel;
   exceptions: ExceptionDateModel[];
 }
+
+export interface GetAllBranchesModel {
+  name: MultiLangModel;
+  address: MultiLangModel;
+  email: string | null;
+  phone: string | null;
+}
