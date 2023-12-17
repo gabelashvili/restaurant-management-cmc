@@ -7,7 +7,7 @@ import { type Control, type UseFormTrigger, useFieldArray, Controller } from 're
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid4 } from 'uuid';
 
-import { ExceptionRepeatEnum, type BranchModel } from '../../../@types/bracnh';
+import { ExceptionRepeatEnum, type BranchModel } from '../../../@types/branch';
 import NoDatText from '../../shared/NoDatText';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 interface Props {

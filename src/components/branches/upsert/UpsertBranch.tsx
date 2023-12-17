@@ -2,16 +2,18 @@ import { useEffect } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
+import { cloneDeep } from 'lodash';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuid4 } from 'uuid';
 
 import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
-import { type BranchModel } from '../../../@types/bracnh';
-import { useGetBranchQuery, useLazyCreateBranchQuery } from '../../../store/api/branchApi';
+import { type BranchModel } from '../../../@types/branch';
+import { useGetBranchQuery, useLazyCreateBranchQuery, useLazyUpdateBranchQuery } from '../../../store/api/branchApi';
+import { getDirtyFieldsValues } from '../../../utils/utils';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
@@ -104,21 +106,32 @@ const initialState = {
 };
 
 const UpsertBranch = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { branchId } = useParams();
   const { data: getBranchResponse } = useGetBranchQuery(branchId || '', { skip: !branchId });
-  const [createBranch] = useLazyCreateBranchQuery();
-  const { handleSubmit, getValues, control, trigger, setValue, reset } = useForm<BranchModel>({
+  const [createBranch, { data: createBranchData }] = useLazyCreateBranchQuery();
+  const [updateBranch] = useLazyUpdateBranchQuery();
+  const {
+    handleSubmit,
+    getValues,
+    control,
+    trigger,
+    setValue,
+    reset,
+    formState: { dirtyFields },
+  } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
 
   const onSubmit = handleSubmit(
-    (data) => {
+    async (data) => {
+      const values = getDirtyFieldsValues<BranchModel>(Object.keys(dirtyFields), cloneDeep(data));
       if (branchId) {
-        console.log('edit');
+        updateBranch({ branchId, data: { ...values } });
       } else {
-        createBranch({ ...data });
+        createBranch({ ...values });
       }
     },
     (err) => console.log(err),
@@ -133,6 +146,12 @@ const UpsertBranch = () => {
       });
     }
   }, [getBranchResponse]);
+
+  useEffect(() => {
+    if (createBranchData?.data._id) {
+      navigate(`../edit/${createBranchData?.data._id}`);
+    }
+  }, [createBranchData?.data._id]);
 
   return (
     <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>

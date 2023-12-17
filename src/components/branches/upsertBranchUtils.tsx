@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 
-import { type BranchWorkingHoursModel, type BranchModel } from '../../@types/bracnh';
+import { type BranchWorkingHoursModel, type BranchModel } from '../../@types/branch';
 
 export const branchUpsertReqObject = (data: Partial<BranchModel>) => {
   const formattedData = { ...data };

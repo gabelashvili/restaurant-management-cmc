@@ -4,7 +4,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import { Controller, type Control } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type BranchModel } from '../../../@types/bracnh';
+import { type BranchModel } from '../../../@types/branch';
 import MultiLangTextField from '../../shared/MultiLangTextField';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 

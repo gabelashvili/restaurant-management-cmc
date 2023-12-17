@@ -1,7 +1,7 @@
 import moment from 'moment';
 import * as yup from 'yup';
 
-import { ExceptionRepeatEnum } from '../@types/bracnh';
+import { ExceptionRepeatEnum } from '../@types/branch';
 
 const optionalDateSchema = yup.array().of(
   yup.object().shape({

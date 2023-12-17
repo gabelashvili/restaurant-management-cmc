@@ -10,7 +10,7 @@ import { type Control, Controller, type UseFormTrigger, type UseFormGetValues, t
 import { useTranslation } from 'react-i18next';
 import { v4 as uuid4 } from 'uuid';
 
-import { type BranchWorkingHoursModel, type BranchModel } from '../../../@types/bracnh';
+import { type BranchWorkingHoursModel, type BranchModel } from '../../../@types/branch';
 import UpsertSectionWrapper from '../../shared/UpsertSectionWrapper';
 interface Props {
   control: Control<BranchModel, any>;
@@ -50,7 +50,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
       end: null,
       start: null,
     });
-
+    console.log(data);
     setValue(`workingHours.${day}.data`, data, { shouldDirty: true });
     trigger(`workingHours.${day}`);
   };
@@ -124,7 +124,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
                               trigger(`workingHours.${day}.data.${workingHourI}`);
                             }}
                             inputRef={field.ref}
-                            value={moment(field.value, 'HH:mm')}
+                            defaultValue={moment(field.value, 'HH:mm')}
                           />
                         )}
                       />
@@ -163,7 +163,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue }: Props) =>
                               }}
                               inputRef={field.ref}
                               name={field.name}
-                              value={moment(field.value, 'HH:mm')}
+                              defaultValue={moment(field.value, 'HH:mm')}
                             />
                           )}
                         />

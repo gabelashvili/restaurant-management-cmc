@@ -1,6 +1,7 @@
 import baseApi from './baseApi';
-import { type BranchModel } from '../../@types/bracnh';
+import { type BranchModel } from '../../@types/branch';
 import { type ResponseModel } from '../../@types/common';
+import { removeIdsFromBranchUpsert } from '../../utils/branch';
 
 const branchApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -10,18 +11,18 @@ const branchApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-    createBranch: build.query<ResponseModel<BranchModel>, Omit<BranchModel, '_id'>>({
+    createBranch: build.query<ResponseModel<BranchModel>, Partial<Omit<BranchModel, '_id'>>>({
       query: (args) => ({
         url: `branches`,
         method: 'POST',
-        body: args,
+        body: removeIdsFromBranchUpsert(args),
       }),
     }),
     updateBranch: build.query<ResponseModel<BranchModel>, { data: Partial<Omit<BranchModel, '_id'>>; branchId: string }>({
       query: (args) => ({
         url: `branches/${args.branchId}`,
         method: 'PUT',
-        body: args.data,
+        body: removeIdsFromBranchUpsert(args.data),
       }),
     }),
   }),
