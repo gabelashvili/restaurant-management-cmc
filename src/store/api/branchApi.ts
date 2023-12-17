@@ -19,13 +19,13 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: ['BRANCHES_LIST'] }).i
         method: 'GET',
       }),
     }),
-    createBranch: build.query<ResponseModel<BranchModel>, Partial<Omit<BranchModel, '_id'>>>({
+    createBranch: build.mutation<ResponseModel<BranchModel>, Partial<Omit<BranchModel, '_id'>>>({
       query: (args) => ({
         url: `branches`,
         method: 'POST',
         body: removeIdsFromBranchUpsert(args),
       }),
-      invalidatesTags: () => [{ type: 'BRANCHES_LIST' }],
+      invalidatesTags: ['BRANCHES_LIST'],
     }),
     updateBranch: build.query<ResponseModel<BranchModel>, { data: Partial<Omit<BranchModel, '_id'>>; branchId: string }>({
       query: (args) => ({
@@ -38,5 +38,5 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: ['BRANCHES_LIST'] }).i
   overrideExisting: false,
 });
 
-export const { useGetBranchQuery, useLazyCreateBranchQuery, useLazyUpdateBranchQuery, useGetBranchesQuery } = branchApi;
+export const { useGetBranchQuery, useLazyUpdateBranchQuery, useGetBranchesQuery, useCreateBranchMutation } = branchApi;
 export default branchApi;

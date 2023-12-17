@@ -13,7 +13,7 @@ import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/branch';
-import { useGetBranchQuery, useLazyCreateBranchQuery, useLazyUpdateBranchQuery } from '../../../store/api/branchApi';
+import { useGetBranchQuery, useCreateBranchMutation, useLazyUpdateBranchQuery } from '../../../store/api/branchApi';
 import { getDirtyFieldsValues } from '../../../utils/utils';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
@@ -111,7 +111,7 @@ const UpsertBranch = () => {
   const { t } = useTranslation();
   const { branchId } = useParams();
   const { data: getBranchResponse } = useGetBranchQuery(branchId || '', { skip: !branchId });
-  const [createBranch, { data: createBranchData, isFetching: createBranchIsFetching }] = useLazyCreateBranchQuery();
+  const [createBranch, { data: createBranchData, isLoading }] = useCreateBranchMutation();
   const [updateBranch, { isFetching: updateBranchIsFetching }] = useLazyUpdateBranchQuery();
   const {
     handleSubmit,
@@ -161,7 +161,7 @@ const UpsertBranch = () => {
       <BranchExceptionDates control={control} trigger={trigger} />
       <Divider />
       <LoadingButton
-        loading={createBranchIsFetching || updateBranchIsFetching}
+        loading={isLoading || updateBranchIsFetching}
         variant="contained"
         sx={{ ml: 'auto', display: 'flex', width: 'fit-content' }}
         onClick={onSubmit}
