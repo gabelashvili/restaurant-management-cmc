@@ -1,4 +1,4 @@
-import { Avatar, Box, TableRow, Typography } from '@mui/material';
+import { TableRow } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { type Languages } from '../../@types/common';

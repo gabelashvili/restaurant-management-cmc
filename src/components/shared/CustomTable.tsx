@@ -1,7 +1,6 @@
 import { type FC, type ReactElement } from 'react';
 
 import {
-  Backdrop,
   Box,
   CircularProgress,
   Paper,
