@@ -36,7 +36,6 @@ const BranchesList = () => {
           dispatch(setWarningModalLoading());
           await removeBranch(_id);
           dispatch(closeWarningModal());
-          // refetch();
         },
       }),
     );
