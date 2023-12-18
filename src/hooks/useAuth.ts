@@ -20,8 +20,14 @@ const useAuth = () => {
     }
     try {
       const authData = JSON.parse(storageData) as SignInRespModel;
-      dispatch(setAuthedUserId(authData.userId));
-    } catch (error) {}
+      if (authData.userId) {
+        dispatch(setAuthedUserId(authData.userId));
+      } else {
+        dispatch(setAuthState('not-authorized'));
+      }
+    } catch (error) {
+      dispatch(setAuthState('not-authorized'));
+    }
   };
 
   useEffect(() => {
