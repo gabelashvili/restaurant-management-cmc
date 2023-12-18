@@ -44,7 +44,15 @@ const CustomTableMenu = ({ onEdit, onRemove }: Props) => {
         }}
       >
         {onEdit && (
-          <LoadingButton startIcon={<Edit />} size="small" sx={{ width: '100%', px: 2, justifyContent: 'start' }} onClick={onEdit}>
+          <LoadingButton
+            startIcon={<Edit />}
+            size="small"
+            sx={{ width: '100%', px: 2, justifyContent: 'start' }}
+            onClick={() => {
+              onEdit();
+              setAnchorEl(null);
+            }}
+          >
             {t('common.edit')}
           </LoadingButton>
         )}
@@ -52,7 +60,10 @@ const CustomTableMenu = ({ onEdit, onRemove }: Props) => {
           <LoadingButton
             color="error"
             startIcon={<Delete />}
-            onClick={onRemove}
+            onClick={() => {
+              onRemove();
+              setAnchorEl(null);
+            }}
             size="small"
             sx={{ width: '100%', px: 2, justifyContent: 'start', color: 'error.main' }}
           >

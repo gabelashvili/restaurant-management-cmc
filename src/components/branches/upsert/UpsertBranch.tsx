@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Divider } from '@mui/material';
-import { cloneDeep } from 'lodash';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,8 +12,7 @@ import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/branch';
-import { useGetBranchQuery, useCreateBranchMutation, useLazyUpdateBranchQuery } from '../../../store/api/branchApi';
-import { getDirtyFieldsValues } from '../../../utils/utils';
+import { useGetBranchQuery, useCreateBranchMutation, useUpdateBranchMutation } from '../../../store/api/branchApi';
 import { upsertBranchSchema } from '../../../validations/branch';
 import Container from '../../shared/Container';
 
@@ -111,8 +109,8 @@ const UpsertBranch = () => {
   const { t } = useTranslation();
   const { branchId } = useParams();
   const { data: getBranchResponse } = useGetBranchQuery(branchId || '', { skip: !branchId });
-  const [createBranch, { data: createBranchData, isLoading }] = useCreateBranchMutation();
-  const [updateBranch, { isFetching: updateBranchIsFetching }] = useLazyUpdateBranchQuery();
+  const [createBranch, { data: createBranchData, isLoading: createBranchIsLoading }] = useCreateBranchMutation();
+  const [updateBranch, { isLoading: updateBranchIsLoading }] = useUpdateBranchMutation();
   const {
     handleSubmit,
     getValues,
@@ -120,7 +118,7 @@ const UpsertBranch = () => {
     trigger,
     setValue,
     reset,
-    formState: { dirtyFields },
+    formState: { isDirty },
   } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
@@ -128,11 +126,10 @@ const UpsertBranch = () => {
 
   const onSubmit = handleSubmit(
     async (data) => {
-      const values = getDirtyFieldsValues<BranchModel>(Object.keys(dirtyFields), cloneDeep(data));
       if (branchId) {
-        updateBranch({ branchId, data: { ...values } });
+        updateBranch({ branchId, data: { ...data } });
       } else {
-        createBranch({ ...values });
+        createBranch({ ...data });
       }
     },
     (err) => console.log(err),
@@ -155,16 +152,21 @@ const UpsertBranch = () => {
   }, [createBranchData?.data._id]);
 
   return (
-    <Container title={t('branch.add')} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+    <Container
+      title={t(`branch.upsert.${branchId ? 'update' : 'add'}`)}
+      centerTitle
+      sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}
+    >
       <BranchGeneralInfo control={control} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} setValue={setValue} />
       <BranchExceptionDates control={control} trigger={trigger} />
       <Divider />
       <LoadingButton
-        loading={isLoading || updateBranchIsFetching}
+        loading={createBranchIsLoading || updateBranchIsLoading}
         variant="contained"
         sx={{ ml: 'auto', display: 'flex', width: 'fit-content' }}
         onClick={onSubmit}
+        disabled={!isDirty}
       >
         {t(branchId ? `common.update` : `common.add`)}
       </LoadingButton>

@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { type Languages } from '../../@types/common';
+import { useAppDispatch } from '../../hooks/store';
 import useTableFilters from '../../hooks/useTableFilters';
-import { useGetBranchesQuery } from '../../store/api/branchApi';
+import { useGetBranchesQuery, useRemoveBranchMutation } from '../../store/api/branchApi';
+import { closeWarningModal, setWarningModal, setWarningModalLoading } from '../../store/slices/warningModalSlice';
 import CustomTable from '../shared/table/CustomTable';
 import CustomTableBodyCell from '../shared/table/CustomTableBodyCell';
 import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
@@ -12,13 +14,33 @@ import CustomTableMenu from '../shared/table/CustomTableMenu';
 import TableHeader from '../shared/TableHeader';
 
 const BranchesList = () => {
+  const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const lang = i18n.language as Languages;
   const { handleFilterChange, filters } = useTableFilters();
   const { isFetching, data: branches } = useGetBranchesQuery({ ...filters });
+  const [removeBranch] = useRemoveBranchMutation();
 
   const handleEdit = (id: string) => navigate(`edit/${id}`);
+
+  const handleRemove = (_id: string, name: string) => {
+    dispatch(
+      setWarningModal({
+        open: true,
+        title: t('branch.upsert.remove'),
+        description: t('branch.upsert.remove_desc', {
+          branch: name,
+        }),
+        onAgree: async () => {
+          dispatch(setWarningModalLoading());
+          await removeBranch(_id);
+          dispatch(closeWarningModal());
+          // refetch();
+        },
+      }),
+    );
+  };
 
   return (
     <CustomTable
@@ -27,7 +49,7 @@ const BranchesList = () => {
         <TableHeader
           title={t('branch.branches')}
           handleAdd={{
-            title: t('branch.add'),
+            title: t('branch.upsert.add'),
             onClick: () => navigate('new'),
           }}
           onSearch={(value) => handleFilterChange('search', value)}
@@ -38,11 +60,11 @@ const BranchesList = () => {
         branches?.data.list.map((item) => (
           <TableRow key={item._id} hover>
             <CustomTableBodyCell align={headers[0].align}>{item.name[lang]}</CustomTableBodyCell>
-            <CustomTableBodyCell align={headers[1].align}>{item.name[lang]}</CustomTableBodyCell>
-            <CustomTableBodyCell align={headers[2].align}>{item.name[lang]}</CustomTableBodyCell>
-            <CustomTableBodyCell align={headers[3].align}>{item.address[lang]}</CustomTableBodyCell>
+            <CustomTableBodyCell align={headers[1].align}>{item.address[lang]}</CustomTableBodyCell>
+            <CustomTableBodyCell align={headers[2].align}>{item.email || '-'}</CustomTableBodyCell>
+            <CustomTableBodyCell align={headers[3].align}>{item.phone || '-'}</CustomTableBodyCell>
             <CustomTableBodyCell align={headers[4].align}>
-              <CustomTableMenu onEdit={() => handleEdit(item._id)} />
+              <CustomTableMenu onEdit={() => handleEdit(item._id)} onRemove={() => handleRemove(item._id, item.name[lang])} />
             </CustomTableBodyCell>
           </TableRow>
         ))
