@@ -12,7 +12,6 @@ import { type UpdateDetailModel } from '../../../@types/auth';
 import { useAppSelector } from '../../../hooks/store';
 import { useLazyUpdateDetailsQuery } from '../../../store/api/authApi';
 import { updateUserData } from '../../../store/slices/authSlice';
-import { getDirtyFieldsValues } from '../../../utils/utils';
 import { updateDetailSchema } from '../../../validations/user';
 import SettingsComponentContainer from '../SettingsComponentContainer';
 
@@ -24,7 +23,7 @@ const UpdateBaseInfo = () => {
 
   const {
     handleSubmit,
-    formState: { isDirty, errors, dirtyFields },
+    formState: { isDirty, errors },
     setValue,
     watch,
     reset,
@@ -38,8 +37,7 @@ const UpdateBaseInfo = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const reqData = getDirtyFieldsValues<Omit<UpdateDetailModel, '_id'>>(dirtyFields, data);
-    const response = await updateDetails({ ...reqData });
+    const response = await updateDetails({ ...data });
     if (response.data) {
       reset({ ...data });
       dispatch(updateUserData({ ...data }));
