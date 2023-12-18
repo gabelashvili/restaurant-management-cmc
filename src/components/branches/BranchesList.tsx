@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { type Languages } from '../../@types/common';
 import useTableFilters from '../../hooks/useTableFilters';
 import { useGetBranchesQuery } from '../../store/api/branchApi';
-import CustomTable from '../shared/CustomTable';
-import CustomTableBodyCell from '../shared/CustomTableBodyCell';
-import CustomTableHeaderCell from '../shared/CustomTableHeaderCell';
+import CustomTable from '../shared/table/CustomTable';
+import CustomTableBodyCell from '../shared/table/CustomTableBodyCell';
+import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
+import CustomTableMenu from '../shared/table/CustomTableMenu';
 import TableHeader from '../shared/TableHeader';
 
 const BranchesList = () => {
@@ -17,6 +18,8 @@ const BranchesList = () => {
   const { handleFilterChange, filters } = useTableFilters();
   const { isFetching, data: branches } = useGetBranchesQuery({ ...filters });
 
+  const handleEdit = (id: string) => navigate(`edit/${id}`);
+
   return (
     <CustomTable
       loading={isFetching}
@@ -24,7 +27,7 @@ const BranchesList = () => {
         <TableHeader
           title={t('branch.branches')}
           handleAdd={{
-            title: 'add',
+            title: t('branch.add'),
             onClick: () => navigate('new'),
           }}
           onSearch={(value) => handleFilterChange('search', value)}
@@ -32,23 +35,25 @@ const BranchesList = () => {
       )}
       renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={t(el.label)} />)}
       renderTableBody={() =>
-        branches?.data.list.map((item, i) => (
+        branches?.data.list.map((item) => (
           <TableRow key={item._id} hover>
-            <CustomTableBodyCell align={headers[0].align} width={'10%'}>{`${i + 1 < 10 ? `0${i + 1}` : i + 1}`}</CustomTableBodyCell>
+            <CustomTableBodyCell align={headers[0].align}>{item.name[lang]}</CustomTableBodyCell>
             <CustomTableBodyCell align={headers[1].align}>{item.name[lang]}</CustomTableBodyCell>
             <CustomTableBodyCell align={headers[2].align}>{item.name[lang]}</CustomTableBodyCell>
-            <CustomTableBodyCell align={headers[3].align}>{item.name[lang]}</CustomTableBodyCell>
-            <CustomTableBodyCell align={headers[4].align}>{item.address[lang]}</CustomTableBodyCell>
+            <CustomTableBodyCell align={headers[3].align}>{item.address[lang]}</CustomTableBodyCell>
+            <CustomTableBodyCell align={headers[4].align}>
+              <CustomTableMenu onEdit={() => handleEdit(item._id)} />
+            </CustomTableBodyCell>
           </TableRow>
         ))
       }
-      dataCount={branches?.data.list.length || 0}
       paginationOpts={{
         count: branches?.data.count || 0,
         limit: filters.limit,
         onPageChange: (page) => handleFilterChange('page', page),
         onLimitChange: (limit) => handleFilterChange('limit', limit),
         page: filters.page,
+        dataCount: branches?.data.list.length || 0,
       }}
     />
   );
@@ -57,10 +62,6 @@ const BranchesList = () => {
 export default BranchesList;
 
 const headers = [
-  {
-    label: 'common.number_sign' as const,
-    align: 'left' as const,
-  },
   {
     label: 'branch.branch_name' as const,
     align: 'left' as const,
@@ -76,5 +77,9 @@ const headers = [
   {
     label: 'common.phone_number' as const,
     align: 'center' as const,
+  },
+  {
+    label: 'common.empty' as const,
+    align: 'right' as const,
   },
 ];

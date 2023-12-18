@@ -1,8 +1,8 @@
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 
-import CustomTable from '../shared/CustomTable';
-import CustomTableBodyCell from '../shared/CustomTableBodyCell';
-import CustomTableHeaderCell from '../shared/CustomTableHeaderCell';
+import CustomTable from '../shared/table/CustomTable';
+import CustomTableBodyCell from '../shared/table/CustomTableBodyCell';
+import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
 import TableHeader from '../shared/TableHeader';
 
 const EmployeesList = () => {

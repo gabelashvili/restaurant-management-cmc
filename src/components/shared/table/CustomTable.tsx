@@ -24,9 +24,9 @@ interface CustomTableProps {
     onPageChange: (page: number) => void;
     onLimitChange: (limit: number) => void;
     page: number;
+    dataCount: number;
   };
   loading?: boolean;
-  dataCount: number;
 }
 
 const renderEmptyCells = (count: number) =>
@@ -36,7 +36,7 @@ const renderEmptyCells = (count: number) =>
     </TableRow>
   ));
 
-const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, dataCount, loading }) => {
+const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading }) => {
   return (
     <TableContainer component={Paper} sx={{ display: 'grid' }}>
       {header && header()}
@@ -47,7 +47,7 @@ const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTabl
           </TableHead>
           <TableBody>
             {renderTableBody()}
-            {paginationOpts && renderEmptyCells(paginationOpts.limit - dataCount)}
+            {paginationOpts && renderEmptyCells(paginationOpts.limit - paginationOpts.dataCount)}
           </TableBody>
           {loading && (
             <Box

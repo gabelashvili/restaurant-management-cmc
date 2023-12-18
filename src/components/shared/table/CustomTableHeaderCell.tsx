@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { TableCell } from '@mui/material';
 
-import { type TableHeaderCellModel } from '../../@types/custom-table';
+import { type TableHeaderCellModel } from '../../../@types/custom-table';
 
 const CustomTableHeaderCell: FC<TableHeaderCellModel> = (props) => {
   const { align, label } = props;
