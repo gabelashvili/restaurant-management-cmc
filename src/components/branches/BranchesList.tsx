@@ -74,7 +74,7 @@ const BranchesList = () => {
         onPageChange: (page) => handleFilterChange('page', page),
         onLimitChange: (limit) => handleFilterChange('limit', limit),
         page: filters.page,
-        dataCount: branches?.data.list.length || 0,
+        visibleDataCount: branches?.data.list.length || 0,
       }}
     />
   );

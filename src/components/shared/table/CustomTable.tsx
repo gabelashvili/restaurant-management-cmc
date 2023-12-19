@@ -13,6 +13,9 @@ import {
   TableRow,
 } from '@mui/material';
 import Scrollbars from 'react-custom-scrollbars';
+import { useTranslation } from 'react-i18next';
+
+import NoDatText from '../NoDatText';
 
 interface CustomTableProps {
   header?: () => ReactElement;
@@ -24,7 +27,7 @@ interface CustomTableProps {
     onPageChange: (page: number) => void;
     onLimitChange: (limit: number) => void;
     page: number;
-    dataCount: number;
+    visibleDataCount: number;
   };
   loading?: boolean;
 }
@@ -37,6 +40,9 @@ const renderEmptyCells = (count: number) =>
   ));
 
 const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading }) => {
+  const { t } = useTranslation();
+  console.log(paginationOpts?.visibleDataCount);
+
   return (
     <TableContainer component={Paper} sx={{ display: 'grid' }}>
       {header && header()}
@@ -47,7 +53,7 @@ const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTabl
           </TableHead>
           <TableBody>
             {renderTableBody()}
-            {paginationOpts && renderEmptyCells(paginationOpts.limit - paginationOpts.dataCount)}
+            {paginationOpts && renderEmptyCells(paginationOpts.limit - paginationOpts.visibleDataCount)}
           </TableBody>
           {loading && (
             <Box
@@ -64,6 +70,21 @@ const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTabl
             >
               <CircularProgress />
             </Box>
+          )}
+          {!loading && paginationOpts?.visibleDataCount === 0 && (
+            <NoDatText
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              text={t('common.data_not_found')}
+            />
           )}
         </Table>
       </Scrollbars>

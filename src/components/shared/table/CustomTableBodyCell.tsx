@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { TableCell } from '@mui/material';
 
-import { type TableBodyCellModel } from '../../@types/custom-table';
+import { type TableBodyCellModel } from '../../../@types/custom-table';
 
 const CustomTableBodyCell: FC<TableBodyCellModel> = (props) => {
   const { children, align, width } = props;
