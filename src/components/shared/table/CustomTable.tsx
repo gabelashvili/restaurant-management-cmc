@@ -41,7 +41,6 @@ const renderEmptyCells = (count: number) =>
 
 const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading }) => {
   const { t } = useTranslation();
-  console.log(paginationOpts?.visibleDataCount);
 
   return (
     <TableContainer component={Paper} sx={{ display: 'grid' }}>
