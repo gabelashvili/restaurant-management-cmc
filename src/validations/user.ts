@@ -1,5 +1,7 @@
 import * as yup from 'yup';
 
+import { multiLangSchema } from './common-schemas';
+
 export const signInSchema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().required(),
@@ -32,4 +34,17 @@ export const updatePasswordSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref('newPassword')])
     .required(),
+});
+
+export const upsertUserSchema = yup.object().shape({
+  firstName: multiLangSchema.required(),
+  lastName: multiLangSchema.required(),
+  email: yup
+    .string()
+    .matches(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    )
+    .required(),
+  roleId: yup.string().required().nullable(),
+  phone: yup.string().required(),
 });

@@ -1,3 +1,5 @@
+import { type MultiLangModel } from './common';
+
 export interface RoleModel {
   roleName: string;
   roleId: number;
@@ -9,6 +11,14 @@ export interface UserModel {
   lastName: string;
   email: string;
   avatar: null | string;
-  role: RoleModel;
+  role: RoleModel | null;
   _id: string;
+}
+
+export interface AddNewUserModel {
+  firstName: MultiLangModel;
+  lastName: MultiLangModel;
+  email: string;
+  roleId: string | null;
+  phone: string;
 }

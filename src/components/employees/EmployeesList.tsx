@@ -1,5 +1,6 @@
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 
+import UpsertEmployeeModal from './UpsertEmployeeModal';
 import CustomTable from '../shared/table/CustomTable';
 import CustomTableBodyCell from '../shared/table/CustomTableBodyCell';
 import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
@@ -7,28 +8,31 @@ import TableHeader from '../shared/TableHeader';
 
 const EmployeesList = () => {
   return (
-    <CustomTable
-      header={() => <TableHeader title="თანამშრომლები" />}
-      renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={el.label} />)}
-      renderTableBody={() =>
-        list.map((item, i) => (
-          <TableRow key={item.id} hover>
-            <CustomTableBodyCell width={'5%'}>{`${i + 1 < 10 ? `0${i + 1}` : i + 1}`}</CustomTableBodyCell>
-            <CustomTableBodyCell width="20%">
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                {item.avatar ? <Avatar src={item.avatar} /> : <Avatar>{`${item.firstName[0]}${item.lastName[0]}`}</Avatar>}
-                <Box>
-                  <Typography>{`${item.firstName} ${item.lastName} `}</Typography>
-                  <Typography sx={{ color: 'text.disabled' }}>{item.email}</Typography>
+    <>
+      <UpsertEmployeeModal />
+      <CustomTable
+        header={() => <TableHeader title="თანამშრომლები" />}
+        renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={el.label} />)}
+        renderTableBody={() =>
+          list.map((item, i) => (
+            <TableRow key={item.id} hover>
+              <CustomTableBodyCell width={'5%'}>{`${i + 1 < 10 ? `0${i + 1}` : i + 1}`}</CustomTableBodyCell>
+              <CustomTableBodyCell width="20%">
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  {item.avatar ? <Avatar src={item.avatar} /> : <Avatar>{`${item.firstName[0]}${item.lastName[0]}`}</Avatar>}
+                  <Box>
+                    <Typography>{`${item.firstName} ${item.lastName} `}</Typography>
+                    <Typography sx={{ color: 'text.disabled' }}>{item.email}</Typography>
+                  </Box>
                 </Box>
-              </Box>
-            </CustomTableBodyCell>
-            <CustomTableBodyCell align="center">{item.firstName}</CustomTableBodyCell>
-            <CustomTableBodyCell align="center">{item.firstName}</CustomTableBodyCell>
-          </TableRow>
-        ))
-      }
-    />
+              </CustomTableBodyCell>
+              <CustomTableBodyCell align="center">{item.firstName}</CustomTableBodyCell>
+              <CustomTableBodyCell align="center">{item.firstName}</CustomTableBodyCell>
+            </TableRow>
+          ))
+        }
+      />
+    </>
   );
 };
 

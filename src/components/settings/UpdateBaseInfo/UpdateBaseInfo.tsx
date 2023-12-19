@@ -67,13 +67,13 @@ const UpdateBaseInfo = () => {
             <TextField
               onChange={(e) => setValue('firstName', e.target.value, { shouldDirty: true, shouldValidate: true })}
               value={watch('firstName')}
-              label={t('common.firstName')}
+              label={t('common.first_name')}
               error={!!errors.firstName}
             />
             <TextField
               onChange={(e) => setValue('lastName', e.target.value, { shouldDirty: true, shouldValidate: true })}
               value={watch('lastName')}
-              label={t('common.lastName')}
+              label={t('common.last_name')}
               error={!!errors.lastName}
             />
             <TextField

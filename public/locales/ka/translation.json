@@ -6,8 +6,8 @@
         "password": "ავტორიზაცია",
         "search": "ძებნა",
         "role": "როლი",
-        "firstName": "სახელი",
-        "lastName": "გვარი",
+        "first_name": "სახელი",
+        "last_name": "გვარი",
         "save": "შენახვა",
         "cancel":"გაუქმება",
         "address": "მისამართი",
@@ -104,6 +104,7 @@
         "saturday": "შაბათი",
         "sunday": "კვირა"
     },
-    "manager": {
+    "employee": {
+        "add": "თანამშრომლის დამატება"
     }
 }
