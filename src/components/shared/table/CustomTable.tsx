@@ -41,7 +41,6 @@ const renderEmptyCells = (count: number) =>
 
 const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading }) => {
   const { t } = useTranslation();
-
   return (
     <TableContainer component={Paper} sx={{ display: 'grid' }}>
       {header && header()}
@@ -53,41 +52,45 @@ const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTabl
           <TableBody>
             {renderTableBody()}
             {paginationOpts && renderEmptyCells(paginationOpts.limit - paginationOpts.visibleDataCount)}
+            <tr>
+              <td>
+                {loading && (
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <CircularProgress />
+                  </Box>
+                )}
+                {!loading && paginationOpts?.visibleDataCount === 0 && (
+                  <NoDatText
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                    text={t('common.data_not_found')}
+                  />
+                )}
+              </td>
+            </tr>
           </TableBody>
-          {loading && (
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
-          {!loading && paginationOpts?.visibleDataCount === 0 && (
-            <NoDatText
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              text={t('common.data_not_found')}
-            />
-          )}
         </Table>
       </Scrollbars>
-      {paginationOpts && (
+      {paginationOpts && !loading && paginationOpts?.visibleDataCount !== 0 && (
         <TablePagination
           sx={{ m: 3, display: 'flex', justifyContent: 'flex-end' }}
           count={paginationOpts.count}
