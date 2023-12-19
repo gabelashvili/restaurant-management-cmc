@@ -8,14 +8,15 @@ export const signInSchema = yup.object().shape({
 });
 
 export const updateDetailSchema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  firstName: multiLangSchema,
+  lastName: multiLangSchema,
   email: yup
     .string()
     .matches(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     )
     .required(),
+  phone: yup.string().required(),
 });
 
 export const updatePasswordSchema = yup.object().shape({
@@ -45,6 +46,6 @@ export const upsertUserSchema = yup.object().shape({
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     )
     .required(),
-  roleId: yup.string().required().nullable(),
+  roleId: yup.string().required(),
   phone: yup.string().required(),
 });

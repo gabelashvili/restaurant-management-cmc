@@ -7,11 +7,12 @@ export interface RoleModel {
 }
 
 export interface UserModel {
-  firstName: string;
-  lastName: string;
+  firstName: MultiLangModel;
+  lastName: MultiLangModel;
   email: string;
   avatar: null | string;
   role: RoleModel | null;
+  phone: string;
   _id: string;
 }
 
@@ -19,6 +20,6 @@ export interface AddNewUserModel {
   firstName: MultiLangModel;
   lastName: MultiLangModel;
   email: string;
-  roleId: string | null;
+  roleId: string;
   phone: string;
 }

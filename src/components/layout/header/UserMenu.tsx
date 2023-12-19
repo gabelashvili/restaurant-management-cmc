@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { type Languages } from '../../../@types/common';
 import { useAppSelector } from '../../../hooks/store';
 import { logOut } from '../../../store/slices/authSlice';
 import { generateAvatarImage } from '../../../utils/utils';
 
 const UserMenu = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as Languages;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useAppSelector((state) => state.auth);
@@ -34,9 +36,9 @@ const UserMenu = () => {
           <Avatar sx={{ width: 35, height: 35 }} />
 
           <Box>
-            <Typography>{`${user?.firstName} ${user?.lastName}`}</Typography>
+            <Typography>{`${user?.firstName[lang]} ${user?.lastName[lang]}`}</Typography>
             <Typography display="block" fontWeight={500} color="text.disabled">
-              {user?.role.roleName}
+              {user?.role?.roleName}
             </Typography>
           </Box>
         </Box>

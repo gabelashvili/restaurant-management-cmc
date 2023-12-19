@@ -22,7 +22,7 @@ const UpsertEmployeeModal = () => {
         ka: '',
         en: '',
       },
-      roleId: null,
+      roleId: '',
       phone: '',
     },
     resolver: yupResolver(upsertUserSchema),
@@ -33,7 +33,7 @@ const UpsertEmployeeModal = () => {
   });
 
   return (
-    <Dialog open PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
+    <Dialog open={false} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
       <DialogTitle>{t('employee.add')}</DialogTitle>
       <Divider />
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -109,8 +109,8 @@ const UpsertEmployeeModal = () => {
               fullWidth
               label={t('common.role')}
               error={!!params.fieldState.error}
-              inputProps={{ ...params.field, value: params.field.value || '' }}
-              onChange={(e) => params.field.onChange(e.target.value || null)}
+              inputProps={{ ...params.field, value: params.field.value }}
+              onChange={(e) => params.field.onChange(e.target.value)}
             />
           )}
         />

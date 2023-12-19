@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Box, FormControlLabel, FormGroup, Paper, Switch, TextField } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ import { useAppSelector } from '../../../hooks/store';
 import { useLazyUpdateDetailsQuery } from '../../../store/api/authApi';
 import { updateUserData } from '../../../store/slices/authSlice';
 import { updateDetailSchema } from '../../../validations/user';
+import MultiLangTextField from '../../shared/MultiLangTextField';
 import SettingsComponentContainer from '../SettingsComponentContainer';
 
 const UpdateBaseInfo = () => {
@@ -23,15 +24,21 @@ const UpdateBaseInfo = () => {
 
   const {
     handleSubmit,
-    formState: { isDirty, errors },
-    setValue,
-    watch,
+    formState: { isDirty },
     reset,
+    control,
   } = useForm<Omit<UpdateDetailModel, '_id'>>({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      firstName: {
+        ka: '',
+        en: '',
+      },
+      lastName: {
+        ka: '',
+        en: '',
+      },
       email: '',
+      phone: '',
     },
     resolver: yupResolver(updateDetailSchema),
   });
@@ -50,6 +57,7 @@ const UpdateBaseInfo = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        phone: user.phone,
       });
     }
   };
@@ -64,25 +72,54 @@ const UpdateBaseInfo = () => {
         <UpdateAvatar />
         <SettingsComponentContainer title={t('auth.settings.update_details')}>
           <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: { xs: '1fr', xl: '1fr 1fr' } }}>
-            <TextField
-              onChange={(e) => setValue('firstName', e.target.value, { shouldDirty: true, shouldValidate: true })}
-              value={watch('firstName')}
-              label={t('common.first_name')}
-              error={!!errors.firstName}
+            <Controller
+              control={control}
+              name={`firstName`}
+              render={(params) => (
+                <MultiLangTextField
+                  fullWidth
+                  label={t('common.first_name')}
+                  required
+                  onChange={params.field.onChange}
+                  value={params.field.value}
+                  error={!!params.fieldState.error}
+                  ref={params.field.ref}
+                />
+              )}
             />
-            <TextField
-              onChange={(e) => setValue('lastName', e.target.value, { shouldDirty: true, shouldValidate: true })}
-              value={watch('lastName')}
-              label={t('common.last_name')}
-              error={!!errors.lastName}
+            <Controller
+              control={control}
+              name={`lastName`}
+              render={(params) => (
+                <MultiLangTextField
+                  fullWidth
+                  label={t('common.last_name')}
+                  required
+                  onChange={params.field.onChange}
+                  value={params.field.value}
+                  error={!!params.fieldState.error}
+                  ref={params.field.ref}
+                />
+              )}
             />
-            <TextField
-              onChange={(e) => setValue('email', e.target.value, { shouldDirty: true, shouldValidate: true })}
-              value={watch('email')}
-              label={t('common.email')}
-              error={!!errors.email}
+            <Controller
+              control={control}
+              name={`phone`}
+              defaultValue={''}
+              render={(params) => (
+                <TextField fullWidth label={t('common.phone_number')} error={!!params.fieldState.error} inputProps={{ ...params.field }} />
+              )}
             />
-            <TextField disabled value={user?.role.roleName} label={t('common.role')} />
+            <Controller
+              control={control}
+              name={`email`}
+              defaultValue={''}
+              render={(params) => (
+                <TextField fullWidth label={t('common.email')} error={!!params.fieldState.error} inputProps={{ ...params.field }} />
+              )}
+            />
+
+            <TextField disabled value={user?.role?.roleName} label={t('common.role')} />
             <FormGroup>
               <FormControlLabel control={<Switch defaultChecked />} label="Show notifications" />
               <FormControlLabel control={<Switch />} label="Show notifications" />
