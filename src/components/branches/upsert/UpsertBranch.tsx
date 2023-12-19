@@ -108,7 +108,7 @@ const UpsertBranch = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { branchId } = useParams();
-  const { data: getBranchResponse } = useGetBranchQuery(branchId || '', { skip: !branchId });
+  const { data: getBranchResponse } = useGetBranchQuery(branchId, { skip: !branchId });
   const [createBranch, { data: createBranchData, isLoading: createBranchIsLoading }] = useCreateBranchMutation();
   const [updateBranch, { isLoading: updateBranchIsLoading }] = useUpdateBranchMutation();
   const {

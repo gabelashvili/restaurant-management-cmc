@@ -18,7 +18,7 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
       }),
       providesTags: [branchApiTags.getBranchList],
     }),
-    getBranch: build.query<ResponseModel<BranchModel>, string>({
+    getBranch: build.query<ResponseModel<BranchModel>, string | undefined>({
       query: (branchId) => ({
         url: `branches/${branchId}`,
         method: 'GET',
