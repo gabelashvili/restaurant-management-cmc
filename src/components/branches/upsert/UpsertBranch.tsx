@@ -108,7 +108,7 @@ const UpsertBranch = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { branchId } = useParams();
-  const { data: getBranchResponse } = useGetBranchQuery(branchId, { skip: !branchId });
+  const { data: getBranchResponse, isFetching: branchDataFetching } = useGetBranchQuery(branchId, { skip: !branchId });
   const [createBranch, { data: createBranchData, isLoading: createBranchIsLoading }] = useCreateBranchMutation();
   const [updateBranch, { isLoading: updateBranchIsLoading }] = useUpdateBranchMutation();
   const {
@@ -157,9 +157,9 @@ const UpsertBranch = () => {
       centerTitle
       sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}
     >
-      <BranchGeneralInfo control={control} />
-      <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} setValue={setValue} />
-      <BranchExceptionDates control={control} trigger={trigger} />
+      <BranchGeneralInfo control={control} loading={branchDataFetching} />
+      <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} setValue={setValue} loading={branchDataFetching} />
+      <BranchExceptionDates control={control} trigger={trigger} loading={branchDataFetching} />
       <Divider />
       <LoadingButton
         loading={createBranchIsLoading || updateBranchIsLoading}
