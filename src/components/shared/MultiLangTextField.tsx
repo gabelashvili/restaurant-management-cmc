@@ -55,19 +55,22 @@ const MultiLangTextField = forwardRef<Props, any>(({ label, fullWidth, variant, 
                 <Box sx={{ fontSize: 22 }}>{languages.find((el) => el.key === selectedLang)?.icon}</Box>
               </IconButton>
               <Menu MenuListProps={{ sx: { p: 0 } }} anchorEl={anchorEl} open={!!anchorEl} onClose={() => setAnchorEl(null)}>
-                {languages.map((el) => (
-                  <ListItemButton
-                    selected={el.key === selectedLang}
-                    key={el.key}
-                    onClick={() => {
-                      setSelectedLang(el.key);
-                      setAnchorEl(null);
-                    }}
-                  >
-                    <ListItemIcon sx={{ minWidth: 0, color: 'inherit', mr: 1.5, fontSize: 18 }}>{el.icon}</ListItemIcon>
-                    <ListItemText primaryTypographyProps={{ fontSize: 14 }}>{el.label}</ListItemText>
-                  </ListItemButton>
-                ))}
+                {languages.map(
+                  (el) =>
+                    el.key !== selectedLang && (
+                      <ListItemButton
+                        selected={el.key === selectedLang}
+                        key={el.key}
+                        onClick={() => {
+                          setSelectedLang(el.key);
+                          setAnchorEl(null);
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 0, color: 'inherit', mr: 1.5, fontSize: 18 }}>{el.icon}</ListItemIcon>
+                        <ListItemText primaryTypographyProps={{ fontSize: 14 }}>{el.label}</ListItemText>
+                      </ListItemButton>
+                    ),
+                )}
               </Menu>
             </InputAdornment>
           ),
