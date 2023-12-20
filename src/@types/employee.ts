@@ -16,10 +16,6 @@ export interface EmployeeModel {
   _id: string;
 }
 
-export interface AddNewEmployeeModel {
-  firstName: MultiLangModel;
-  lastName: MultiLangModel;
-  email: string;
+export interface UpsertEmployeeModel extends Omit<EmployeeModel, 'role' | '_id' | 'avatar'> {
   roleId: string;
-  phone: string;
 }

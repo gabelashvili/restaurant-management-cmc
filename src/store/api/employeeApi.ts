@@ -1,20 +1,19 @@
 import baseApi from './baseApi';
-import { type BranchModel } from '../../@types/branch';
 import { type ResponseModel } from '../../@types/common';
-import { removeIdsFromBranchUpsert } from '../../utils/branch';
+import { type UpsertEmployeeModel } from '../../@types/employee';
 
-const branchApi = baseApi.injectEndpoints({
+const employeeApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    createEmployee: build.mutation<ResponseModel<BranchModel>, Partial<Omit<BranchModel, '_id'>>>({
+    createEmployee: build.mutation<ResponseModel<null>, UpsertEmployeeModel>({
       query: (args) => ({
-        url: `branches`,
+        url: `employees`,
         method: 'POST',
-        body: removeIdsFromBranchUpsert(args),
+        body: args,
       }),
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useCreateEmployeeMutation } = branchApi;
-export default branchApi;
+export const { useCreateEmployeeMutation } = employeeApi;
+export default employeeApi;

@@ -4,14 +4,16 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Tex
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type AddNewEmployeeModel } from '../../@types/employee';
+import { type UpsertEmployeeModel } from '../../@types/employee';
+import { useCreateEmployeeMutation } from '../../store/api/employeeApi';
 import { upsertEmployeeSchema } from '../../validations/employee-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
 
 const UpsertEmployeeModal = () => {
   const { t } = useTranslation();
+  const [createEmployee, { isLoading: createEmployeeLoading }] = useCreateEmployeeMutation();
 
-  const { handleSubmit, control, reset } = useForm<AddNewEmployeeModel>({
+  const { handleSubmit, control, reset } = useForm<UpsertEmployeeModel>({
     defaultValues: {
       email: '',
       firstName: {
@@ -29,11 +31,11 @@ const UpsertEmployeeModal = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    createEmployee(data);
   });
 
   return (
-    <Dialog open={false} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
+    <Dialog open={true} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
       <DialogTitle>{t('employee.add')}</DialogTitle>
       <Divider />
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -118,7 +120,7 @@ const UpsertEmployeeModal = () => {
       <Divider sx={{ my: 2 }} />
       <DialogActions>
         <Button color="error">{t('common.cancel')}</Button>
-        <LoadingButton color="success" onClick={onSubmit}>
+        <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading}>
           {t('common.add')}
         </LoadingButton>
       </DialogActions>
