@@ -5,13 +5,15 @@ import { Avatar, Box, Collapse, ListItemButton, ListItemIcon, ListItemText, Typo
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { type Languages } from '../../../@types/common';
 import routes from '../../../helpers/routes';
 import { useAppSelector } from '../../../hooks/store';
 import { generateAvatarImage } from '../../../utils/utils';
 import Logo from '../../shared/Logo';
 
 const NavigationList = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as Languages;
   const navigate = useNavigate();
   const location = useLocation();
   const user = useAppSelector((state) => state.auth.user);
@@ -33,7 +35,7 @@ const NavigationList = () => {
       </Box>
       <Box sx={{ my: 5, display: 'flex', alignItems: 'center', gap: 2, bgcolor: 'secondary.200', p: 2, borderRadius: 2 }}>
         <Avatar src={generateAvatarImage(null, user?.avatar)} />
-        <Typography>Lasha Gabelashvili</Typography>
+        <Typography>{`${user?.firstName[lang]} ${user?.lastName[lang]}`}</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
         {Object.values(routes).map((route) => (
