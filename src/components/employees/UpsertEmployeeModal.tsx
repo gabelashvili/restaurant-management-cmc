@@ -4,14 +4,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Tex
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type AddNewUserModel } from '../../@types/user';
+import { type AddNewEmployeeModel } from '../../@types/employee';
 import { upsertUserSchema } from '../../validations/user';
 import MultiLangTextField from '../shared/MultiLangTextField';
 
 const UpsertEmployeeModal = () => {
   const { t } = useTranslation();
 
-  const { handleSubmit, control, reset } = useForm<AddNewUserModel>({
+  const { handleSubmit, control, reset } = useForm<AddNewEmployeeModel>({
     defaultValues: {
       email: '',
       firstName: {

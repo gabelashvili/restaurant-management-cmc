@@ -1,7 +1,7 @@
 import baseApi from './baseApi';
 import { type SignInRespModel, type SignInModel, type UpdatePasswordModel, type UpdateDetailModel } from '../../@types/auth';
 import { type ResponseModel } from '../../@types/common';
-import { type UserModel } from '../../@types/user';
+import { type EmployeeModel } from '../../@types/employee';
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -12,7 +12,7 @@ const authApi = baseApi.injectEndpoints({
         body: arg,
       }),
     }),
-    authedUser: build.query<ResponseModel<UserModel>, void>({
+    authedUser: build.query<ResponseModel<EmployeeModel>, void>({
       query: () => ({
         url: 'auth/user',
         method: 'GET',

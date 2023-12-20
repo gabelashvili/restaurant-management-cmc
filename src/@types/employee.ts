@@ -6,7 +6,7 @@ export interface RoleModel {
   _id: string;
 }
 
-export interface UserModel {
+export interface EmployeeModel {
   firstName: MultiLangModel;
   lastName: MultiLangModel;
   email: string;
@@ -16,7 +16,7 @@ export interface UserModel {
   _id: string;
 }
 
-export interface AddNewUserModel {
+export interface AddNewEmployeeModel {
   firstName: MultiLangModel;
   lastName: MultiLangModel;
   email: string;

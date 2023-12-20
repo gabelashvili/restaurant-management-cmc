@@ -1,5 +1,5 @@
 import { type TokensModel } from './common';
-import { type UserModel } from './user';
+import { type EmployeeModel } from './employee';
 
 export interface SignInModel {
   email: string;
@@ -14,10 +14,10 @@ export interface SignInRespModel {
 export interface AuthStoreModel {
   state: 'pending' | 'authorized' | 'not-authorized';
   userId: null | string;
-  user: UserModel | null;
+  user: EmployeeModel | null;
 }
 
-export type UpdateDetailModel = Omit<UserModel, 'id' | 'role' | 'avatar'>;
+export type UpdateDetailModel = Omit<EmployeeModel, 'id' | 'role' | 'avatar'>;
 
 export interface UpdatePasswordModel {
   currentPassword: string;
