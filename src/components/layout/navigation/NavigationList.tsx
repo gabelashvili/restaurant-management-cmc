@@ -28,6 +28,7 @@ const NavigationList = () => {
     }
     return path;
   };
+
   return (
     <Box sx={{ p: 2 }}>
       <Box sx={{ px: 2, pt: 1 }}>
@@ -38,49 +39,49 @@ const NavigationList = () => {
         <Typography>{`${user?.firstName[lang]} ${user?.lastName[lang]}`}</Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-        {Object.values(routes).map((route) => (
-          <Fragment key={route.path}>
+        {Object.values(routes).map(({ Icon, path, title, children }) => (
+          <Fragment key={path}>
             <ListItemButton
-              selected={!route.children && currentPath() === route.path}
+              selected={!children && currentPath() === path}
               disableRipple
               sx={{ display: 'flex', gap: 2, borderRadius: 2 }}
               onClick={() => {
-                if (route.children) {
-                  setOpenNavPath(openNavPath === route.path ? null : route.path);
+                if (children) {
+                  setOpenNavPath(openNavPath === path ? null : path);
                 } else {
-                  navigate(route.path);
+                  navigate(path);
                 }
               }}
             >
               <ListItemIcon sx={{ minWidth: 0 }}>
-                <route.Icon
+                <Icon
                   fontSize="medium"
                   sx={{
-                    color: !route.children && currentPath() === route.path ? 'primary.main' : 'secondary.400',
+                    color: !children && currentPath() === path ? 'primary.main' : 'secondary.400',
                   }}
                 />
               </ListItemIcon>
-              <ListItemText>{t(`routes.${route.title}`)}</ListItemText>
-              {route.children && (
-                <ListItemIcon sx={{ minWidth: 0 }}>{openNavPath === route.path ? <KeyboardArrowUp /> : <KeyboardArrowDown />}</ListItemIcon>
+              <ListItemText>{t(`routes.${title}`)}</ListItemText>
+              {children && (
+                <ListItemIcon sx={{ minWidth: 0 }}>{openNavPath === path ? <KeyboardArrowUp /> : <KeyboardArrowDown />}</ListItemIcon>
               )}
             </ListItemButton>
-            <Collapse in={openNavPath === route.path} sx={{ ml: 3 }}>
-              {route.children &&
-                Object.values(route.children).map((childRoute) => (
+            <Collapse in={openNavPath === path} sx={{ ml: 3 }}>
+              {children &&
+                Object.values(children).map((childRoute) => (
                   <ListItemButton
-                    key={route.path + childRoute.path}
-                    selected={currentPath() === `${route.path}${childRoute.path === '' ? '' : `/${childRoute.path}`}`}
+                    key={path + childRoute.path}
+                    selected={currentPath() === `${path}${childRoute.path === '' ? '' : `/${childRoute.path}`}`}
                     disableRipple
                     sx={{ display: 'flex', gap: 2, borderRadius: 2 }}
-                    onClick={() => navigate(`${route.path}/${childRoute.path}`)}
+                    onClick={() => navigate(`${path}/${childRoute.path}`)}
                   >
                     <ListItemIcon sx={{ minWidth: 0 }}>
                       <childRoute.Icon
                         fontSize="medium"
                         sx={{
                           color:
-                            currentPath() === `${route.path}${childRoute.path === '' ? '' : `/${childRoute.path}`}`
+                            currentPath() === `${path}${childRoute.path === '' ? '' : `/${childRoute.path}`}`
                               ? 'primary.main'
                               : 'secondary.400',
                         }}

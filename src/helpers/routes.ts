@@ -1,13 +1,15 @@
 import { Category, Leaderboard, ListAlt, LocalBar, People, Place, Restaurant } from '@mui/icons-material';
 
+type TitleEnum = 'statistics' | 'menu' | 'categories' | 'dishes' | 'drinks' | 'branches' | 'employees';
+
 const routes: Record<
   string,
   {
-    title: string;
+    title: TitleEnum;
     Icon: any;
     path: string;
     children?: Array<{
-      title: string;
+      title: TitleEnum;
       Icon: any;
       path: string;
     }>;
