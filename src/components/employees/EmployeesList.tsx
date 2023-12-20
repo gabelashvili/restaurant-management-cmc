@@ -1,4 +1,5 @@
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import UpsertEmployeeModal from './UpsertEmployeeModal';
 import CustomTable from '../shared/table/CustomTable';
@@ -7,11 +8,13 @@ import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
 import TableHeader from '../shared/TableHeader';
 
 const EmployeesList = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <UpsertEmployeeModal />
       <CustomTable
-        header={() => <TableHeader title="თანამშრომლები" />}
+        header={() => <TableHeader title={t('employee.title')} />}
         renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={el.label} />)}
         renderTableBody={() =>
           list.map((item, i) => (
