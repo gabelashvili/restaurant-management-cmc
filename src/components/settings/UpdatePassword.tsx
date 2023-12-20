@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import { type UpdatePasswordModel } from '../../@types/auth';
 import { useLazyUpdatePasswordQuery } from '../../store/api/authApi';
-import { updatePasswordSchema } from '../../validations/user';
+import { updatePasswordSchema } from '../../validations/auth-schemas';
 import PasswordValidation from '../auth/PasswordValidation';
 
 const UpdatePassword = () => {

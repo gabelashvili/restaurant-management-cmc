@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import { type SignInModel } from '../../@types/auth';
 import { useLazySignInQuery } from '../../store/api/authApi';
-import { signInSchema } from '../../validations/user';
+import { signInSchema } from '../../validations/auth-schemas';
 import Logo from '../shared/Logo';
 
 const SignIn = () => {

@@ -13,7 +13,7 @@ import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
 import { type BranchModel } from '../../../@types/branch';
 import { useGetBranchQuery, useCreateBranchMutation, useUpdateBranchMutation } from '../../../store/api/branchApi';
-import { upsertBranchSchema } from '../../../validations/branch';
+import { upsertBranchSchema } from '../../../validations/branch-schema';
 import Container from '../../shared/Container';
 
 const initialState = {

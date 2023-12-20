@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { type AddNewEmployeeModel } from '../../@types/employee';
-import { upsertUserSchema } from '../../validations/user';
+import { upsertEmployeeSchema } from '../../validations/employee-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
 
 const UpsertEmployeeModal = () => {
@@ -25,7 +25,7 @@ const UpsertEmployeeModal = () => {
       roleId: '',
       phone: '',
     },
-    resolver: yupResolver(upsertUserSchema),
+    resolver: yupResolver(upsertEmployeeSchema),
   });
 
   const onSubmit = handleSubmit((data) => {

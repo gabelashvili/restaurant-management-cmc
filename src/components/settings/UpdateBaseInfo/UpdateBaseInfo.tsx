@@ -12,7 +12,7 @@ import { type UpdateDetailModel } from '../../../@types/auth';
 import { useAppSelector } from '../../../hooks/store';
 import { useLazyUpdateDetailsQuery } from '../../../store/api/authApi';
 import { updateUserData } from '../../../store/slices/authSlice';
-import { updateDetailSchema } from '../../../validations/user';
+import { updateDetailSchema } from '../../../validations/auth-schemas';
 import MultiLangTextField from '../../shared/MultiLangTextField';
 import SettingsComponentContainer from '../SettingsComponentContainer';
 

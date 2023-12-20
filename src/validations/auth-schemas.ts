@@ -36,16 +36,3 @@ export const updatePasswordSchema = yup.object().shape({
     .oneOf([yup.ref('newPassword')])
     .required(),
 });
-
-export const upsertUserSchema = yup.object().shape({
-  firstName: multiLangSchema.required(),
-  lastName: multiLangSchema.required(),
-  email: yup
-    .string()
-    .matches(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    )
-    .required(),
-  roleId: yup.string().required(),
-  phone: yup.string().required(),
-});
