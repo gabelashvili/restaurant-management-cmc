@@ -24,7 +24,7 @@ export const updatePasswordSchema = yup.object().shape({
   newPassword: yup
     .string()
     .required()
-    .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^A-Za-z0-9]).{8,30}$/)
+    .min(8)
     .when('currentPassword', (currentPassword, schema) => {
       if (currentPassword.length > 0) {
         return schema.notOneOf([yup.ref('currentPassword')], 'password_already_used');

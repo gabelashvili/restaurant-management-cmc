@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { type UpdatePasswordModel } from '../../@types/auth';
 import { useLazyUpdatePasswordQuery } from '../../store/api/authApi';
 import { updatePasswordSchema } from '../../validations/auth-schemas';
-import PasswordValidation from '../auth/PasswordValidation';
 
 const UpdatePassword = () => {
   const { t } = useTranslation();
@@ -23,7 +22,7 @@ const UpdatePassword = () => {
 
   const {
     handleSubmit,
-    formState: { isDirty, errors, dirtyFields, isValid },
+    formState: { isDirty, errors, isValid },
     setValue,
     watch,
     reset,
@@ -98,9 +97,6 @@ const UpdatePassword = () => {
             ),
           }}
         />
-        {dirtyFields.newPassword && errors.newPassword && errors.newPassword.message !== 'password_already_used' && (
-          <PasswordValidation password={watch('newPassword')} />
-        )}
         <TextField
           fullWidth
           onChange={(e) => setValue('repeatNewPassword', e.target.value, { shouldDirty: true, shouldValidate: true })}
