@@ -5,12 +5,14 @@ import { useTranslation } from 'react-i18next';
 
 import UpsertEmployeeModal from './UpsertEmployeeModal';
 import { type Languages } from '../../@types/common';
+import { type EmployeeModel } from '../../@types/employee';
 import useTableFilters from '../../hooks/useTableFilters';
 import { useGetEmployeesQuery } from '../../store/api/employeeApi';
 import { generateAvatarImage } from '../../utils/utils';
 import CustomTable from '../shared/table/CustomTable';
 import CustomTableBodyCell from '../shared/table/CustomTableBodyCell';
 import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
+import CustomTableMenu from '../shared/table/CustomTableMenu';
 import TableHeader from '../shared/TableHeader';
 
 const EmployeesList = () => {
@@ -19,10 +21,18 @@ const EmployeesList = () => {
   const { handleFilterChange, filters } = useTableFilters();
   const { isFetching, data: employees } = useGetEmployeesQuery({ ...filters });
   const [openAddModal, setOpenAddModal] = useState(false);
+  const [editItem, setEditItem] = useState<EmployeeModel | null>(null);
 
   return (
     <>
-      <UpsertEmployeeModal open={openAddModal} handleClose={() => setOpenAddModal(false)} />
+      <UpsertEmployeeModal
+        editItem={editItem}
+        open={openAddModal}
+        handleClose={() => {
+          setOpenAddModal(false);
+          setEditItem(null);
+        }}
+      />
       <CustomTable
         header={() => (
           <TableHeader
@@ -39,7 +49,7 @@ const EmployeesList = () => {
           employees?.data?.list?.map((item) => (
             <TableRow key={item._id} hover>
               <CustomTableBodyCell>
-                <Box sx={{ display: 'flex', alignItems: headers[0].align, gap: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   {item.avatar ? (
                     <Avatar src={generateAvatarImage(null, item.avatar)} />
                   ) : (
@@ -51,6 +61,15 @@ const EmployeesList = () => {
               <CustomTableBodyCell align={headers[1].align}>{t(`roles.${item.role.roleName}`)}</CustomTableBodyCell>
               <CustomTableBodyCell align={headers[2].align}>{item.email}</CustomTableBodyCell>
               <CustomTableBodyCell align={headers[3].align}>{item.phone}</CustomTableBodyCell>
+              <CustomTableBodyCell align={headers[4].align}>
+                <CustomTableMenu
+                  onEdit={() => {
+                    setEditItem(item);
+                    setOpenAddModal(true);
+                  }}
+                  onRemove={() => console.log(item._id)}
+                />
+              </CustomTableBodyCell>
             </TableRow>
           ))
         }
@@ -71,7 +90,7 @@ export default EmployeesList;
 
 const headers = [
   {
-    label: 'common.user' as const,
+    label: 'common.employee' as const,
     align: 'left' as const,
   },
   {
@@ -85,5 +104,9 @@ const headers = [
   {
     label: 'common.phone_number' as const,
     align: 'left' as const,
+  },
+  {
+    label: 'common.empty' as const,
+    align: 'right' as const,
   },
 ];

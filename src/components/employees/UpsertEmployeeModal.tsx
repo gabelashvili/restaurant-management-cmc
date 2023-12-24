@@ -6,7 +6,8 @@ import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { type UpsertEmployeeModel } from '../../@types/employee';
+import { type Languages } from '../../@types/common';
+import { type EmployeeModel, type UpsertEmployeeModel } from '../../@types/employee';
 import { useCreateEmployeeMutation, useGetRolesQuery } from '../../store/api/employeeApi';
 import { upsertEmployeeSchema } from '../../validations/employee-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
@@ -14,43 +15,65 @@ import MultiLangTextField from '../shared/MultiLangTextField';
 interface Props {
   open: boolean;
   handleClose: () => void;
+  editItem: EmployeeModel | null;
 }
-const UpsertEmployeeModal: FC<Props> = ({ open, handleClose }) => {
-  const { t } = useTranslation();
-  const [createEmployee, { isLoading: createEmployeeLoading }] = useCreateEmployeeMutation();
+
+const defaultValues = {
+  email: '',
+  firstName: {
+    ka: '',
+    en: '',
+  },
+  lastName: {
+    ka: '',
+    en: '',
+  },
+  roleId: NaN,
+  phone: '',
+};
+
+const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language as Languages;
+
+  const [createEmployee, { isLoading: createEmployeeLoading, isSuccess: createEmployeeIsSuccess }] = useCreateEmployeeMutation();
   const { isFetching: rolesIsFetching, data: roles } = useGetRolesQuery();
 
-  const { control, getValues, reset } = useForm<UpsertEmployeeModel>({
-    defaultValues: {
-      email: '',
-      firstName: {
-        ka: '',
-        en: '',
-      },
-      lastName: {
-        ka: '',
-        en: '',
-      },
-      roleId: '',
-      phone: '',
-    },
+  const { control, reset, handleSubmit } = useForm<UpsertEmployeeModel>({
+    defaultValues,
     resolver: yupResolver(upsertEmployeeSchema),
   });
 
-  const onSubmit = async () => {
-    await createEmployee(getValues());
+  const onClose = () => {
     handleClose();
+    reset(defaultValues);
   };
 
+  const onSubmit = handleSubmit((data) => {
+    createEmployee({ ...data });
+  });
+
   useEffect(() => {
-    if (!open) {
-      reset();
+    if (editItem) {
+      reset({
+        firstName: editItem.firstName,
+        lastName: editItem.lastName,
+        email: editItem.email,
+        phone: editItem.phone,
+        roleId: editItem.role.roleId,
+      });
     }
-  }, [open]);
+  }, [editItem]);
+
+  useEffect(() => {
+    if (createEmployeeIsSuccess) {
+      onClose();
+    }
+  }, [createEmployeeIsSuccess]);
 
   return (
     <Dialog open={open} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
-      <DialogTitle>{t('employee.add')}</DialogTitle>
+      <DialogTitle>{editItem ? `${editItem.firstName[lang]} ${editItem.lastName[lang]}` : t('employee.add')}</DialogTitle>
       <Divider />
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Controller
@@ -88,7 +111,6 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose }) => {
         <Controller
           control={control}
           name={`phone`}
-          defaultValue={''}
           render={(params) => (
             <TextField
               required
@@ -104,7 +126,6 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose }) => {
         <Controller
           control={control}
           name={`email`}
-          defaultValue={''}
           render={(params) => (
             <TextField
               required
@@ -120,7 +141,6 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose }) => {
         <Controller
           control={control}
           name={`roleId`}
-          defaultValue={''}
           render={({ field, fieldState }) => (
             <Autocomplete
               fullWidth
@@ -142,7 +162,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose }) => {
       </DialogContent>
       <Divider sx={{ my: 2 }} />
       <DialogActions>
-        <Button onClick={handleClose} color="error">
+        <Button onClick={onClose} color="error">
           {t('common.cancel')}
         </Button>
         <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading}>

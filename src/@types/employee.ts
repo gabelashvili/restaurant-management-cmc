@@ -17,5 +17,5 @@ export interface EmployeeModel {
 }
 
 export interface UpsertEmployeeModel extends Omit<EmployeeModel, 'role' | '_id' | 'avatar'> {
-  roleId: string;
+  roleId: number;
 }

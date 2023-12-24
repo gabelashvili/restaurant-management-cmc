@@ -90,6 +90,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<string | FetchArgs, unknown, FetchB
       return result;
     }
   }
+
   return result;
 };
 
