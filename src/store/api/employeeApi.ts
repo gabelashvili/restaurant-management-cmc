@@ -9,11 +9,29 @@ const employeeApiTags = {
 
 const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(employeeApiTags)] }).injectEndpoints({
   endpoints: (build) => ({
+    getEmployees: build.query<ResponseModel<WithPaginationModel<EmployeeModel[]>>, TableFiltersModel>({
+      query: (args) => ({
+        url: `employees`,
+        method: 'GET',
+        params: { ...args },
+      }),
+      providesTags: [employeeApiTags.getEmployeesList],
+    }),
     createEmployee: build.mutation<ResponseModel<null>, UpsertEmployeeModel>({
       query: (args) => ({
         url: `employees`,
         method: 'POST',
         body: args,
+      }),
+      invalidatesTags: (result, error) => (error ? [] : [employeeApiTags.getEmployeesList]),
+    }),
+    updateEmployee: build.mutation<ResponseModel<null>, { employeeId: string; data: UpsertEmployeeModel }>({
+      query: (args) => ({
+        url: `employees/${args.employeeId}`,
+        method: 'PUT',
+        body: {
+          ...args.data,
+        },
       }),
       invalidatesTags: [employeeApiTags.getEmployeesList],
     }),
@@ -23,17 +41,9 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
         method: 'GET',
       }),
     }),
-    getEmployees: build.query<ResponseModel<WithPaginationModel<EmployeeModel[]>>, TableFiltersModel>({
-      query: (args) => ({
-        url: `employees`,
-        method: 'GET',
-        params: { ...args },
-      }),
-      providesTags: [employeeApiTags.getEmployeesList],
-    }),
   }),
   overrideExisting: false,
 });
 
-export const { useCreateEmployeeMutation, useGetRolesQuery, useGetEmployeesQuery } = employeeApi;
+export const { useCreateEmployeeMutation, useGetRolesQuery, useGetEmployeesQuery, useUpdateEmployeeMutation } = employeeApi;
 export default employeeApi;

@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { type Languages } from '../../@types/common';
 import { type EmployeeModel, type UpsertEmployeeModel } from '../../@types/employee';
-import { useCreateEmployeeMutation, useGetRolesQuery } from '../../store/api/employeeApi';
+import { useCreateEmployeeMutation, useGetRolesQuery, useUpdateEmployeeMutation } from '../../store/api/employeeApi';
 import { upsertEmployeeSchema } from '../../validations/employee-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
 
@@ -36,7 +36,8 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language as Languages;
 
-  const [createEmployee, { isLoading: createEmployeeLoading, isSuccess: createEmployeeIsSuccess }] = useCreateEmployeeMutation();
+  const [createEmployee, { isLoading: createEmployeeLoading }] = useCreateEmployeeMutation();
+  const [updateEmployee, { isLoading: updateEmployeeLoading }] = useUpdateEmployeeMutation();
   const { isFetching: rolesIsFetching, data: roles } = useGetRolesQuery();
 
   const { control, reset, handleSubmit } = useForm<UpsertEmployeeModel>({
@@ -49,8 +50,19 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
     reset(defaultValues);
   };
 
-  const onSubmit = handleSubmit((data) => {
-    createEmployee({ ...data });
+  const onSubmit = handleSubmit(async (data) => {
+    if (editItem) {
+      const response = await updateEmployee({ data, employeeId: editItem._id }).unwrap();
+      if (response.success) {
+        console.log(response.data, 22);
+        onClose();
+      }
+    } else {
+      const response = await createEmployee({ ...data }).unwrap();
+      if (response.success) {
+        onClose();
+      }
+    }
   });
 
   useEffect(() => {
@@ -64,12 +76,6 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
       });
     }
   }, [editItem]);
-
-  useEffect(() => {
-    if (createEmployeeIsSuccess) {
-      onClose();
-    }
-  }, [createEmployeeIsSuccess]);
 
   return (
     <Dialog open={open} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
@@ -165,7 +171,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
         <Button onClick={onClose} color="error">
           {t('common.cancel')}
         </Button>
-        <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading}>
+        <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading || updateEmployeeLoading}>
           {t('common.add')}
         </LoadingButton>
       </DialogActions>

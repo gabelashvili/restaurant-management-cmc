@@ -31,7 +31,7 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
         method: 'POST',
         body: removeIdsFromBranchUpsert(args),
       }),
-      invalidatesTags: [branchApiTags.getBranchList],
+      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
     }),
     updateBranch: build.mutation<ResponseModel<BranchModel>, { data: Partial<Omit<BranchModel, '_id'>>; branchId: string }>({
       query: (args) => ({
@@ -39,27 +39,27 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
         method: 'PUT',
         body: removeIdsFromBranchUpsert(args.data),
       }),
-      async onQueryStarted({ branchId, data }, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          dispatch(
-            branchApi.util.updateQueryData('getBranch', branchId, (draft) => {
-              draft.data = {
-                ...draft.data,
-                ...data,
-              };
-            }),
-          );
-        } catch {}
-      },
-      invalidatesTags: [branchApiTags.getBranchList],
+      // async onQueryStarted({ branchId, data }, { dispatch, queryFulfilled }) {
+      //   try {
+      //     await queryFulfilled;
+      //     dispatch(
+      //       branchApi.util.updateQueryData('getBranch', branchId, (draft) => {
+      //         draft.data = {
+      //           ...draft.data,
+      //           ...data,
+      //         };
+      //       }),
+      //     );
+      //   } catch {}
+      // },
+      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
     }),
     removeBranch: build.mutation<ResponseModel<null>, string>({
       query: (branchId) => ({
         url: `branches/${branchId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [branchApiTags.getBranchList],
+      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
     }),
   }),
   overrideExisting: false,
