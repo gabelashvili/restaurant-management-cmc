@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField } from '@mui/material';
+import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +13,7 @@ const UpsertEmployeeModal = () => {
   const { t } = useTranslation();
   const [createEmployee, { isLoading: createEmployeeLoading }] = useCreateEmployeeMutation();
 
-  const { handleSubmit, control, reset } = useForm<UpsertEmployeeModel>({
+  const { handleSubmit, control } = useForm<UpsertEmployeeModel>({
     defaultValues: {
       email: '',
       firstName: {
@@ -105,14 +105,13 @@ const UpsertEmployeeModal = () => {
           control={control}
           name={`roleId`}
           defaultValue={''}
-          render={(params) => (
-            <TextField
-              variant="filled"
+          render={({ field, fieldState }) => (
+            <Autocomplete
               fullWidth
-              label={t('common.role')}
-              error={!!params.fieldState.error}
-              inputProps={{ ...params.field, value: params.field.value }}
-              onChange={(e) => params.field.onChange(e.target.value)}
+              disablePortal
+              options={[]}
+              // getOptionLabel={(opt) => t(`roles.${opt.toLowerCase() as const}`)}
+              renderInput={(params) => <TextField variant="filled" label={t('common.role')} error={!!fieldState.error} {...params} />}
             />
           )}
         />
