@@ -1,3 +1,5 @@
+import { useEffect, type FC } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField } from '@mui/material';
@@ -5,15 +7,20 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { type UpsertEmployeeModel } from '../../@types/employee';
-import { useCreateEmployeeMutation } from '../../store/api/employeeApi';
+import { useCreateEmployeeMutation, useGetRolesQuery } from '../../store/api/employeeApi';
 import { upsertEmployeeSchema } from '../../validations/employee-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
 
-const UpsertEmployeeModal = () => {
+interface Props {
+  open: boolean;
+  handleClose: () => void;
+}
+const UpsertEmployeeModal: FC<Props> = ({ open, handleClose }) => {
   const { t } = useTranslation();
   const [createEmployee, { isLoading: createEmployeeLoading }] = useCreateEmployeeMutation();
+  const { isFetching: rolesIsFetching, data: roles } = useGetRolesQuery();
 
-  const { handleSubmit, control } = useForm<UpsertEmployeeModel>({
+  const { control, getValues, reset } = useForm<UpsertEmployeeModel>({
     defaultValues: {
       email: '',
       firstName: {
@@ -30,12 +37,19 @@ const UpsertEmployeeModal = () => {
     resolver: yupResolver(upsertEmployeeSchema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    createEmployee(data);
-  });
+  const onSubmit = async () => {
+    await createEmployee(getValues());
+    handleClose();
+  };
+
+  useEffect(() => {
+    if (!open) {
+      reset();
+    }
+  }, [open]);
 
   return (
-    <Dialog open={true} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
+    <Dialog open={open} PaperProps={{ sx: { maxWidth: 500, width: '100%' } }}>
       <DialogTitle>{t('employee.add')}</DialogTitle>
       <Divider />
       <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -77,6 +91,7 @@ const UpsertEmployeeModal = () => {
           defaultValue={''}
           render={(params) => (
             <TextField
+              required
               variant="filled"
               fullWidth
               label={t('common.phone_number')}
@@ -92,6 +107,7 @@ const UpsertEmployeeModal = () => {
           defaultValue={''}
           render={(params) => (
             <TextField
+              required
               variant="filled"
               fullWidth
               label={t('common.email')}
@@ -109,16 +125,26 @@ const UpsertEmployeeModal = () => {
             <Autocomplete
               fullWidth
               disablePortal
-              options={[]}
-              // getOptionLabel={(opt) => t(`roles.${opt.toLowerCase() as const}`)}
-              renderInput={(params) => <TextField variant="filled" label={t('common.role')} error={!!fieldState.error} {...params} />}
+              disableClearable={!field.value}
+              loading={rolesIsFetching}
+              options={roles?.data ? [...roles.data].sort((a, b) => a.roleId - b.roleId) : []}
+              getOptionLabel={({ roleName }) => t(`roles.${roleName}`)}
+              onChange={(_, val) => {
+                field.onChange(val?.roleId || null);
+              }}
+              value={roles?.data.find((role) => role.roleId === Number(field.value)) || null}
+              renderInput={(params) => (
+                <TextField variant="filled" label={t('common.role')} required error={!!fieldState.error} {...params} />
+              )}
             />
           )}
         />
       </DialogContent>
       <Divider sx={{ my: 2 }} />
       <DialogActions>
-        <Button color="error">{t('common.cancel')}</Button>
+        <Button onClick={handleClose} color="error">
+          {t('common.cancel')}
+        </Button>
         <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading}>
           {t('common.add')}
         </LoadingButton>

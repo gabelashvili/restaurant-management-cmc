@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -9,12 +11,21 @@ import TableHeader from '../shared/TableHeader';
 
 const EmployeesList = () => {
   const { t } = useTranslation();
+  const [openAddModal, setOpenAddModal] = useState(false);
 
   return (
     <>
-      <UpsertEmployeeModal />
+      <UpsertEmployeeModal open={openAddModal} handleClose={() => setOpenAddModal(false)} />
       <CustomTable
-        header={() => <TableHeader title={t('employee.title')} />}
+        header={() => (
+          <TableHeader
+            title={t('employee.title')}
+            handleAdd={{
+              onClick: () => setOpenAddModal(true),
+              title: t('employee.add'),
+            }}
+          />
+        )}
         renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={el.label} />)}
         renderTableBody={() =>
           list.map((item, i) => (

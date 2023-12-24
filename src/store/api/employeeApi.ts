@@ -1,6 +1,6 @@
 import baseApi from './baseApi';
 import { type ResponseModel } from '../../@types/common';
-import { type UpsertEmployeeModel } from '../../@types/employee';
+import { type RoleModel, type UpsertEmployeeModel } from '../../@types/employee';
 
 const employeeApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -11,9 +11,15 @@ const employeeApi = baseApi.injectEndpoints({
         body: args,
       }),
     }),
+    getRoles: build.query<ResponseModel<RoleModel[]>, void>({
+      query: () => ({
+        url: `employees/roles`,
+        method: 'GET',
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useCreateEmployeeMutation } = employeeApi;
+export const { useCreateEmployeeMutation, useGetRolesQuery } = employeeApi;
 export default employeeApi;

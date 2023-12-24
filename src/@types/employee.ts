@@ -1,7 +1,7 @@
 import { type MultiLangModel } from './common';
 
 export interface RoleModel {
-  roleName: string;
+  roleName: 'admin' | 'manager' | 'waiter';
   roleId: number;
   _id: string;
 }
