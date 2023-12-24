@@ -11,7 +11,7 @@ export interface EmployeeModel {
   lastName: MultiLangModel;
   email: string;
   avatar: null | string;
-  role: RoleModel | null;
+  role: RoleModel;
   phone: string;
   _id: string;
 }
