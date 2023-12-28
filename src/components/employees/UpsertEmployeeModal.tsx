@@ -28,7 +28,7 @@ const defaultValues = {
     ka: '',
     en: '',
   },
-  roleId: NaN,
+  roleId: 0,
   phone: '',
 };
 
@@ -124,8 +124,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
               fullWidth
               label={t('common.phone_number')}
               error={!!params.fieldState.error}
-              inputProps={{ ...params.field, value: params.field.value }}
-              onChange={(e) => params.field.onChange(e.target.value)}
+              inputProps={{ ...params.field }}
             />
           )}
         />
@@ -139,8 +138,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
               fullWidth
               label={t('common.email')}
               error={!!params.fieldState.error}
-              inputProps={{ ...params.field, value: params.field.value }}
-              onChange={(e) => params.field.onChange(e.target.value)}
+              inputProps={{ ...params.field }}
             />
           )}
         />

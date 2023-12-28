@@ -11,6 +11,9 @@ export const upsertEmployeeSchema = yup.object().shape({
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     )
     .required(),
-  roleId: yup.number().required(),
+  roleId: yup
+    .number()
+    .required()
+    .transform((val) => (val === 0 ? null : val)),
   phone: yup.string().required(),
 });
