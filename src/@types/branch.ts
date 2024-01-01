@@ -3,7 +3,7 @@ import { type MultiLangModel } from './common';
 export interface WorkingHourModel {
   enabled: boolean;
   data: Array<{
-    _id: string;
+    _id?: string;
     start: string | null;
     end: string | null;
   }>;
@@ -14,7 +14,7 @@ export enum ExceptionRepeatEnum {
   ONE_TIME = 'one_time',
 }
 export interface ExceptionDateModel {
-  _id: string;
+  _id?: string;
   start: string;
   end: string;
   repeat: ExceptionRepeatEnum;

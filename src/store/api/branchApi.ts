@@ -1,7 +1,6 @@
 import baseApi from './baseApi';
 import { type GetAllBranchesModel, type BranchModel } from '../../@types/branch';
 import { type WithPaginationModel, type ResponseModel, type TableFiltersModel } from '../../@types/common';
-import { removeIdsFromBranchUpsert } from '../../utils/branch';
 
 const branchApiTags = {
   getBranchList: 'GET_BRANCHES_LIST',
@@ -29,7 +28,7 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
       query: (args) => ({
         url: `branches`,
         method: 'POST',
-        body: removeIdsFromBranchUpsert(args),
+        body: args,
       }),
       invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
     }),
@@ -37,7 +36,7 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
       query: (args) => ({
         url: `branches/${args.branchId}`,
         method: 'PUT',
-        body: removeIdsFromBranchUpsert(args.data),
+        body: args.data,
       }),
       // async onQueryStarted({ branchId, data }, { dispatch, queryFulfilled }) {
       //   try {

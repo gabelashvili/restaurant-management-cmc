@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
 import { Divider } from '@mui/material';
+import { omit } from 'lodash';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,7 +12,7 @@ import { v4 as uuid4 } from 'uuid';
 import BranchExceptionDates from './BranchExceptionDates';
 import BranchGeneralInfo from './BranchGeneralInfo';
 import BranchWorkingHours from './BranchWorkingHours';
-import { type BranchModel } from '../../../@types/branch';
+import { type BranchWorkingHoursModel, type BranchModel } from '../../../@types/branch';
 import { useGetBranchQuery, useCreateBranchMutation, useUpdateBranchMutation } from '../../../store/api/branchApi';
 import { upsertBranchSchema } from '../../../validations/branch-schema';
 import Container from '../../shared/Container';
@@ -126,10 +127,18 @@ const UpsertBranch = () => {
 
   const onSubmit = handleSubmit(
     async (data) => {
+      const reqData = {
+        ...data,
+        workingHour: Object.keys(data.workingHours).reduce((acc, cur) => {
+          const item = data.workingHours[cur as keyof BranchWorkingHoursModel];
+          return { ...acc, [cur]: { ...item, data: item.data.map((el) => (el._id?.includes('new') ? omit(el, '_id') : el)) } };
+        }, {}),
+        exceptions: data.exceptions.map((el) => (el._id?.includes('new') ? omit(el, '_id') : el)),
+      };
       if (branchId) {
-        updateBranch({ branchId, data: { ...data } });
+        updateBranch({ branchId, data: { ...reqData } });
       } else {
-        createBranch({ ...data });
+        createBranch({ ...reqData });
       }
     },
     (err) => console.log(err),

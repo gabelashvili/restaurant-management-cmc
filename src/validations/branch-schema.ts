@@ -62,7 +62,7 @@ const weekDaySchema = yup.object().shape({
 });
 
 const exceptionSchema = yup.object().shape({
-  _id: yup.string().required(),
+  _id: yup.string(),
   start: yup
     .string()
     .required()
