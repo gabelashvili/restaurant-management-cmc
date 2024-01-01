@@ -102,6 +102,7 @@ const BranchExceptionDates = ({ control, trigger, loading }: Props) => {
                             label={t('branch.upsert.exception_date_type')}
                             inputRef={params.field.ref}
                             error={!!params.fieldState.error}
+                            InputLabelProps={{ ...inputParams.InputLabelProps, children: null }}
                           />
                         )}
                       />

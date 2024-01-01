@@ -158,7 +158,14 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
               }}
               value={roles?.data.find((role) => role.roleId === Number(field.value)) || null}
               renderInput={(params) => (
-                <TextField variant="filled" label={t('common.role')} required error={!!fieldState.error} {...params} />
+                <TextField
+                  variant="filled"
+                  label={t('common.role')}
+                  required
+                  error={!!fieldState.error}
+                  {...params}
+                  InputLabelProps={{ ...params.InputLabelProps, children: null }}
+                />
               )}
             />
           )}

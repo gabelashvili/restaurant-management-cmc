@@ -86,7 +86,14 @@ const BranchGeneralInfo = ({ control, loading }: Props) => {
             fullWidth
             disablePortal
             options={[]}
-            renderInput={(params) => <TextField variant="filled" label={t('branch.upsert.managers')} {...params} />}
+            renderInput={(params) => (
+              <TextField
+                variant="filled"
+                label={t('branch.upsert.managers')}
+                {...params}
+                InputLabelProps={{ ...params.InputLabelProps, children: null }}
+              />
+            )}
           />
         </>
       )}
