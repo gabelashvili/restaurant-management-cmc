@@ -25,7 +25,10 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openItemId, setOpenItemId] = useState<null | string>(null);
 
-  const handleOpen = (e: MouseEvent<HTMLButtonElement>, id: string) => {
+  const handleOpen = (e: MouseEvent<HTMLButtonElement>, id?: string) => {
+    if (!id) {
+      return;
+    }
     setAnchorEl(e.currentTarget);
     setOpenItemId(id);
   };
@@ -35,12 +38,16 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
     setOpenItemId(null);
   };
 
-  const removeItem = (id: string, day: keyof BranchWorkingHoursModel) => {
+  const removeItem = (day: keyof BranchWorkingHoursModel, id?: string) => {
+    if (!id) {
+      return;
+    }
     setValue(
       `workingHours.${day}.data`,
       getValues('workingHours')[day].data.filter((el) => el._id !== id),
       { shouldDirty: true },
     );
+    trigger(`workingHours.${day}`);
   };
 
   const insertNewDate = (index: number, day: keyof BranchWorkingHoursModel) => {
@@ -182,7 +189,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
                             <MenuItem
                               sx={{ color: 'error.main' }}
                               onClick={() => {
-                                removeItem(workingHour._id, day);
+                                removeItem(day, workingHour._id);
                                 handleMenuClose();
                               }}
                             >
