@@ -38,19 +38,19 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
         method: 'PUT',
         body: args.data,
       }),
-      // async onQueryStarted({ branchId, data }, { dispatch, queryFulfilled }) {
-      //   try {
-      //     await queryFulfilled;
-      //     dispatch(
-      //       branchApi.util.updateQueryData('getBranch', branchId, (draft) => {
-      //         draft.data = {
-      //           ...draft.data,
-      //           ...data,
-      //         };
-      //       }),
-      //     );
-      //   } catch {}
-      // },
+      async onQueryStarted({ branchId, data }, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(
+            branchApi.util.updateQueryData('getBranch', branchId, (draft) => {
+              draft.data = {
+                ...draft.data,
+                ...data,
+              };
+            }),
+          );
+        } catch {}
+      },
       invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
     }),
     removeBranch: build.mutation<ResponseModel<null>, string>({

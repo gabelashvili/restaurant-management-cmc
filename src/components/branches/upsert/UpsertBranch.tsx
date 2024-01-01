@@ -127,14 +127,15 @@ const UpsertBranch = () => {
 
   const onSubmit = handleSubmit(
     async (data) => {
-      const reqData = {
+      const reqData: BranchModel = {
         ...data,
-        workingHour: Object.keys(data.workingHours).reduce((acc, cur) => {
+        workingHours: Object.keys(data.workingHours).reduce((acc, cur) => {
           const item = data.workingHours[cur as keyof BranchWorkingHoursModel];
           return { ...acc, [cur]: { ...item, data: item.data.map((el) => (el._id?.includes('new') ? omit(el, '_id') : el)) } };
-        }, {}),
+        }, {}) as BranchWorkingHoursModel,
         exceptions: data.exceptions.map((el) => (el._id?.includes('new') ? omit(el, '_id') : el)),
       };
+
       if (branchId) {
         updateBranch({ branchId, data: { ...reqData } });
       } else {
