@@ -1,4 +1,4 @@
-import { type FC, type ReactElement } from 'react';
+import { type ReactNode, type FC, type ReactElement } from 'react';
 
 import {
   Box,
@@ -15,6 +15,7 @@ import {
 import Scrollbars from 'react-custom-scrollbars';
 import { useTranslation } from 'react-i18next';
 
+import AdditionalTableFilters from './AdditionalTableFilters';
 import NoDatText from '../NoDatText';
 
 interface CustomTableProps {
@@ -30,6 +31,7 @@ interface CustomTableProps {
     visibleDataCount: number;
   };
   loading?: boolean;
+  additionalFilters?: () => ReactNode;
 }
 
 const renderEmptyCells = (count: number) =>
@@ -39,69 +41,72 @@ const renderEmptyCells = (count: number) =>
     </TableRow>
   ));
 
-const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading }) => {
+const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading, additionalFilters }) => {
   const { t } = useTranslation();
   return (
-    <TableContainer component={Paper} sx={{ display: 'grid' }}>
-      {header && header()}
-      <Scrollbars autoHeight autoHeightMax={'100%'}>
-        <Table sx={{ position: 'relative' }}>
-          <TableHead>
-            <TableRow>{renderTableHeader()}</TableRow>
-          </TableHead>
-          <TableBody>
-            {renderTableBody()}
-            {paginationOpts && renderEmptyCells(paginationOpts.limit - paginationOpts.visibleDataCount)}
-            <tr>
-              <td>
-                {loading && (
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <CircularProgress />
-                  </Box>
-                )}
-                {!loading && paginationOpts?.visibleDataCount === 0 && (
-                  <NoDatText
-                    sx={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    text={t('common.data_not_found')}
-                  />
-                )}
-              </td>
-            </tr>
-          </TableBody>
-        </Table>
-      </Scrollbars>
-      {paginationOpts && !loading && paginationOpts?.visibleDataCount !== 0 && (
-        <TablePagination
-          sx={{ m: 3, display: 'flex', justifyContent: 'flex-end' }}
-          count={paginationOpts.count}
-          rowsPerPage={paginationOpts.limit}
-          page={paginationOpts.page - 1}
-          component={'div'}
-          onPageChange={(_, value) => paginationOpts.onPageChange(Number(value) + 1)}
-          onRowsPerPageChange={(e) => paginationOpts.onLimitChange(Number(e.target.value))}
-        />
-      )}
-    </TableContainer>
+    <>
+      {additionalFilters && <AdditionalTableFilters>{additionalFilters()}</AdditionalTableFilters>}
+      <TableContainer component={Paper} sx={{ display: 'grid' }}>
+        {header && header()}
+        <Scrollbars autoHeight autoHeightMax={'100%'}>
+          <Table sx={{ position: 'relative' }}>
+            <TableHead>
+              <TableRow>{renderTableHeader()}</TableRow>
+            </TableHead>
+            <TableBody>
+              {renderTableBody()}
+              {paginationOpts && renderEmptyCells(paginationOpts.limit - paginationOpts.visibleDataCount)}
+              <tr>
+                <td>
+                  {loading && (
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <CircularProgress />
+                    </Box>
+                  )}
+                  {!loading && paginationOpts?.visibleDataCount === 0 && (
+                    <NoDatText
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
+                      text={t('common.data_not_found')}
+                    />
+                  )}
+                </td>
+              </tr>
+            </TableBody>
+          </Table>
+        </Scrollbars>
+        {paginationOpts && !loading && paginationOpts?.visibleDataCount !== 0 && (
+          <TablePagination
+            sx={{ m: 3, display: 'flex', justifyContent: 'flex-end' }}
+            count={paginationOpts.count}
+            rowsPerPage={paginationOpts.limit}
+            page={paginationOpts.page - 1}
+            component={'div'}
+            onPageChange={(_, value) => paginationOpts.onPageChange(Number(value) + 1)}
+            onRowsPerPageChange={(e) => paginationOpts.onLimitChange(Number(e.target.value))}
+          />
+        )}
+      </TableContainer>
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import EmployeesAdditionalFilters from './EmployeesAdditionalFilters';
 import UpsertEmployeeModal from './UpsertEmployeeModal';
 import { type Languages } from '../../@types/common';
 import { type EmployeeModel } from '../../@types/employee';
@@ -65,6 +66,7 @@ const EmployeesList = () => {
             onSearch={(value) => handleFilterChange('search', value)}
           />
         )}
+        additionalFilters={() => <EmployeesAdditionalFilters />}
         loading={isFetching}
         renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={t(el.label)} />)}
         renderTableBody={() =>
