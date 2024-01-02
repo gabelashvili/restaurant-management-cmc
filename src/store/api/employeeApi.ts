@@ -4,7 +4,6 @@ import { type EmployeeModel, type RoleModel, type UpsertEmployeeModel } from '..
 
 const employeeApiTags = {
   getEmployeesList: 'GET_EMPLOYEES_LIST',
-  getEmployee: 'GET_EMPLOYEE',
 };
 
 const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(employeeApiTags)] }).injectEndpoints({

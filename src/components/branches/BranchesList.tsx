@@ -89,15 +89,15 @@ const headers = [
   },
   {
     label: 'common.address' as const,
-    align: 'center' as const,
+    align: 'left' as const,
   },
   {
     label: 'common.email' as const,
-    align: 'center' as const,
+    align: 'left' as const,
   },
   {
     label: 'common.phone_number' as const,
-    align: 'center' as const,
+    align: 'left' as const,
   },
   {
     label: 'common.empty' as const,

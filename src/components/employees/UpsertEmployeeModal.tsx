@@ -2,7 +2,7 @@ import { useEffect, type FC } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField } from '@mui/material';
+import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -52,9 +52,8 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     if (editItem) {
-      const response = await updateEmployee({ data, employeeId: editItem._id }).unwrap();
+      const response = await updateEmployee({ data: { ...data }, employeeId: editItem._id }).unwrap();
       if (response.success) {
-        console.log(response.data, 22);
         onClose();
       }
     } else {
@@ -173,11 +172,11 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
       </DialogContent>
       <Divider sx={{ my: 2 }} />
       <DialogActions>
-        <Button onClick={onClose} color="error">
+        <LoadingButton onClick={onClose} color="error" loading={createEmployeeLoading || updateEmployeeLoading}>
           {t('common.cancel')}
-        </Button>
+        </LoadingButton>
         <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading || updateEmployeeLoading}>
-          {t('common.add')}
+          {t(`common.${editItem?._id ? 'edit' : 'add'}`)}
         </LoadingButton>
       </DialogActions>
     </Dialog>
