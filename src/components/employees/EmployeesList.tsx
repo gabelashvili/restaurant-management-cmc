@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next';
 import UpsertEmployeeModal from './UpsertEmployeeModal';
 import { type Languages } from '../../@types/common';
 import { type EmployeeModel } from '../../@types/employee';
+import { useAppDispatch } from '../../hooks/store';
 import useTableFilters from '../../hooks/useTableFilters';
-import { useGetEmployeesQuery } from '../../store/api/employeeApi';
+import { useGetEmployeesQuery, useRemoveEmployeeMutation } from '../../store/api/employeeApi';
+import { closeWarningModal, setWarningModal, setWarningModalLoading } from '../../store/slices/warningModalSlice';
 import { generateAvatarImage } from '../../utils/utils';
 import CustomTable from '../shared/table/CustomTable';
 import CustomTableBodyCell from '../shared/table/CustomTableBodyCell';
@@ -16,12 +18,31 @@ import CustomTableMenu from '../shared/table/CustomTableMenu';
 import TableHeader from '../shared/TableHeader';
 
 const EmployeesList = () => {
+  const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation();
-  const lang = i18n.language as Languages;
   const { handleFilterChange, filters } = useTableFilters();
   const { isFetching, data: employees } = useGetEmployeesQuery({ ...filters });
+  const [removeEmployee] = useRemoveEmployeeMutation();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [editItem, setEditItem] = useState<EmployeeModel | null>(null);
+  const lang = i18n.language as Languages;
+
+  const handleRemove = (_id: string, name: string) => {
+    dispatch(
+      setWarningModal({
+        open: true,
+        title: t('employee.remove'),
+        description: t('employee.remove_desc', {
+          branch: name,
+        }),
+        onAgree: async () => {
+          dispatch(setWarningModalLoading());
+          await removeEmployee(_id);
+          dispatch(closeWarningModal());
+        },
+      }),
+    );
+  };
 
   return (
     <>
@@ -41,6 +62,7 @@ const EmployeesList = () => {
               onClick: () => setOpenAddModal(true),
               title: t('employee.add'),
             }}
+            onSearch={(value) => handleFilterChange('search', value)}
           />
         )}
         loading={isFetching}
@@ -67,7 +89,7 @@ const EmployeesList = () => {
                     setEditItem(item);
                     setOpenAddModal(true);
                   }}
-                  onRemove={() => console.log(item._id)}
+                  onRemove={() => handleRemove(item._id, `${item.firstName[lang]} ${item.lastName[lang]}`)}
                 />
               </CustomTableBodyCell>
             </TableRow>

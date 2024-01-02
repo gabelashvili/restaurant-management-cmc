@@ -34,6 +34,13 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
       }),
       invalidatesTags: [employeeApiTags.getEmployeesList],
     }),
+    removeEmployee: build.mutation<ResponseModel<null>, string>({
+      query: (employeeId) => ({
+        url: `employees/${employeeId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: (result, error) => (error ? [] : [employeeApiTags.getEmployeesList]),
+    }),
     getRoles: build.query<ResponseModel<RoleModel[]>, void>({
       query: () => ({
         url: `employees/roles`,
@@ -44,5 +51,6 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
   overrideExisting: false,
 });
 
-export const { useCreateEmployeeMutation, useGetRolesQuery, useGetEmployeesQuery, useUpdateEmployeeMutation } = employeeApi;
+export const { useCreateEmployeeMutation, useGetRolesQuery, useGetEmployeesQuery, useUpdateEmployeeMutation, useRemoveEmployeeMutation } =
+  employeeApi;
 export default employeeApi;
