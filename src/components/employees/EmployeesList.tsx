@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -44,7 +44,9 @@ const EmployeesList = () => {
       }),
     );
   };
-
+  useEffect(() => {
+    handleFilterChange('x', 2);
+  }, []);
   return (
     <>
       <UpsertEmployeeModal

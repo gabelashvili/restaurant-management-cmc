@@ -20,11 +20,3 @@ export interface WithPaginationModel<T> {
   count: number;
   list: T;
 }
-
-export interface TableFiltersModel {
-  page: number;
-  limit: number;
-  sortBy?: string | null;
-  sortDir?: 'asc' | 'desc' | null;
-  search?: string;
-}

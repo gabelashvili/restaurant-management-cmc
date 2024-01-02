@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { type TableFiltersModel } from '../@types/common';
+import { type TableFiltersModel } from '../@types/custom-table';
 
 const PAGE_INITIAL = 1;
 const LIMIT_INITIAL = 10;
@@ -13,7 +13,7 @@ const filtersInitial = {
 const useTableFilters = () => {
   const [filters, setFilters] = useState<TableFiltersModel>(filtersInitial);
 
-  const handleFilterChange = (filter: keyof TableFiltersModel, value: any) => {
+  const handleFilterChange = <T>(filter: keyof TableFiltersModel | keyof T, value: any) => {
     const newFilters = { ...filters };
     if (filter === 'search') {
       newFilters.page = PAGE_INITIAL;

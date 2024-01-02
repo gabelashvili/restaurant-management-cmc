@@ -12,3 +12,14 @@ export interface TableBodyCellModel {
   align?: 'right' | 'left' | 'center' | 'inherit' | 'justify';
   width?: string;
 }
+export interface TableFiltersModel {
+  page: number;
+  limit: number;
+  sortBy?: string | null;
+  sortDir?: 'asc' | 'desc' | null;
+  search?: string;
+  order?: {
+    name: string;
+    order: 'asc' | 'desc';
+  };
+}
