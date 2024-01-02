@@ -13,12 +13,13 @@ const filtersInitial = {
 const useTableFilters = () => {
   const [filters, setFilters] = useState<TableFiltersModel>(filtersInitial);
 
-  const handleFilterChange = <T>(filter: keyof TableFiltersModel | keyof T, value: any) => {
+  const handleFilterChange = <T extends keyof TableFiltersModel>(filter: T, value: TableFiltersModel[T]) => {
     const newFilters = { ...filters };
     if (filter === 'search') {
       newFilters.page = PAGE_INITIAL;
       newFilters.limit = LIMIT_INITIAL;
     }
+
     setFilters({ ...newFilters, [filter]: value });
   };
 
@@ -32,8 +33,10 @@ const useTableFilters = () => {
     setFilters(filtersInitial);
   };
 
+  const { order, ...rest } = { ...filters };
+  const queryParams = { ...rest, ...(order && { orderBy: order.name, orderDir: order.order }) };
   return {
-    filters,
+    filters: { ...queryParams },
     handleFilterChange,
     resetFilters,
     removeFilter,

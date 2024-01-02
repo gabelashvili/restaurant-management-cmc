@@ -5,6 +5,9 @@ export type RowType = 'TEXT';
 export interface TableHeaderCellModel {
   label: string;
   align: 'right' | 'left' | 'center' | 'inherit' | 'justify';
+  orderKey?: string;
+  handleOrder?: (order: 'asc' | 'desc') => void;
+  order?: 'asc' | 'desc' | null;
 }
 
 export interface TableBodyCellModel {

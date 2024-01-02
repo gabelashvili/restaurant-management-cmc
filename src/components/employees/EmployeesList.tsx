@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -44,9 +44,7 @@ const EmployeesList = () => {
       }),
     );
   };
-  useEffect(() => {
-    handleFilterChange('x', 2);
-  }, []);
+
   return (
     <>
       <UpsertEmployeeModal
@@ -70,7 +68,23 @@ const EmployeesList = () => {
         )}
         additionalFilters={() => <EmployeesAdditionalFilters />}
         loading={isFetching}
-        renderTableHeader={() => headers.map((el) => <CustomTableHeaderCell key={el.label} align={el.align} label={t(el.label)} />)}
+        renderTableHeader={() =>
+          headers.map(({ label, ...el }) => (
+            <CustomTableHeaderCell
+              key={label}
+              label={t(label)}
+              {...el}
+              order={filters.orderBy === el.orderKey ? filters.orderDir : null}
+              handleOrder={(val) => {
+                if (el.orderKey) {
+                  console.log(val);
+
+                  handleFilterChange('order', { name: el.orderKey, order: val });
+                }
+              }}
+            />
+          ))
+        }
         renderTableBody={() =>
           employees?.data?.list?.map((item) => (
             <TableRow key={item._id} hover>
@@ -118,18 +132,22 @@ const headers = [
   {
     label: 'common.employee' as const,
     align: 'left' as const,
+    orderKey: 'fullName',
   },
   {
     label: 'common.role' as const,
     align: 'left' as const,
+    orderKey: 'role',
   },
   {
     label: 'common.email' as const,
     align: 'left' as const,
+    orderKey: 'email',
   },
   {
     label: 'common.phone_number' as const,
     align: 'left' as const,
+    orderKey: 'phoneNumber',
   },
   {
     label: 'common.empty' as const,

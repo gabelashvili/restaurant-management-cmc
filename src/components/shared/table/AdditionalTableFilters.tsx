@@ -9,7 +9,7 @@ interface Props {
 const AdditionalTableFilters: FC<Props> = ({ children }) => {
   const { t } = useTranslation();
   return (
-    <Dialog open PaperProps={{ sx: { maxWidth: 400, width: '100%' } }}>
+    <Dialog open={false} PaperProps={{ sx: { maxWidth: 400, width: '100%' } }}>
       <DialogTitle>{t('table.additional_filters')}</DialogTitle>
       <DialogContent>
         <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column', pt: 1 }}>{children}</Box>
