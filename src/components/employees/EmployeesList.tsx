@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
+import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 import EmployeesAdditionalFilters from './EmployeesAdditionalFilters';
@@ -132,12 +133,12 @@ const headers = [
   {
     label: 'common.employee' as const,
     align: 'left' as const,
-    orderKey: 'fullName',
+    orderKey: `firstName.${i18n.language}`,
   },
   {
     label: 'common.role' as const,
     align: 'left' as const,
-    orderKey: 'role',
+    orderKey: 'roleId',
   },
   {
     label: 'common.email' as const,
@@ -147,7 +148,7 @@ const headers = [
   {
     label: 'common.phone_number' as const,
     align: 'left' as const,
-    orderKey: 'phoneNumber',
+    orderKey: 'phone',
   },
   {
     label: 'common.empty' as const,
