@@ -8,7 +8,7 @@ export const removeIdsFromBranchUpsert = (data: Partial<BranchModel>) => {
   }
 
   if (data.exceptions) {
-    values.exceptions = data.exceptions.map((el) => (el._id.includes('new') ? { start: el.start, end: el.end, repeat: el.repeat } : el));
+    values.exceptions = data.exceptions.map((el) => (el._id?.includes('new') ? { start: el.start, end: el.end, repeat: el.repeat } : el));
   }
   if (data.workingHours) {
     values.workingHours = Object.keys(data.workingHours).reduce((acc, cur) => {
@@ -18,7 +18,7 @@ export const removeIdsFromBranchUpsert = (data: Partial<BranchModel>) => {
           ...acc,
           [cur]: {
             ...workingDayDetails,
-            data: workingDayDetails.data.map((el) => (el._id.includes('new') ? { start: el.start, end: el.end } : el)),
+            data: workingDayDetails.data.map((el) => (el._id?.includes('new') ? { start: el.start, end: el.end } : el)),
           },
         };
       }

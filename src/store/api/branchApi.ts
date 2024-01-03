@@ -1,6 +1,7 @@
 import baseApi from './baseApi';
 import { type GetAllBranchesModel, type BranchModel } from '../../@types/branch';
-import { type WithPaginationModel, type ResponseModel, type TableFiltersModel } from '../../@types/common';
+import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
+import { type TableFiltersModel } from '../../@types/custom-table';
 
 const branchApiTags = {
   getBranchList: 'GET_BRANCHES_LIST',

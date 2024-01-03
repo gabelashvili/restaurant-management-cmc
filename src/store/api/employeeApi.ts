@@ -1,5 +1,6 @@
 import baseApi from './baseApi';
-import { type WithPaginationModel, type ResponseModel, type TableFiltersModel } from '../../@types/common';
+import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
+import { type TableFiltersModel } from '../../@types/custom-table';
 import { type EmployeeModel, type RoleModel, type UpsertEmployeeModel } from '../../@types/employee';
 
 const employeeApiTags = {
