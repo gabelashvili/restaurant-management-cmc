@@ -37,7 +37,7 @@ interface CustomTableProps {
 const renderEmptyCells = (count: number) =>
   new Array(count).fill(0).map((_, i) => (
     <TableRow key={i}>
-      <TableCell sx={{ visibility: 'hidden' }}>empty</TableCell>
+      <TableCell sx={{ visibility: 'hidden', height: 73 }}>empty</TableCell>
     </TableRow>
   ));
 
