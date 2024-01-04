@@ -1,4 +1,4 @@
-import { type ReactNode, type FC, type ReactElement } from 'react';
+import { type ReactNode, type FC, type ReactElement, useState } from 'react';
 
 import {
   Box,
@@ -19,7 +19,7 @@ import AdditionalTableFilters from './AdditionalTableFilters';
 import NoDatText from '../NoDatText';
 
 interface CustomTableProps {
-  header?: () => ReactElement;
+  header?: ({ openAdditionalFilters }: { openAdditionalFilters: VoidFunction }) => ReactElement;
   renderTableHeader: () => ReactElement | ReactElement[];
   renderTableBody: () => ReactElement | ReactElement[] | undefined;
   paginationOpts?: {
@@ -43,11 +43,16 @@ const renderEmptyCells = (count: number) =>
 
 const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading, additionalFilters }) => {
   const { t } = useTranslation();
+  const [openAdditionalFilters, setOpenAdditionalFilters] = useState(false);
   return (
     <>
-      {additionalFilters && <AdditionalTableFilters>{additionalFilters()}</AdditionalTableFilters>}
+      {additionalFilters && (
+        <AdditionalTableFilters open={openAdditionalFilters} setOpen={setOpenAdditionalFilters}>
+          {additionalFilters()}
+        </AdditionalTableFilters>
+      )}
       <TableContainer component={Paper} sx={{ display: 'grid' }}>
-        {header && header()}
+        {header && header({ openAdditionalFilters: () => setOpenAdditionalFilters(true) })}
         <Scrollbars autoHeight autoHeightMax={'100%'}>
           <Table sx={{ position: 'relative' }}>
             <TableHead>

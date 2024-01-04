@@ -64,7 +64,7 @@ const EmployeesList = () => {
         }}
       />
       <CustomTable
-        header={() => (
+        header={({ openAdditionalFilters }) => (
           <TableHeader
             title={t('employee.title')}
             handleAdd={{
@@ -72,6 +72,7 @@ const EmployeesList = () => {
               title: t('employee.add'),
             }}
             onSearch={(value) => handleFilterChange('search', value || null)}
+            additionalFilters={{ open: () => openAdditionalFilters() }}
           />
         )}
         additionalFilters={() => <EmployeesAdditionalFilters />}

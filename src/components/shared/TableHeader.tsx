@@ -12,9 +12,13 @@ interface TableHeaderProps {
     onClick: () => void;
   };
   onSearch?: (val: string) => void;
+  additionalFilters?: {
+    open: () => void;
+  };
 }
-const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch }) => {
+const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch, additionalFilters }) => {
   const { t } = useTranslation();
+
   return (
     <>
       <Box
@@ -48,9 +52,11 @@ const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch }) => {
               }}
             />
           )}
-          <ButtonBase sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
-            <FilterList />
-          </ButtonBase>
+          {additionalFilters && (
+            <ButtonBase onClick={additionalFilters.open} sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
+              <FilterList />
+            </ButtonBase>
+          )}
           {handleAdd && (
             <Tooltip title={handleAdd.title} placement="top">
               <ButtonBase onClick={handleAdd.onClick} sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>

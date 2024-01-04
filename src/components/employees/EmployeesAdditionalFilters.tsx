@@ -3,7 +3,7 @@ import { TextField } from '@mui/material';
 const EmployeesAdditionalFilters = () => {
   return (
     <>
-      <TextField label="ae qwdqw wqwd" value={2} fullWidth inputProps={{ shrink: true }} />
+      <TextField label="ae qwdqw wqwd" value={2} fullWidth />
       <TextField fullWidth />
       <TextField fullWidth />
       <TextField fullWidth />
