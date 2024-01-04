@@ -1,6 +1,5 @@
 import baseApi from './baseApi';
 import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
-import { type TableFiltersModel } from '../../@types/custom-table';
 import { type EmployeeModel, type RoleModel, type UpsertEmployeeModel } from '../../@types/employee';
 
 const employeeApiTags = {
@@ -9,7 +8,7 @@ const employeeApiTags = {
 
 const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(employeeApiTags)] }).injectEndpoints({
   endpoints: (build) => ({
-    getEmployees: build.query<ResponseModel<WithPaginationModel<EmployeeModel[]>>, TableFiltersModel>({
+    getEmployees: build.query<ResponseModel<WithPaginationModel<EmployeeModel[]>>, Record<string, string>>({
       query: (args) => ({
         url: `employees`,
         method: 'GET',

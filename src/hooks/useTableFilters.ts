@@ -1,45 +1,42 @@
 import { useState } from 'react';
 
-import { type TableFiltersModel } from '../@types/custom-table';
+const useTableFilters = <T extends Record<string, any>>(initialFilters: T) => {
+  const [filters, setFilters] = useState<Record<string, any>>(initialFilters);
 
-const PAGE_INITIAL = 1;
-const LIMIT_INITIAL = 10;
-
-const filtersInitial = {
-  limit: LIMIT_INITIAL,
-  page: PAGE_INITIAL,
-};
-
-const useTableFilters = () => {
-  const [filters, setFilters] = useState<TableFiltersModel>(filtersInitial);
-
-  const handleFilterChange = <T extends keyof TableFiltersModel>(filter: T, value: TableFiltersModel[T]) => {
-    const newFilters = { ...filters };
-    if (filter === 'search') {
-      newFilters.page = PAGE_INITIAL;
-      newFilters.limit = LIMIT_INITIAL;
+  const handleFilterChange = (filter: keyof T, value: any) => {
+    const newFilters: Record<string, any> = { ...filters };
+    if (filter === 'search' && newFilters?.page && newFilters.limit) {
+      newFilters.page = initialFilters.page;
+      newFilters.limit = initialFilters.limit;
     }
-
-    setFilters({ ...newFilters, [filter]: value });
+    newFilters[filter as string] = value;
+    setFilters({ ...newFilters });
   };
 
-  const removeFilter = (filter: keyof TableFiltersModel) => {
-    const newFIlters = { ...filters };
-    delete newFIlters[filter];
-    setFilters(newFIlters);
+  const handleMultipleFiltersChange = (values: Partial<Record<keyof T, any>>) => {
+    setFilters({ ...filters, ...values });
   };
 
-  const resetFilters = () => {
-    setFilters(filtersInitial);
-  };
-
-  const { order, ...rest } = { ...filters };
-  const queryParams = { ...rest, ...(order && { orderBy: order.name, orderDir: order.order }) };
+  const queryParams = Object.keys(filters).reduce((acc, cur) => {
+    if (filters[cur]) {
+      const newData: any = { ...acc };
+      if (cur === 'sort') {
+        newData.sortBy = filters[cur].sortBy;
+        newData.sortDir = filters[cur].sortDir;
+      } else {
+        newData[cur] = filters[cur];
+      }
+      return { ...newData };
+    }
+    return {
+      ...acc,
+    };
+  }, {}) as Partial<Record<keyof T, any>>;
   return {
-    filters: { ...queryParams },
+    selectedFilters: filters as Record<keyof T, any>,
+    queryParams,
     handleFilterChange,
-    resetFilters,
-    removeFilter,
+    handleMultipleFiltersChange,
   };
 };
 

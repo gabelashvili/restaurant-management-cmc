@@ -6,7 +6,8 @@ import { Box, TableCell } from '@mui/material';
 import { type TableHeaderCellModel } from '../../../@types/custom-table';
 
 const CustomTableHeaderCell: FC<TableHeaderCellModel> = (props) => {
-  const { align, label, orderKey, handleOrder, order } = props;
+  const { align, label, sortKey, handleOrder, sortDir } = props;
+
   return (
     <TableCell
       align={align}
@@ -20,19 +21,19 @@ const CustomTableHeaderCell: FC<TableHeaderCellModel> = (props) => {
           opacity: 1,
         },
       })}
-      onClick={() => handleOrder && handleOrder(order === 'desc' ? 'asc' : 'desc')}
+      onClick={() => handleOrder && handleOrder(sortDir === 'asc' ? 'desc' : 'asc')}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: align }}>
         {label}
-        {orderKey && (
+        {sortKey && (
           <ArrowDownward
             sx={{
               fontSize: 16,
               display: 'flex',
               alignItems: 'center',
               mt: 0.2,
-              opacity: order ? 1 : 0,
-              transform: `rotate(${order === 'asc' ? '180deg' : '0deg'})`,
+              opacity: sortDir ? 1 : 0,
+              transform: `rotate(${sortDir === 'asc' ? '180deg' : '0deg'})`,
             }}
           />
         )}

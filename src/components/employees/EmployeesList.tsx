@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { Avatar, Box, TableRow, Typography } from '@mui/material';
-import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 import EmployeesAdditionalFilters from './EmployeesAdditionalFilters';
@@ -19,11 +18,19 @@ import CustomTableHeaderCell from '../shared/table/CustomTableHeaderCell';
 import CustomTableMenu from '../shared/table/CustomTableMenu';
 import TableHeader from '../shared/TableHeader';
 
+const initialFilters = {
+  page: 1,
+  limit: 10,
+  search: null,
+  sortDir: null,
+  sortBy: null,
+};
+
 const EmployeesList = () => {
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation();
-  const { handleFilterChange, filters } = useTableFilters();
-  const { isFetching, data: employees } = useGetEmployeesQuery({ ...filters });
+  const { handleFilterChange, selectedFilters, queryParams, handleMultipleFiltersChange } = useTableFilters(initialFilters);
+  const { isFetching, data: employees } = useGetEmployeesQuery({ ...queryParams });
   const [removeEmployee] = useRemoveEmployeeMutation();
   const [openAddModal, setOpenAddModal] = useState(false);
   const [editItem, setEditItem] = useState<EmployeeModel | null>(null);
@@ -64,23 +71,24 @@ const EmployeesList = () => {
               onClick: () => setOpenAddModal(true),
               title: t('employee.add'),
             }}
-            onSearch={(value) => handleFilterChange('search', value)}
+            onSearch={(value) => handleFilterChange('search', value || null)}
           />
         )}
         additionalFilters={() => <EmployeesAdditionalFilters />}
         loading={isFetching}
         renderTableHeader={() =>
-          headers.map(({ label, ...el }) => (
+          getTableHeaders(lang).map(({ label, ...el }) => (
             <CustomTableHeaderCell
               key={label}
               label={t(label)}
               {...el}
-              order={filters.orderBy === el.orderKey ? filters.orderDir : null}
+              sortDir={selectedFilters.sortBy === el.sortKey ? selectedFilters.sortDir : null}
               handleOrder={(val) => {
-                if (el.orderKey) {
-                  console.log(val);
-
-                  handleFilterChange('order', { name: el.orderKey, order: val });
+                if (el.sortKey) {
+                  handleMultipleFiltersChange({
+                    sortBy: el.sortKey,
+                    sortDir: val,
+                  });
                 }
               }}
             />
@@ -99,10 +107,10 @@ const EmployeesList = () => {
                   <Typography>{`${item.firstName[lang]} ${item.lastName[lang]} `}</Typography>
                 </Box>
               </CustomTableBodyCell>
-              <CustomTableBodyCell align={headers[1].align}>{t(`roles.${item.role.roleName}`)}</CustomTableBodyCell>
-              <CustomTableBodyCell align={headers[2].align}>{item.email}</CustomTableBodyCell>
-              <CustomTableBodyCell align={headers[3].align}>{item.phone}</CustomTableBodyCell>
-              <CustomTableBodyCell align={headers[4].align}>
+              <CustomTableBodyCell align={getTableHeaders(lang)[1].align}>{t(`roles.${item.role.roleName}`)}</CustomTableBodyCell>
+              <CustomTableBodyCell align={getTableHeaders(lang)[2].align}>{item.email}</CustomTableBodyCell>
+              <CustomTableBodyCell align={getTableHeaders(lang)[3].align}>{item.phone}</CustomTableBodyCell>
+              <CustomTableBodyCell align={getTableHeaders(lang)[4].align}>
                 <CustomTableMenu
                   onEdit={() => {
                     setEditItem(item);
@@ -116,10 +124,10 @@ const EmployeesList = () => {
         }
         paginationOpts={{
           count: employees?.data.count || 0,
-          limit: filters.limit,
+          limit: selectedFilters.limit,
           onPageChange: (page) => handleFilterChange('page', page),
           onLimitChange: (limit) => handleFilterChange('limit', limit),
-          page: filters.page,
+          page: selectedFilters.page,
           visibleDataCount: employees?.data.list.length || 0,
         }}
       />
@@ -129,26 +137,26 @@ const EmployeesList = () => {
 
 export default EmployeesList;
 
-const headers = [
+const getTableHeaders = (selectedLang: string) => [
   {
     label: 'common.employee' as const,
     align: 'left' as const,
-    orderKey: `firstName.${i18n.language}`,
+    sortKey: `firstName.${selectedLang}`,
   },
   {
     label: 'common.role' as const,
     align: 'left' as const,
-    orderKey: 'roleId',
+    sortKey: 'roleId',
   },
   {
     label: 'common.email' as const,
     align: 'left' as const,
-    orderKey: 'email',
+    sortKey: 'email',
   },
   {
     label: 'common.phone_number' as const,
     align: 'left' as const,
-    orderKey: 'phone',
+    sortKey: 'phone',
   },
   {
     label: 'common.empty' as const,
