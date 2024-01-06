@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useEffect } from 'react';
+import { type Dispatch, type SetStateAction } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Autocomplete, Box, Button, TextField } from '@mui/material';

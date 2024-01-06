@@ -1,7 +1,7 @@
-import { type Dispatch, type SetStateAction, type FC } from 'react';
+import { type FC } from 'react';
 
 import { Add, FilterList, Search } from '@mui/icons-material';
-import { Box, ButtonBase, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
+import { Badge, Box, ButtonBase, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
 import { debounce } from 'lodash';
 import { useTranslation } from 'react-i18next';
 
@@ -17,7 +17,7 @@ interface TableHeaderProps {
   };
   selectedAdditionFilters: number;
 }
-const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch, additionalFilters }) => {
+const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch, additionalFilters, selectedAdditionFilters }) => {
   const { t } = useTranslation();
 
   return (
@@ -54,9 +54,11 @@ const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch, additio
             />
           )}
           {additionalFilters && (
-            <ButtonBase onClick={additionalFilters.open} sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
-              <FilterList />
-            </ButtonBase>
+            <Badge badgeContent={selectedAdditionFilters} color="primary">
+              <ButtonBase onClick={additionalFilters.open} sx={{ bgcolor: 'secondary.300', borderRadius: 2, p: 1 }}>
+                <FilterList />
+              </ButtonBase>
+            </Badge>
           )}
           {handleAdd && (
             <Tooltip title={handleAdd.title} placement="top">
