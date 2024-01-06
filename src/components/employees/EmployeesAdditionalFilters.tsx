@@ -1,3 +1,5 @@
+import { type Dispatch, type SetStateAction, useEffect } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Autocomplete, Box, Button, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,14 +13,16 @@ import { employeesAdditionalFiltersSchema } from '../../validations/employee-sch
 interface Props {
   closeAdditionalFilters: VoidFunction;
   handleChange: (filters: EmployeesAdditionalFiltersModel) => void;
+  setSelectedAdditionFilters: Dispatch<SetStateAction<number>>;
 }
-const EmployeesAdditionalFilters = ({ closeAdditionalFilters, handleChange }: Props) => {
+const EmployeesAdditionalFilters = ({ closeAdditionalFilters, handleChange, setSelectedAdditionFilters }: Props) => {
   const { t } = useTranslation();
   const roles = useAppSelector((state) => selectRoles(state));
   const {
     control,
     formState: { isDirty },
     handleSubmit,
+    reset,
   } = useForm<EmployeesAdditionalFiltersModel>({
     resolver: yupResolver(employeesAdditionalFiltersSchema),
     defaultValues: {
@@ -28,7 +32,18 @@ const EmployeesAdditionalFilters = ({ closeAdditionalFilters, handleChange }: Pr
 
   const onSubmit = handleSubmit((data) => {
     handleChange(data);
+    reset(data);
     closeAdditionalFilters();
+    setSelectedAdditionFilters(
+      Number(
+        Object.keys(data).reduce((acc: number, cur: any) => {
+          if (data[cur as keyof EmployeesAdditionalFiltersModel]) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0),
+      ),
+    );
   });
 
   return (

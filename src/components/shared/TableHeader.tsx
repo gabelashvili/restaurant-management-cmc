@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type Dispatch, type SetStateAction, type FC } from 'react';
 
 import { Add, FilterList, Search } from '@mui/icons-material';
 import { Box, ButtonBase, InputAdornment, TextField, Tooltip, Typography } from '@mui/material';
@@ -15,6 +15,7 @@ interface TableHeaderProps {
   additionalFilters?: {
     open: () => void;
   };
+  selectedAdditionFilters: number;
 }
 const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch, additionalFilters }) => {
   const { t } = useTranslation();

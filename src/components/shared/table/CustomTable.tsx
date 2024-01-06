@@ -1,4 +1,4 @@
-import { type ReactNode, type FC, type ReactElement, useState } from 'react';
+import { type ReactNode, type FC, type ReactElement, useState, type Dispatch, type SetStateAction } from 'react';
 
 import {
   Box,
@@ -19,7 +19,13 @@ import AdditionalTableFilters from './AdditionalTableFilters';
 import NoDatText from '../NoDatText';
 
 interface CustomTableProps {
-  header?: ({ openAdditionalFilters }: { openAdditionalFilters: VoidFunction }) => ReactElement;
+  header?: ({
+    openAdditionalFilters,
+    selectedAdditionFilters,
+  }: {
+    openAdditionalFilters: VoidFunction;
+    selectedAdditionFilters: number;
+  }) => ReactElement;
   renderTableHeader: () => ReactElement | ReactElement[];
   renderTableBody: () => ReactElement | ReactElement[] | undefined;
   paginationOpts?: {
@@ -31,7 +37,7 @@ interface CustomTableProps {
     visibleDataCount: number;
   };
   loading?: boolean;
-  additionalFilters?: (onClose: VoidFunction) => ReactNode;
+  additionalFilters?: (onClose: VoidFunction, setSelectedAdditionFilters: Dispatch<SetStateAction<number>>) => ReactNode;
 }
 
 const renderEmptyCells = (count: number) =>
@@ -44,15 +50,19 @@ const renderEmptyCells = (count: number) =>
 const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTableHeader, paginationOpts, loading, additionalFilters }) => {
   const { t } = useTranslation();
   const [openAdditionalFilters, setOpenAdditionalFilters] = useState(false);
+  const [selectedAdditionFilters, setSelectedAdditionFilters] = useState(0);
+
   return (
     <>
       {additionalFilters && (
-        <AdditionalTableFilters open={openAdditionalFilters} setOpen={setOpenAdditionalFilters}>
-          {additionalFilters(() => setOpenAdditionalFilters(false))}
-        </AdditionalTableFilters>
+        <>
+          <AdditionalTableFilters open={openAdditionalFilters} setOpen={setOpenAdditionalFilters}>
+            {additionalFilters && additionalFilters(() => setOpenAdditionalFilters(false), setSelectedAdditionFilters)}
+          </AdditionalTableFilters>
+        </>
       )}
       <TableContainer component={Paper} sx={{ display: 'grid' }}>
-        {header && header({ openAdditionalFilters: () => setOpenAdditionalFilters(true) })}
+        {header && header({ openAdditionalFilters: () => setOpenAdditionalFilters(true), selectedAdditionFilters })}
         <Scrollbars autoHeight autoHeightMax={'100%'}>
           <Table sx={{ position: 'relative' }}>
             <TableHead>

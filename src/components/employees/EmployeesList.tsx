@@ -24,6 +24,7 @@ const initialFilters = {
   search: null,
   sortDir: null,
   sortBy: null,
+  roleId: null,
 };
 
 const EmployeesList = () => {
@@ -64,7 +65,7 @@ const EmployeesList = () => {
         }}
       />
       <CustomTable
-        header={({ openAdditionalFilters }) => (
+        header={({ openAdditionalFilters, selectedAdditionFilters }) => (
           <TableHeader
             title={t('employee.title')}
             handleAdd={{
@@ -73,10 +74,15 @@ const EmployeesList = () => {
             }}
             onSearch={(value) => handleFilterChange('search', value || null)}
             additionalFilters={{ open: () => openAdditionalFilters() }}
+            selectedAdditionFilters={selectedAdditionFilters}
           />
         )}
-        additionalFilters={(closeAdditionalFilters) => (
-          <EmployeesAdditionalFilters closeAdditionalFilters={closeAdditionalFilters} handleChange={(val) => console.log(val)} />
+        additionalFilters={(closeAdditionalFilters, setSelectedAdditionFilters) => (
+          <EmployeesAdditionalFilters
+            closeAdditionalFilters={closeAdditionalFilters}
+            handleChange={(val) => handleMultipleFiltersChange(val)}
+            setSelectedAdditionFilters={setSelectedAdditionFilters}
+          />
         )}
         loading={isFetching}
         renderTableHeader={() =>
