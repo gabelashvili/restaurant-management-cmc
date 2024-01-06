@@ -16,10 +16,6 @@ const AdditionalTableFilters: FC<Props> = ({ children, open, setOpen }) => {
       <DialogContent>
         <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column', pt: 1 }}>{children}</Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setOpen(false)}>{t('common.cancel')}</Button>
-        <Button>{t('common.save')}</Button>
-      </DialogActions>
     </Dialog>
   );
 };

@@ -1,3 +1,5 @@
+import { createSelector } from '@reduxjs/toolkit';
+
 import baseApi from './baseApi';
 import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
 import { type EmployeeModel, type RoleModel, type UpsertEmployeeModel } from '../../@types/employee';
@@ -54,3 +56,5 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
 export const { useCreateEmployeeMutation, useGetRolesQuery, useGetEmployeesQuery, useUpdateEmployeeMutation, useRemoveEmployeeMutation } =
   employeeApi;
 export default employeeApi;
+
+export const selectRoles = createSelector(employeeApi.endpoints.getRoles.select(), (rolesResult) => rolesResult?.data?.data);

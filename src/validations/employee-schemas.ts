@@ -17,3 +17,7 @@ export const upsertEmployeeSchema = yup.object().shape({
     .transform((val) => (val === 0 ? null : val)),
   phone: yup.string().required(),
 });
+
+export const employeesAdditionalFiltersSchema = yup.object().shape({
+  roleId: yup.number().required().nullable(),
+});

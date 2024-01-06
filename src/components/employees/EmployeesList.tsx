@@ -75,7 +75,9 @@ const EmployeesList = () => {
             additionalFilters={{ open: () => openAdditionalFilters() }}
           />
         )}
-        additionalFilters={() => <EmployeesAdditionalFilters />}
+        additionalFilters={(closeAdditionalFilters) => (
+          <EmployeesAdditionalFilters closeAdditionalFilters={closeAdditionalFilters} handleChange={(val) => console.log(val)} />
+        )}
         loading={isFetching}
         renderTableHeader={() =>
           getTableHeaders(lang).map(({ label, ...el }) => (

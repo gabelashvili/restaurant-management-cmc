@@ -31,7 +31,7 @@ interface CustomTableProps {
     visibleDataCount: number;
   };
   loading?: boolean;
-  additionalFilters?: () => ReactNode;
+  additionalFilters?: (onClose: VoidFunction) => ReactNode;
 }
 
 const renderEmptyCells = (count: number) =>
@@ -48,7 +48,7 @@ const CustomTable: FC<CustomTableProps> = ({ header, renderTableBody, renderTabl
     <>
       {additionalFilters && (
         <AdditionalTableFilters open={openAdditionalFilters} setOpen={setOpenAdditionalFilters}>
-          {additionalFilters()}
+          {additionalFilters(() => setOpenAdditionalFilters(false))}
         </AdditionalTableFilters>
       )}
       <TableContainer component={Paper} sx={{ display: 'grid' }}>
