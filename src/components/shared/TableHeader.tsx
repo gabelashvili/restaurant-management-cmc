@@ -15,7 +15,7 @@ interface TableHeaderProps {
   additionalFilters?: {
     open: () => void;
   };
-  selectedAdditionFilters: number;
+  selectedAdditionFilters?: number;
 }
 const TableHeader: FC<TableHeaderProps> = ({ title, handleAdd, onSearch, additionalFilters, selectedAdditionFilters }) => {
   const { t } = useTranslation();
