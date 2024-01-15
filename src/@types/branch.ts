@@ -35,6 +35,11 @@ export interface BranchGeneralInfoModel {
   address: MultiLangModel;
   phone: string | null;
   email: string | null;
+  managers: Array<{
+    firstName: MultiLangModel;
+    lastName: MultiLangModel;
+    _id: string;
+  }>;
 }
 
 export interface BranchModel {

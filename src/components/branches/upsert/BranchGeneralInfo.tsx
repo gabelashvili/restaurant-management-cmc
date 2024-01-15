@@ -120,41 +120,52 @@ const BranchGeneralInfo = ({ control, loading }: Props) => {
               />
             )}
           />
-          <Autocomplete
-            fullWidth
-            multiple
-            loading={isFetching}
-            onClose={() => {
-              handleMultipleFiltersChange(initialFilters);
-            }}
-            filterOptions={(options) => options}
-            options={managers?.data.list || []}
-            getOptionLabel={(item) => `${item.firstName[lang]} ${item.lastName[lang]}`}
-            ListboxProps={{
-              sx: { maxHeight: 250 },
-              ref: listBoxRef,
-              onScroll,
-            }}
-            onInputChange={(_, value, reason) => {
-              if (reason === 'input') {
-                handleSearch(value);
-              }
-            }}
-            renderInput={(params) => (
-              <TextField
-                variant="filled"
-                label={t('branch.upsert.managers')}
-                {...params}
-                InputLabelProps={{ ...params.InputLabelProps, children: null }}
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      {isFetching ? <CircularProgress sx={{ mt: -2 }} color="inherit" size={20} /> : null}
-                      {params.InputProps.endAdornment}
-                    </>
-                  ),
+          <Controller
+            control={control}
+            name={`general.managers`}
+            render={({ field }) => (
+              <Autocomplete
+                fullWidth
+                multiple
+                loading={isFetching}
+                onClose={() => {
+                  handleMultipleFiltersChange(initialFilters);
                 }}
+                filterOptions={(options) => options}
+                options={managers?.data.list.map((el) => ({ firstName: el.firstName, lastName: el.lastName, _id: el._id })) || []}
+                getOptionLabel={(item) => `${item.firstName[lang]} ${item.lastName[lang]}`}
+                ListboxProps={{
+                  sx: { maxHeight: 250 },
+                  ref: listBoxRef,
+                  onScroll,
+                }}
+                onInputChange={(_, value, reason) => {
+                  if (reason === 'input') {
+                    handleSearch(value);
+                  }
+                }}
+                onChange={(_, val) => {
+                  field.onChange(val);
+                }}
+                isOptionEqualToValue={(opt, value) => opt._id === value._id}
+                value={field.value}
+                renderInput={(params) => (
+                  <TextField
+                    variant="filled"
+                    label={t('branch.upsert.managers')}
+                    {...params}
+                    InputLabelProps={{ ...params.InputLabelProps, children: null }}
+                    InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <>
+                          {isFetching ? <CircularProgress sx={{ mt: -2 }} color="inherit" size={20} /> : null}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }}
+                  />
+                )}
               />
             )}
           />

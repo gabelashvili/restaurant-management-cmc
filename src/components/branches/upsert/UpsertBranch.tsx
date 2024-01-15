@@ -29,6 +29,7 @@ const initialState = {
     },
     email: null,
     phone: null,
+    managers: [],
   },
   workingHours: {
     monday: {
@@ -119,11 +120,12 @@ const UpsertBranch = () => {
     trigger,
     setValue,
     reset,
-    formState: { isDirty },
+    formState: { isDirty, errors },
   } = useForm<BranchModel>({
     defaultValues: { ...initialState },
     resolver: yupResolver(upsertBranchSchema),
   });
+  console.log(errors);
 
   const onSubmit = handleSubmit(
     async (data) => {
