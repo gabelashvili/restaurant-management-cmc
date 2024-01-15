@@ -18,12 +18,45 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
       }),
       providesTags: [employeeApiTags.getEmployeesList],
     }),
+    getEmployeesInfinite: build.query<ResponseModel<WithPaginationModel<EmployeeModel[]>>, Record<string, string>>({
+      query: (args) => ({
+        url: `employees`,
+        method: 'GET',
+        params: { ...args },
+      }),
+      serializeQueryArgs: ({ queryArgs }) => {
+        const newQueryArgs = { ...queryArgs };
+        if (newQueryArgs.page) {
+          delete newQueryArgs.page;
+        }
+        if (newQueryArgs.search) {
+          delete newQueryArgs.search;
+        }
+        return newQueryArgs;
+      },
+      merge: (currentCache, newItems, args) => {
+        if (currentCache.data && Number(args.arg.page) > 1) {
+          return {
+            ...newItems,
+            data: {
+              ...newItems.data,
+              list: [...newItems.data.list, ...currentCache.data.list],
+            },
+          };
+        }
+        return newItems;
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+    }),
     createEmployee: build.mutation<ResponseModel<null>, UpsertEmployeeModel>({
       query: (args) => ({
         url: `employees`,
         method: 'POST',
         body: args,
       }),
+
       invalidatesTags: (result, error) => (error ? [] : [employeeApiTags.getEmployeesList]),
     }),
     updateEmployee: build.mutation<ResponseModel<null>, { employeeId: string; data: UpsertEmployeeModel }>({
@@ -53,8 +86,14 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
   overrideExisting: false,
 });
 
-export const { useCreateEmployeeMutation, useGetRolesQuery, useGetEmployeesQuery, useUpdateEmployeeMutation, useRemoveEmployeeMutation } =
-  employeeApi;
+export const {
+  useCreateEmployeeMutation,
+  useGetRolesQuery,
+  useGetEmployeesQuery,
+  useUpdateEmployeeMutation,
+  useRemoveEmployeeMutation,
+  useGetEmployeesInfiniteQuery,
+} = employeeApi;
 export default employeeApi;
 
 export const selectRoles = createSelector(employeeApi.endpoints.getRoles.select(), (rolesResult) => rolesResult?.data?.data);

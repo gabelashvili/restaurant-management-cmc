@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const useTableFilters = <T extends Record<string, any>>(initialFilters: T) => {
   const [filters, setFilters] = useState<Record<string, any>>(initialFilters);
@@ -17,21 +17,25 @@ const useTableFilters = <T extends Record<string, any>>(initialFilters: T) => {
     setFilters({ ...filters, ...values });
   };
 
-  const queryParams = Object.keys(filters).reduce((acc, cur) => {
-    if (filters[cur]) {
-      const newData: any = { ...acc };
-      if (cur === 'sort') {
-        newData.sortBy = filters[cur].sortBy;
-        newData.sortDir = filters[cur].sortDir;
-      } else {
-        newData[cur] = filters[cur];
-      }
-      return { ...newData };
-    }
-    return {
-      ...acc,
-    };
-  }, {}) as Partial<Record<keyof T, any>>;
+  const queryParams = useMemo(
+    () =>
+      Object.keys(filters).reduce((acc, cur) => {
+        if (filters[cur]) {
+          const newData: any = { ...acc };
+          if (cur === 'sort') {
+            newData.sortBy = filters[cur].sortBy;
+            newData.sortDir = filters[cur].sortDir;
+          } else {
+            newData[cur] = filters[cur];
+          }
+          return { ...newData };
+        }
+        return {
+          ...acc,
+        };
+      }, {}),
+    [filters],
+  ) as Partial<Record<keyof T, any>>;
   return {
     selectedFilters: filters as Record<keyof T, any>,
     queryParams,
