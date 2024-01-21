@@ -14,6 +14,10 @@ export interface EmployeeModel {
   role: RoleModel;
   phone: string;
   _id: string;
+  branches: Array<{
+    name: MultiLangModel;
+    _id: string;
+  }>;
 }
 
 export interface UpsertEmployeeModel extends Omit<EmployeeModel, 'role' | '_id' | 'avatar'> {

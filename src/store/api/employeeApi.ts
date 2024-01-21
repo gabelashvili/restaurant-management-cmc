@@ -50,7 +50,7 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
         return currentArg !== previousArg;
       },
     }),
-    createEmployee: build.mutation<ResponseModel<null>, UpsertEmployeeModel>({
+    createEmployee: build.mutation<ResponseModel<null>, Omit<UpsertEmployeeModel, 'branches'>>({
       query: (args) => ({
         url: `employees`,
         method: 'POST',
@@ -59,7 +59,7 @@ const employeeApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(em
 
       invalidatesTags: (result, error) => (error ? [] : [employeeApiTags.getEmployeesList]),
     }),
-    updateEmployee: build.mutation<ResponseModel<null>, { employeeId: string; data: UpsertEmployeeModel }>({
+    updateEmployee: build.mutation<ResponseModel<null>, { employeeId: string; data: Omit<UpsertEmployeeModel, 'branches'> }>({
       query: (args) => ({
         url: `employees/${args.employeeId}`,
         method: 'PUT',

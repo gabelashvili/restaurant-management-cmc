@@ -27,7 +27,7 @@ const UpdateBaseInfo = () => {
     formState: { isDirty },
     reset,
     control,
-  } = useForm<Omit<UpdateDetailModel, '_id'>>({
+  } = useForm<Omit<UpdateDetailModel, '_id' | 'branches'>>({
     defaultValues: {
       firstName: {
         ka: '',

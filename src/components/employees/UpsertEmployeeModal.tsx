@@ -40,7 +40,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
   const [updateEmployee, { isLoading: updateEmployeeLoading }] = useUpdateEmployeeMutation();
   const { isFetching: rolesIsFetching, data: roles } = useGetRolesQuery();
 
-  const { control, reset, handleSubmit } = useForm<UpsertEmployeeModel>({
+  const { control, reset, handleSubmit } = useForm<Omit<UpsertEmployeeModel, 'branches'>>({
     defaultValues,
     resolver: yupResolver(upsertEmployeeSchema),
   });
@@ -166,6 +166,25 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
                   InputLabelProps={{ ...params.InputLabelProps, children: null }}
                 />
               )}
+            />
+          )}
+        />
+        <Autocomplete
+          fullWidth
+          multiple
+          loading={rolesIsFetching}
+          options={editItem?.branches || []}
+          getOptionLabel={(item) => item.name[lang]}
+          value={editItem?.branches}
+          disableClearable
+          disabled
+          renderInput={(params) => (
+            <TextField
+              variant="filled"
+              label={t('branch.branches')}
+              required
+              {...params}
+              InputLabelProps={{ ...params.InputLabelProps, children: null }}
             />
           )}
         />
