@@ -40,7 +40,12 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
   const [updateEmployee, { isLoading: updateEmployeeLoading }] = useUpdateEmployeeMutation();
   const { isFetching: rolesIsFetching, data: roles } = useGetRolesQuery();
 
-  const { control, reset, handleSubmit } = useForm<Omit<UpsertEmployeeModel, 'branches'>>({
+  const {
+    control,
+    reset,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm<Omit<UpsertEmployeeModel, 'branches'>>({
     defaultValues,
     resolver: yupResolver(upsertEmployeeSchema),
   });
@@ -175,7 +180,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
           loading={rolesIsFetching}
           options={editItem?.branches || []}
           getOptionLabel={(item) => item.name[lang]}
-          value={editItem?.branches}
+          value={editItem?.branches || []}
           disableClearable
           disabled
           renderInput={(params) => (
@@ -194,7 +199,7 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
         <LoadingButton onClick={onClose} color="error" loading={createEmployeeLoading || updateEmployeeLoading}>
           {t('common.cancel')}
         </LoadingButton>
-        <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading || updateEmployeeLoading}>
+        <LoadingButton color="success" onClick={onSubmit} loading={createEmployeeLoading || updateEmployeeLoading} disabled={!isDirty}>
           {t(`common.${editItem?._id ? 'edit' : 'add'}`)}
         </LoadingButton>
       </DialogActions>
