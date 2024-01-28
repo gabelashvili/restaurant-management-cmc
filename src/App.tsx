@@ -10,6 +10,7 @@ import BranchesList from './components/branches/BranchesList';
 import UpsertBranch from './components/branches/upsert/UpsertBranch';
 import EmployeesList from './components/employees/EmployeesList';
 import Layout from './components/layout/Layout';
+import ProductCategoriesList from './components/product-categories/ProductCategoriesList';
 import UserSettings from './components/settings/UserSettings';
 import useAuth from './hooks/useAuth';
 import { getTheme } from './theme';
@@ -37,7 +38,7 @@ const defaultRoutes = createBrowserRouter([
         children: [
           {
             path: 'categories',
-            element: <div>კატეგორიები</div>,
+            element: <ProductCategoriesList />,
           },
           {
             path: 'dishes',

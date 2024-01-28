@@ -96,11 +96,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<string | FetchArgs, unknown, FetchB
 
 export const rtkQueryErrorLogger: Middleware = (_api: MiddlewareAPI) => (next) => (action) => {
   if (action.type.includes('fulfilled') && action?.payload?.message) {
-    toast.success(action.payload.message);
+    toast.success(action?.payload?.message);
   }
   if (action.type.includes('rejected') && action?.payload?.data?.message) {
     if (!toast.isActive('unauthorized')) {
-      toast.error(action.payload.data.message, {
+      toast.error(action?.payload?.data?.message, {
         toastId: 'unauthorized',
       });
     }

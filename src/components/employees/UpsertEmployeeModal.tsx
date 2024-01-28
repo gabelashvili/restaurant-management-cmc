@@ -57,15 +57,19 @@ const UpsertEmployeeModal: FC<Props> = ({ open, handleClose, editItem }) => {
 
   const onSubmit = handleSubmit(async (data) => {
     if (editItem) {
-      const response = await updateEmployee({ data: { ...data }, employeeId: editItem._id }).unwrap();
-      if (response.success) {
-        onClose();
-      }
+      try {
+        const response = await updateEmployee({ data: { ...data }, employeeId: editItem._id }).unwrap();
+        if (response.success) {
+          onClose();
+        }
+      } catch (error) {}
     } else {
-      const response = await createEmployee({ ...data }).unwrap();
-      if (response.success) {
-        onClose();
-      }
+      try {
+        const response = await createEmployee({ ...data }).unwrap();
+        if (response.success) {
+          onClose();
+        }
+      } catch (error) {}
     }
   });
 
