@@ -120,6 +120,9 @@ const EmployeesList = () => {
               <CustomTableBodyCell align={getTableHeaders(lang)[2].align}>{item.email}</CustomTableBodyCell>
               <CustomTableBodyCell align={getTableHeaders(lang)[3].align}>{item.phone}</CustomTableBodyCell>
               <CustomTableBodyCell align={getTableHeaders(lang)[4].align}>
+                {item.branches.map((el) => el.name[lang]).join('; ') || '-'}
+              </CustomTableBodyCell>
+              <CustomTableBodyCell align={getTableHeaders(lang)[4].align}>
                 <CustomTableMenu
                   onEdit={() => {
                     setEditItem(item);
@@ -166,6 +169,10 @@ const getTableHeaders = (selectedLang: string) => [
     label: 'common.phone_number' as const,
     align: 'left' as const,
     sortKey: 'phone',
+  },
+  {
+    label: 'branch.branches' as const,
+    align: 'left' as const,
   },
   {
     label: 'common.empty' as const,

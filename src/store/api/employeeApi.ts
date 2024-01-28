@@ -4,7 +4,7 @@ import baseApi from './baseApi';
 import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
 import { type EmployeeModel, type RoleModel, type UpsertEmployeeModel } from '../../@types/employee';
 
-const employeeApiTags = {
+export const employeeApiTags = {
   getEmployeesList: 'GET_EMPLOYEES_LIST',
 };
 

@@ -2,7 +2,7 @@ import baseApi from './baseApi';
 import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
 import { type ProductCategoryModel } from '../../@types/product-category';
 
-const productCategoryApiTags = {
+export const productCategoryApiTags = {
   getProductCategories: 'GET_PRODUCT_CATEGORIES',
 };
 

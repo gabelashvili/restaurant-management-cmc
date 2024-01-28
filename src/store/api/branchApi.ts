@@ -1,4 +1,5 @@
 import baseApi from './baseApi';
+import { employeeApiTags } from './employeeApi';
 import { type GetAllBranchesModel, type BranchModel } from '../../@types/branch';
 import { type WithPaginationModel, type ResponseModel } from '../../@types/common';
 
@@ -51,7 +52,7 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
           );
         } catch {}
       },
-      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
+      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList, employeeApiTags.getEmployeesList]),
     }),
     removeBranch: build.mutation<ResponseModel<null>, string>({
       query: (branchId) => ({
