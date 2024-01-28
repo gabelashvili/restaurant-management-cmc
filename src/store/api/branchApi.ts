@@ -59,7 +59,7 @@ const branchApi = baseApi.enhanceEndpoints({ addTagTypes: [...Object.values(bran
         url: `branches/${branchId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList]),
+      invalidatesTags: (result, error) => (error ? [] : [branchApiTags.getBranchList, employeeApiTags.getEmployeesList]),
     }),
   }),
   overrideExisting: false,
