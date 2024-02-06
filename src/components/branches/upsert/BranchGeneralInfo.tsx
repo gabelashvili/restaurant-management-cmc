@@ -54,7 +54,7 @@ const BranchGeneralInfo = ({ control, loading }: Props) => {
   };
 
   return (
-    <UpsertSectionWrapper title={t('branch.upsert.general_info')}>
+    <UpsertSectionWrapper title={t('branch.general_info')}>
       {loading ? (
         new Array(5).fill(0).map(() => <Skeleton variant="rounded" sx={{ height: 40 }} key={Math.random().toString()} />)
       ) : (
@@ -152,7 +152,7 @@ const BranchGeneralInfo = ({ control, loading }: Props) => {
                 renderInput={(params) => (
                   <TextField
                     variant="filled"
-                    label={t('branch.upsert.managers')}
+                    label={t('branch.managers')}
                     {...params}
                     InputLabelProps={{ ...params.InputLabelProps, children: null }}
                     InputProps={{

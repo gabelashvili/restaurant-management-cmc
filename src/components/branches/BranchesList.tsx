@@ -36,8 +36,8 @@ const BranchesList = () => {
     dispatch(
       setWarningModal({
         open: true,
-        title: t('branch.upsert.remove'),
-        description: t('branch.upsert.remove_desc', {
+        title: t('branch.remove'),
+        description: t('branch.remove_desc', {
           branch: name,
         }),
         onAgree: async () => {
@@ -56,7 +56,7 @@ const BranchesList = () => {
         <TableHeader
           title={t('branch.branches')}
           handleAdd={{
-            title: t('branch.upsert.add'),
+            title: t('branch.add'),
             onClick: () => navigate('new'),
           }}
           onSearch={(value) => handleFilterChange('search', value)}

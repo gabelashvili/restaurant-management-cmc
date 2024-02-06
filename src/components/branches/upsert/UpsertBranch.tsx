@@ -164,11 +164,7 @@ const UpsertBranch = () => {
   }, [createBranchData?.data._id]);
 
   return (
-    <Container
-      title={t(`branch.upsert.${branchId ? 'update' : 'add'}`)}
-      centerTitle
-      sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}
-    >
+    <Container title={t(`branch.${branchId ? 'update' : 'add'}`)} centerTitle sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <BranchGeneralInfo control={control} loading={branchDataFetching} />
       <BranchWorkingHours control={control} trigger={trigger} getValues={getValues} setValue={setValue} loading={branchDataFetching} />
       <BranchExceptionDates control={control} trigger={trigger} loading={branchDataFetching} />

@@ -65,7 +65,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
 
   return (
     <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
-      <UpsertSectionWrapper title={t('branch.upsert.working_hours')}>
+      <UpsertSectionWrapper title={t('branch.working_hours')}>
         {loading ? (
           <Skeleton variant="rounded" height={300} />
         ) : (
@@ -74,8 +74,8 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
               <TableRow sx={(theme) => ({ '& th': { borderBottom: `1px solid ${theme.palette.divider}` } })}>
                 <TableCell width={'10%'}></TableCell>
                 <TableCell align="left">{t('week_days.title')}</TableCell>
-                <TableCell align="center">{t('branch.upsert.start')}</TableCell>
-                <TableCell align="center">{t('branch.upsert.end')}</TableCell>
+                <TableCell align="center">{t('branch.start')}</TableCell>
+                <TableCell align="center">{t('branch.end')}</TableCell>
                 <TableCell width={'1%'} align="center"></TableCell>
               </TableRow>
             </TableHead>
@@ -124,7 +124,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
                           render={({ field, fieldState }) => (
                             <TimeField
                               disabled={!getValues('workingHours')[day].enabled}
-                              label={t('branch.upsert.start_hour')}
+                              label={t('branch.start_hour')}
                               sx={{ width: '100%' }}
                               required={getValues('workingHours')[day].enabled}
                               format="HH:mm"
@@ -163,7 +163,7 @@ const BranchWorkingHours = ({ control, trigger, getValues, setValue, loading }: 
                               <TimeField
                                 sx={{ width: 'calc(100%)' }}
                                 disabled={!getValues('workingHours')[day].enabled}
-                                label={t('branch.upsert.end_hour')}
+                                label={t('branch.end_hour')}
                                 required={getValues('workingHours')[day].enabled}
                                 format="HH:mm"
                                 InputProps={{ error: !!fieldState.error }}

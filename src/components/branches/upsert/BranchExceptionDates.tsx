@@ -31,7 +31,7 @@ const BranchExceptionDates = ({ control, trigger, loading }: Props) => {
 
   return (
     <LocalizationProvider dateLibInstance={moment} dateAdapter={AdapterMoment}>
-      <UpsertSectionWrapper title={t('branch.upsert.exception_dates')}>
+      <UpsertSectionWrapper title={t('branch.exception_dates')}>
         {loading ? (
           <Skeleton variant="rounded" height={300} />
         ) : (
@@ -93,7 +93,7 @@ const BranchExceptionDates = ({ control, trigger, loading }: Props) => {
                         fullWidth
                         disablePortal
                         options={Object.values(ExceptionRepeatEnum)}
-                        getOptionLabel={(opt) => t(`branch.upsert.${opt}`)}
+                        getOptionLabel={(opt) => t(`branch.${opt}`)}
                         onChange={(_, val) => params.field.onChange(val)}
                         filterSelectedOptions
                         value={params.field.value}
@@ -101,7 +101,7 @@ const BranchExceptionDates = ({ control, trigger, loading }: Props) => {
                           <TextField
                             {...inputParams}
                             variant="outlined"
-                            label={t('branch.upsert.exception_date_type')}
+                            label={t('branch.exception_date_type')}
                             inputRef={params.field.ref}
                             error={!!params.fieldState.error}
                             InputLabelProps={{ ...inputParams.InputLabelProps, children: null }}
@@ -117,7 +117,7 @@ const BranchExceptionDates = ({ control, trigger, loading }: Props) => {
                 </Box>
               ))
             ) : (
-              <NoDatText text={t('branch.upsert.no_exception_dates')} />
+              <NoDatText text={t('branch.no_exception_dates')} />
             )}
 
             <Button sx={{ width: 'fit-content' }} startIcon={<AddCircleRounded />} onClick={handleExceptionAdd}>

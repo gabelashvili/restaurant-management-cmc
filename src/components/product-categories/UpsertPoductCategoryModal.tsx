@@ -113,7 +113,7 @@ const UpsertPoductCategoryModal: FC<Props> = ({ open, handleClose, editItem }) =
               renderInput={(params) => (
                 <TextField
                   variant="filled"
-                  label={t('product_categories.dishes')}
+                  label={t('common.type')}
                   required
                   error={!!fieldState.error}
                   {...params}
