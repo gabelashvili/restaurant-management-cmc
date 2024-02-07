@@ -48,7 +48,7 @@ const ImageUpload: FC<Props> = ({ file, setFile, maxFileSize = MAX_FILE_SIZE_IN_
       <Box sx={{ width: '100%', height: '100%', bgcolor: 'secondary.300', borderRadius: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center', height: '100%', gap: 0.5 }}>
           <CloudUploadOutlined fontSize={'large'} />
-          <Typography>სურათის ატვირთვა</Typography>
+          <Typography textAlign={'center'}>{t('image_upload.title')}</Typography>
         </Box>
       </Box>
 
