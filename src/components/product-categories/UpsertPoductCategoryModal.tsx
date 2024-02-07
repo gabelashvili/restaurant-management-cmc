@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { type Languages } from '../../@types/common';
 import { type ProductCategoryModel } from '../../@types/product-category';
 import { useCreateProductCategoriesMutation, useUpdateProductCategoriesMutation } from '../../store/api/productCategoryApi';
-import { upsertProductCategorySchema } from '../../validations/prduct-category-schemas';
+import { upsertProductCategorySchema } from '../../validations/product-category-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
 
 interface Props {
@@ -36,7 +36,7 @@ const UpsertPoductCategoryModal: FC<Props> = ({ open, handleClose, editItem }) =
     reset,
     handleSubmit,
     formState: { isDirty },
-  } = useForm<Omit<ProductCategoryModel, 'type' | '_id'>>({
+  } = useForm<Omit<ProductCategoryModel, '_id'>>({
     defaultValues,
     resolver: yupResolver(upsertProductCategorySchema),
   });
