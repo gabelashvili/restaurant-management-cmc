@@ -128,6 +128,8 @@
         "category": "კატეგორია"
     },
     "product": {
-        "price": "ფასი"
+        "price": "ფასი",
+        "general_info": "ზოგადი ინფორმაცია",
+        "description": "პროდუქტის აღწერა"
     }
 }
