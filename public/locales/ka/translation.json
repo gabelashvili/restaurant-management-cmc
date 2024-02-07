@@ -27,16 +27,15 @@
     },
     "routes": {
         "statistics": "სტატისტიკა",
-        "menu": "მენიუ",
+        "products": "პროდუქტები",
         "branches": "ფილიალები",
         "employees": "თანამშრომლები",
-        "dishes": "კერძები",
-        "drinks": "სასმელები",
         "categories": "კატეგორიები",
-        "dishes_list": "კერძების სია"
+        "products_categories": "კატეგორიები",
+        "products_list": "პროდუქტების სია"
     },
     "image_upload": {
-        "maxSize": "სურათის მაქსიმალური ზომა {{size}}",
+        "max_size": "სურათის მაქსიმალური ზომა {{size}}",
         "title": "ატვირთე/გაანახლე სურათი"
     },
     "auth": {
@@ -126,8 +125,5 @@
         "dishes": "კერძები",
         "remove": "კატეგორიის წაშლა",
         "remove_desc": "ნამდვილად გსურთ კატეგორია - {{category}} წაშლა"
-    },
-    "upload_image": {
-        "max_size": "სურათის მაქსიმალური ზომა {{size}}"
     }
 }

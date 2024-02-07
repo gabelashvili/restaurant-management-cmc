@@ -8,9 +8,9 @@ import SignIn from './components/auth/SignIn';
 import AuthLayout from './components/AuthLayout';
 import BranchesList from './components/branches/BranchesList';
 import UpsertBranch from './components/branches/upsert/UpsertBranch';
-import UpsertDish from './components/dishes/UpsertDish';
 import EmployeesList from './components/employees/EmployeesList';
 import Layout from './components/layout/Layout';
+import UpsertProduct from './components/product/UpsertProduct';
 import ProductCategoriesList from './components/product-categories/ProductCategoriesList';
 import UserSettings from './components/settings/UserSettings';
 import useAuth from './hooks/useAuth';
@@ -35,18 +35,18 @@ const defaultRoutes = createBrowserRouter([
         element: <EmployeesList />,
       },
       {
-        path: 'menu',
+        path: 'products',
         children: [
           {
             path: 'categories',
             element: <ProductCategoriesList />,
           },
           {
-            path: 'dishes',
+            path: 'list',
             children: [
               {
                 path: 'new',
-                element: <UpsertDish />,
+                element: <UpsertProduct />,
               },
             ],
           },

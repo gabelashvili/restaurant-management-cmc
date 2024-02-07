@@ -35,7 +35,7 @@ const ImageUpload: FC<Props> = ({ file, setFile, maxFileSize = MAX_FILE_SIZE_IN_
     if (file) {
       const fileSizeInImb = file.size / 1048576;
       if (fileSizeInImb > maxFileSize) {
-        toast.error(t('upload_image.max_size', { size: `${maxFileSize}MB` }));
+        toast.error(t('image_upload.max_size', { size: `${maxFileSize}MB` }));
         return;
       }
       setFile(file);

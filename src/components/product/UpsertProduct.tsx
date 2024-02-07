@@ -9,7 +9,7 @@ import EditorToolbar, { formats, modules } from '../shared/EditorToolbar';
 import ImageUpload from '../shared/ImageUpload';
 import UpsertSectionWrapper from '../shared/UpsertSectionWrapper';
 
-const UpsertDish = () => {
+const UpsertProduct = () => {
   const [value, setValue] = useState('');
   const [file, setFile] = useState<File | null>(null);
 
@@ -44,4 +44,4 @@ const UpsertDish = () => {
   );
 };
 
-export default UpsertDish;
+export default UpsertProduct;

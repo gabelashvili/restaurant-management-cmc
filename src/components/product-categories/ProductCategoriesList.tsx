@@ -96,8 +96,7 @@ const ProductCategoriesList = () => {
           productCategories?.data?.list?.map((item) => (
             <TableRow key={item._id} hover>
               <CustomTableBodyCell align={getTableHeaders(lang)[0].align}>{item.name[lang]}</CustomTableBodyCell>
-              <CustomTableBodyCell align={getTableHeaders(lang)[1].align}>{t(`product_categories.${item.type}`)}</CustomTableBodyCell>
-              <CustomTableBodyCell align={getTableHeaders(lang)[2].align}>
+              <CustomTableBodyCell align={getTableHeaders(lang)[1].align}>
                 <CustomTableMenu
                   onEdit={() => {
                     setEditItem(item);
@@ -129,11 +128,6 @@ const getTableHeaders = (selectedLang: string) => [
     label: 'common.name' as const,
     align: 'left' as const,
     sortKey: `name.${selectedLang}`,
-  },
-  {
-    label: 'common.type' as const,
-    align: 'left' as const,
-    sortKey: 'type',
   },
   {
     label: 'common.empty' as const,

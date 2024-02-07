@@ -1,6 +1,6 @@
-import { Category, Leaderboard, ListAlt, LocalBar, People, Place, Restaurant } from '@mui/icons-material';
+import { Category, Leaderboard, ListAlt, People, Place, Restaurant } from '@mui/icons-material';
 
-type TitleEnum = 'statistics' | 'menu' | 'categories' | 'dishes' | 'drinks' | 'branches' | 'employees';
+type TitleEnum = 'statistics' | 'products' | 'products_categories' | 'products_list' | 'branches' | 'employees';
 
 const routes: Record<
   string,
@@ -20,25 +20,20 @@ const routes: Record<
     Icon: Leaderboard,
     path: '',
   },
-  dishes: {
-    title: 'menu',
+  products: {
+    title: 'products',
     Icon: Restaurant,
-    path: 'menu',
+    path: 'products',
     children: [
       {
-        title: 'categories',
+        title: 'products_categories',
         Icon: Category,
         path: 'categories',
       },
       {
-        title: 'dishes',
+        title: 'products_list',
         Icon: ListAlt,
-        path: 'dishes',
-      },
-      {
-        title: 'drinks',
-        Icon: LocalBar,
-        path: 'drinks',
+        path: 'list',
       },
     ],
   },

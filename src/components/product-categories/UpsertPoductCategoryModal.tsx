@@ -2,12 +2,12 @@ import { useEffect, type FC } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoadingButton } from '@mui/lab';
-import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, Divider, TextField } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Divider } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { type Languages } from '../../@types/common';
-import { ProductCategoryTypeEnum, type ProductCategoryModel } from '../../@types/product-category';
+import { type ProductCategoryModel } from '../../@types/product-category';
 import { useCreateProductCategoriesMutation, useUpdateProductCategoriesMutation } from '../../store/api/productCategoryApi';
 import { upsertProductCategorySchema } from '../../validations/prduct-category-schemas';
 import MultiLangTextField from '../shared/MultiLangTextField';
@@ -23,7 +23,6 @@ const defaultValues = {
     ka: '',
     en: '',
   },
-  type: null,
 };
 
 const UpsertPoductCategoryModal: FC<Props> = ({ open, handleClose, editItem }) => {
@@ -36,12 +35,11 @@ const UpsertPoductCategoryModal: FC<Props> = ({ open, handleClose, editItem }) =
     control,
     reset,
     handleSubmit,
-    formState: { isDirty, errors },
-  } = useForm<Omit<ProductCategoryModel, 'type' | '_id'> & { type: null | ProductCategoryTypeEnum }>({
+    formState: { isDirty },
+  } = useForm<Omit<ProductCategoryModel, 'type' | '_id'>>({
     defaultValues,
     resolver: yupResolver(upsertProductCategorySchema),
   });
-  console.log(errors, 2213);
 
   const onClose = () => {
     handleClose();
@@ -70,7 +68,6 @@ const UpsertPoductCategoryModal: FC<Props> = ({ open, handleClose, editItem }) =
     if (editItem) {
       reset({
         name: editItem.name,
-        type: editItem.type,
       });
     }
   }, [editItem]);
@@ -93,33 +90,6 @@ const UpsertPoductCategoryModal: FC<Props> = ({ open, handleClose, editItem }) =
               value={params.field.value}
               error={!!params.fieldState.error}
               ref={params.field.ref}
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name={`type`}
-          render={({ field, fieldState }) => (
-            <Autocomplete
-              fullWidth
-              disablePortal
-              disableClearable={!field.value}
-              options={Object.keys(ProductCategoryTypeEnum)}
-              getOptionLabel={(val) => t(`product_categories.${val as ProductCategoryTypeEnum}`)}
-              onChange={(_, val) => {
-                field.onChange(val || null);
-              }}
-              value={field.value}
-              renderInput={(params) => (
-                <TextField
-                  variant="filled"
-                  label={t('common.type')}
-                  required
-                  error={!!fieldState.error}
-                  {...params}
-                  InputLabelProps={{ ...params.InputLabelProps, children: null }}
-                />
-              )}
             />
           )}
         />
